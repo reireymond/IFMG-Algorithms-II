@@ -4,7 +4,7 @@
 #include "structs.h"
 
 Produtora* criar_produtora(){
-    Produtora* nova_produtora = (Produtora*) malloc(sizeof(Cliente));
+    Produtora* nova_produtora = (Produtora*) malloc(sizeof(Produtora));
 
     if (nova_produtora != NULL) {
         strcpy(nova_produtora->razao_social, "");
@@ -15,7 +15,7 @@ Produtora* criar_produtora(){
         strcpy(nova_produtora->telefone, "");
         strcpy(nova_produtora->telefone_responsavel, "");
         strcpy(nova_produtora->email, "");
-        strcpy(nova_produtora->margem_lucro, "");
+        nova_produtora->margem_lucro = 0;
     }
 
     return nova_produtora;
