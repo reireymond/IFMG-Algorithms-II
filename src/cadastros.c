@@ -110,8 +110,6 @@ void alterarProdutora() {
 }
 
 void salvarProdutora() {
-    system("mkdir data");
-
     FILE *arquivo = fopen("../data/produtora.dat", "wb");
     if (arquivo == NULL) {
         printf("\nErro ao abrir o arquivo para salvar!\n");
