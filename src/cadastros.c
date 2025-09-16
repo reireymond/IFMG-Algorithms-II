@@ -26,15 +26,16 @@ void alterarProdutora() {
         verDetalhesProdutora(); 
 
         printf("\nQual campo deseja alterar?\n");
-        printf("1. Razao Social\n");
-        printf("2. Nome do Responsavel\n");
-        printf("3. CNPJ\n");
-        printf("4. Inscricao Estadual\n");
-        printf("5. Endereco\n");
-        printf("6. Telefone\n");
-        printf("7. Telefone do Responsavel\n");
-        printf("8. E-mail\n");
-        printf("9. Margem de Lucro\n");
+        printf("1. Nome Fantasia\n");
+        printf("2. Razao Social\n");
+        printf("3. Nome do Responsavel\n");
+        printf("4. CNPJ\n");
+        printf("5. Inscricao Estadual\n");
+        printf("6. Endereco\n");
+        printf("7. Telefone\n");
+        printf("8. Telefone do Responsavel\n");
+        printf("9. E-mail\n");
+        printf("10. Margem de Lucro\n");
         printf("0. Salvar e Voltar\n");
         printf("Escolha: ");
         scanf("%d", &opcao_alterar);
@@ -42,47 +43,52 @@ void alterarProdutora() {
 
         switch (opcao_alterar) {
             case 1:
+            printf("Digite o novo Nome Fantasia: ");
+            fgets(dados_produtora.nome_fantasia, sizeof(dados_produtora.nome_fantasia), stdin);
+            dados_produtora.nome_fantasia[strcspn(dados_produtora.nome_fantasia, "\n")] = 0;
+            break;
+            case 2:
                 printf("Digite a nova Razao Social: ");
                 fgets(dados_produtora.razao_social, sizeof(dados_produtora.razao_social), stdin);
                 dados_produtora.razao_social[strcspn(dados_produtora.razao_social, "\n")] = 0;
                 break;
-            case 2:
+            case 3:
                 printf("Digite o novo Nome do Responsavel: ");
                 fgets(dados_produtora.nome_do_responsavel, sizeof(dados_produtora.nome_do_responsavel), stdin);
                 dados_produtora.nome_do_responsavel[strcspn(dados_produtora.nome_do_responsavel, "\n")] = 0;
                 break;
-            case 3:
+            case 4:
                 printf("Digite o novo CNPJ: ");
                 fgets(dados_produtora.cnpj, sizeof(dados_produtora.cnpj), stdin);
                 if (strchr(dados_produtora.cnpj, '\n') == NULL) limpar_buffer();
                 dados_produtora.cnpj[strcspn(dados_produtora.cnpj, "\n")] = 0;
                 break;
-            case 4:
+            case 5:
                 printf("Digite a nova Inscricao Estadual: ");
                 fgets(dados_produtora.inscricao_estadual, sizeof(dados_produtora.inscricao_estadual), stdin);
                 dados_produtora.inscricao_estadual[strcspn(dados_produtora.inscricao_estadual, "\n")] = 0;
                 break;
-            case 5:
+            case 6:
                 printf("Digite o novo Endereco: ");
                 fgets(dados_produtora.endereco, sizeof(dados_produtora.endereco), stdin);
                 dados_produtora.endereco[strcspn(dados_produtora.endereco, "\n")] = 0;
                 break;
-            case 6:
+            case 7:
                 printf("Digite o novo Telefone: ");
                 fgets(dados_produtora.telefone, sizeof(dados_produtora.telefone), stdin);
                 dados_produtora.telefone[strcspn(dados_produtora.telefone, "\n")] = 0;
                 break;
-            case 7:
+            case 8:
                 printf("Digite o novo Telefone do Responsavel: ");
                 fgets(dados_produtora.telefone_responsavel, sizeof(dados_produtora.telefone_responsavel), stdin);
                 dados_produtora.telefone_responsavel[strcspn(dados_produtora.telefone_responsavel, "\n")] = 0;
                 break;
-            case 8:
+            case 9:
                 printf("Digite o novo E-mail: ");
                 fgets(dados_produtora.email, sizeof(dados_produtora.email), stdin);
                 dados_produtora.email[strcspn(dados_produtora.email, "\n")] = 0;
                 break;
-            case 9:
+            case 10:
                 printf("Digite a nova Margem de Lucro (%%): ");
                 scanf("%f", &dados_produtora.margem_lucro);
                 limpar_buffer();
@@ -140,6 +146,10 @@ void adicionarProdutora() {
 
     printf("\n--- Cadastro dos Dados da Produtora ---\n");
     
+    printf("Nome Fantasia: ");
+    fgets(dados_produtora.nome_fantasia, sizeof(dados_produtora.nome_fantasia), stdin);
+    dados_produtora.nome_fantasia[strcspn(dados_produtora.nome_fantasia, "\n")] = 0;
+
     printf("Razao Social: ");
     fgets(dados_produtora.razao_social, sizeof(dados_produtora.razao_social), stdin);
     dados_produtora.razao_social[strcspn(dados_produtora.razao_social, "\n")] = 0;
@@ -188,6 +198,7 @@ void verDetalhesProdutora() {
         return;
     }
     printf("\n--- Detalhes da Produtora Cadastrada ---\n");
+    printf("Nome Fantasia: %s\n", dados_produtora.nome_fantasia);
     printf("Razao Social: %s\n", dados_produtora.razao_social);
     printf("Responsavel: %s\n", dados_produtora.nome_do_responsavel);
     printf("CNPJ: %s\n", dados_produtora.cnpj);

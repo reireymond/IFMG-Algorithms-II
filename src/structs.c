@@ -9,6 +9,7 @@ Produtora *criar_produtora()
 
     if (nova_produtora != NULL)
     {
+        strcpy(nova_produtora->nome_fantasia, "");
         strcpy(nova_produtora->razao_social, "");
         strcpy(nova_produtora->nome_do_responsavel, "");
         strcpy(nova_produtora->cnpj, "");
