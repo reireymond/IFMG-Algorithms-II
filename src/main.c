@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <structs.h>
+#include "cadastros.h" 
+
+void menuGestaoDeDados();
 
 int main() {
     int menu_de_opcoes;
@@ -18,9 +20,18 @@ int main() {
 
         switch (menu_de_opcoes) {
             case 1:
-                menuGestaoDeDados();
+                menuGestaoDeDados(); 
                 break;
             case 2:
+                printf("\nModulo em construcao...\n");
+                break;
+            case 3:
+                printf("\nModulo em construcao...\n");
+                break;
+            case 4:
+                printf("\nModulo em construcao...\n");
+                break;
+            case 5:
                 printf("\nModulo em construcao...\n");
                 break;
             case 0:
@@ -33,4 +44,51 @@ int main() {
 
     } while (menu_de_opcoes != 0);
     return 0;
+}
+
+void menuGestaoDeDados() {
+    int opcao_gestao;
+    do {
+        printf("\n--- GESTAO DE DADOS ---\n");
+        printf("1. Gerenciar Produtora\n");
+        printf("2. Gerenciar Clientes\n");
+        printf("3. Gerenciar Equipe Interna\n");
+        printf("4. Gerenciar Recursos\n");
+        printf("5. Gerenciar Fornecedores\n");
+        printf("6. Gerenciar Operadores\n");
+        printf("0. Voltar ao Menu Principal\n");
+        printf("\nEscolha uma opcao: ");
+        scanf("%d", &opcao_gestao);
+
+        int c;
+        while ((c = getchar()) != '\n' && c != EOF);
+
+        switch (opcao_gestao) {
+                printf("\n--- Menu Produtora ---\n");
+                printf("1. Adicionar/Cadastrar\n");
+                printf("2. Ver Detalhes\n");
+                printf("3. Alterar\n");
+                printf("4. Excluir\n");
+                printf("Escolha: ");
+                int op_prod;
+                scanf("%d", &op_prod);
+                while ((c = getchar()) != '\n' && c != EOF);
+                
+                if (op_prod == 1) adicionarProdutora();
+                else if (op_prod == 2) verDetalhesProdutora();
+                else if (op_prod == 3) alterarProdutora();
+                else if (op_prod == 4) excluirProdutora();
+                break;
+            case 2:
+                printf("\nModulo de Clientes em construcao...\n");// Aqui você chamaria um menu para clientes, similar ao da produtora
+                break;
+            case 0:
+                printf("\nVoltando ao menu principal...\n");
+                break;
+            default:
+                printf("\nOpcao invalida!\n");
+                break;
+        }
+
+    } while (opcao_gestao != 0);
 }
