@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../include/cadastros.h/"
+#include "../include/structs.h/"
 
 int main(){
     int menu_de_opcoes;
