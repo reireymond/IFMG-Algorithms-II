@@ -7,6 +7,7 @@ void menuGestaoDeDados();
 
 int main()
 {
+    carregarProdutora();
     int menu_de_opcoes;
     do
     {

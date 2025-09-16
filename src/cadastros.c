@@ -4,6 +4,35 @@
 
 #include "cadastros.h"
 
+
+void salvarProdutora() {
+    system("mkdir data");
+
+    FILE *arquivo = fopen("data/produtora.dat", "wb");
+    if (arquivo == NULL) {
+        printf("\nErro ao abrir o arquivo para salvar os dados da produtora!\n");
+        return;
+    }
+    fwrite(&dados_produtora, sizeof(Produtora), 1, arquivo);
+
+    fclose(arquivo);
+}
+
+void carregarProdutora() {
+    FILE *arquivo = fopen("data/produtora.dat", "rb");
+    if (arquivo == NULL) {
+        produtora_cadastrada = 0;
+        return;
+    }
+
+    fread(&dados_produtora, sizeof(Produtora), 1, arquivo);
+
+    produtora_cadastrada = 1;
+    
+    fclose(arquivo);
+    printf("\nDados da produtora carregados com sucesso!\n");
+}
+
 void limpar_buffer()
 {
     int c;
@@ -62,6 +91,8 @@ void adicionarProdutora()
 
     produtora_cadastrada = 1;
     printf("\nDados da produtora '%s' cadastrados com sucesso!\n", dados_produtora.razao_social);
+
+    salvarProdutora(); // <-- CHAME A FUNÇÃO DE SALVAR AQUI!
 }
 
 void verDetalhesProdutora()
@@ -102,15 +133,16 @@ void excluirProdutora()
     scanf(" %c", &confirmacao);
     limpar_buffer();
 
-    if (confirmacao == 's' || confirmacao == 'S')
-    {
+    if (confirmacao == 's' || confirmacao == 'S') {
+        
         strcpy(dados_produtora.razao_social, "");
 
         produtora_cadastrada = 0;
+
+        salvarProdutora();
+
         printf("\nDados da produtora excluidos com sucesso!\n");
-    }
-    else
-    {
+    } else {
         printf("\nExclusao cancelada.\n");
     }
 }
