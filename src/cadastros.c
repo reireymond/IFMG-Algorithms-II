@@ -4,16 +4,20 @@
 
 #include "cadastros.h"
 
-void limpar_buffer() {
+void limpar_buffer()
+{
     int c;
-    while ((c = getchar()) != '\n' && c != EOF);
+    while ((c = getchar()) != '\n' && c != EOF)
+        ;
 }
 
 static Produtora dados_produtora;
 static int produtora_cadastrada = 0;
 
-void adicionarProdutora() {
-    if (produtora_cadastrada) {
+void adicionarProdutora()
+{
+    if (produtora_cadastrada)
+    {
         printf("\nUma produtora ja foi cadastrada. Para cadastrar uma nova, exclua a existente.\n");
         return;
     }
@@ -31,7 +35,7 @@ void adicionarProdutora() {
     printf("CNPJ (formato XX.XXX.XXX/XXXX-XX): ");
     fgets(dados_produtora.cnpj, sizeof(dados_produtora.cnpj), stdin);
     dados_produtora.cnpj[strcspn(dados_produtora.cnpj, "\n")] = 0;
-    
+
     printf("Inscricao Estadual: ");
     fgets(dados_produtora.inscricao_estadual, sizeof(dados_produtora.inscricao_estadual), stdin);
     dados_produtora.inscricao_estadual[strcspn(dados_produtora.inscricao_estadual, "\n")] = 0;
@@ -60,8 +64,10 @@ void adicionarProdutora() {
     printf("\nDados da produtora '%s' cadastrados com sucesso!\n", dados_produtora.razao_social);
 }
 
-void verDetalhesProdutora() {
-    if (!produtora_cadastrada) {
+void verDetalhesProdutora()
+{
+    if (!produtora_cadastrada)
+    {
         printf("\nNenhuma produtora cadastrada para exibir.\n");
         return;
     }
@@ -78,27 +84,33 @@ void verDetalhesProdutora() {
     printf("Margem de Lucro: %.2f%%\n", dados_produtora.margem_lucro);
 }
 
-void alterarProdutora() {
+void alterarProdutora()
+{
     printf("\nModulo de alteracao de produtora em construcao...\n");
 }
 
-void excluirProdutora() {
-    if (!produtora_cadastrada) {
+void excluirProdutora()
+{
+    if (!produtora_cadastrada)
+    {
         printf("\nNenhuma produtora cadastrada para excluir.\n");
         return;
     }
-    
+
     char confirmacao;
     printf("\nTem certeza que deseja excluir os dados da produtora %s? (s/n): ", dados_produtora.razao_social);
     scanf(" %c", &confirmacao);
     limpar_buffer();
 
-    if (confirmacao == 's' || confirmacao == 'S') {
+    if (confirmacao == 's' || confirmacao == 'S')
+    {
         strcpy(dados_produtora.razao_social, "");
-        
+
         produtora_cadastrada = 0;
         printf("\nDados da produtora excluidos com sucesso!\n");
-    } else {
+    }
+    else
+    {
         printf("\nExclusao cancelada.\n");
     }
 }

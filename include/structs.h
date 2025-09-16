@@ -2,7 +2,8 @@
 #define STRUCTS_H
 
 // Estrutura Produtora
-typedef struct {
+typedef struct
+{
     char razao_social[101];
     char nome_do_responsavel[101];
     char cnpj[19];
@@ -11,12 +12,13 @@ typedef struct {
     char telefone[16];
     char telefone_responsavel[16];
     char email[255];
-    float margem_lucro;   
+    float margem_lucro;
 
 } Produtora;
 
 // Estrutura Cliente
-typedef struct {
+typedef struct
+{
     int codigo;
     char razao_social[101];
     char nome_do_cliente[101];
@@ -25,13 +27,14 @@ typedef struct {
     char inscricao_estadual[25];
     char endereco[256];
     char telefone[16];
-    char email[255];     
+    char email[255];
     char nome_do_contato[101];
 
 } Cliente;
 
 // Estrutura Equipe_Interna
-typedef struct {
+typedef struct
+{
     int codigo;
     char nome[101];
     char cpf[16];
@@ -42,7 +45,8 @@ typedef struct {
 } Equipe_Interna;
 
 // Estrutura Recursos
-typedef struct {
+typedef struct
+{
     int codigo;
     char descricao[128];
     char categoria[50];
@@ -53,7 +57,8 @@ typedef struct {
 } Recursos;
 
 // Estrutura Fornecedores
-typedef struct {
+typedef struct
+{
     int codigo;
     char razao_social[101];
     char nome_fantasia[101];
@@ -66,7 +71,8 @@ typedef struct {
 } Fornecedores;
 
 // Estrutura Operadores
-typedef struct {
+typedef struct
+{
     int codigo;
     char nome_do_cliente[101];
     char usuario[26];

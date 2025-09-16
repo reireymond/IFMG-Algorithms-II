@@ -3,10 +3,12 @@
 
 #include "structs.h"
 
-Produtora* criar_produtora(){
-    Produtora* nova_produtora = (Produtora*) malloc(sizeof(Produtora));
+Produtora *criar_produtora()
+{
+    Produtora *nova_produtora = (Produtora *)malloc(sizeof(Produtora));
 
-    if (nova_produtora != NULL) {
+    if (nova_produtora != NULL)
+    {
         strcpy(nova_produtora->razao_social, "");
         strcpy(nova_produtora->nome_do_responsavel, "");
         strcpy(nova_produtora->cnpj, "");
@@ -21,10 +23,12 @@ Produtora* criar_produtora(){
     return nova_produtora;
 }
 
-Cliente* criar_cliente() {
-    Cliente* novo_cliente = (Cliente*) malloc(sizeof(Cliente));
+Cliente *criar_cliente()
+{
+    Cliente *novo_cliente = (Cliente *)malloc(sizeof(Cliente));
 
-    if (novo_cliente != NULL) {
+    if (novo_cliente != NULL)
+    {
         novo_cliente->codigo = 0;
         strcpy(novo_cliente->razao_social, "");
         strcpy(novo_cliente->nome_do_cliente, "");

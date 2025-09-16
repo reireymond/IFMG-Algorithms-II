@@ -33,7 +33,7 @@ void alterarFornecedores();
 void excluirFornecedores();
 void verDetalhesFornecedores();
 
-// 
+//
 void adicionarOperadores();
 void alterarOperadores();
 void excluirOperadores();
