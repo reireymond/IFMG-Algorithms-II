@@ -2,17 +2,17 @@
 #include <stdlib.h>
 #include "cadastros.h"
 
+// Protótipos das funções de menu
 void menuGestaoDeDados();
-void menuProdutora(); // <-- Novo protótipo
+void menuProdutora();
 
-
+// Função para pausar a tela e esperar o usuário pressionar Enter
 void pausar() {
     printf("\nPressione Enter para continuar...");
-    
-    int c = getchar();
-    if (c != '\n' && c != EOF) {
-        while ((c = getchar()) != '\n' && c != EOF);
-    }
+    // Limpa o buffer de qualquer caractere restante
+    while(getchar() != '\n' && getchar() != EOF);
+    // Espera o usuário pressionar Enter
+    getchar();
 }
 
 int main() {
@@ -36,6 +36,9 @@ int main() {
                 menuGestaoDeDados();
                 break;
             case 2:
+            case 3:
+            case 4:
+            case 5:
                 printf("\nModulo em construcao...\n");
                 pausar();
                 break;
@@ -71,13 +74,20 @@ void menuGestaoDeDados() {
             case 1:
                 menuProdutora();
                 break;
-            case 2:
-                printf("\nModulo de Clientes em construcao...\n");
-                pausar();
+            
+            // --- ESTA É A PARTE IMPORTANTE PARA OS SUBMENUS ---
+            // Todos os casos em construção agora levam para a mesma mensagem e pausa
+            case 2: // Clientes
+            case 3: // Equipe Interna
+            case 4: // Recursos
+            case 5: // Fornecedores
+            case 6: // Operadores
+                printf("\nModulo em construcao...\n");
+                pausar(); // A pausa agora funciona para todos estes submenus
                 break;
             
-                case 0:
-                printf("\nVoltando ao menu principal...\n");
+            case 0:
+                // Não faz nada, apenas volta ao menu principal
                 break;
             default:
                 printf("\nOpcao invalida!\n");
@@ -88,6 +98,7 @@ void menuGestaoDeDados() {
     } while (opcao_gestao != 0);
 }
 
+// A função menuProdutora() continua a mesma, pois já está completa
 void menuProdutora() {
     int op_prod;
     do {
@@ -101,7 +112,6 @@ void menuProdutora() {
         printf("Escolha: ");
         scanf("%d", &op_prod);
 
-        // Limpa o buffer de entrada para a proxima funcao (fgets)
         int c;
         while ((c = getchar()) != '\n' && c != EOF);
 
@@ -110,7 +120,7 @@ void menuProdutora() {
                 adicionarProdutora();
                 break;
             case 2:
-                alterarProdutora(); // <-- Agora chama a nova função
+                alterarProdutora();
                 break;
             case 3:
                 verDetalhesProdutora();
@@ -119,14 +129,12 @@ void menuProdutora() {
                 excluirProdutora();
                 break;
             case 0:
-                // Não faz nada, apenas sai do loop
                 break;
             default:
                 printf("\nOpcao invalida para Produtora!\n");
                 break;
         }
         
-        // Pausa a tela para o usuário ver a mensagem, exceto quando ele decide voltar
         if (op_prod != 0) {
             pausar();
         }
