@@ -1,20 +1,118 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h> // Necessário para a função strcspn
+#include <string.h>
 
 #include "cadastros.h"
 
+static Produtora dados_produtora;
+static int produtora_cadastrada = 0;
+
+void limpar_buffer() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+}
+
+void alterarProdutora() {
+    if (!produtora_cadastrada) {
+        printf("\nNenhuma produtora cadastrada para alterar. Por favor, adicione uma primeiro.\n");
+        return;
+    }
+
+    int opcao_alterar;
+    do {
+        system("cls"); // Limpa a tela para mostrar os dados e o menu de alteração
+        printf("--- Alterar Dados da Produtora ---\n");
+        // Mostra os dados atuais antes de pedir para alterar
+        verDetalhesProdutora(); 
+
+        printf("\nQual campo deseja alterar?\n");
+        printf("1. Razao Social\n");
+        printf("2. Nome do Responsavel\n");
+        printf("3. CNPJ\n");
+        printf("4. Inscricao Estadual\n");
+        printf("5. Endereco\n");
+        printf("6. Telefone\n");
+        printf("7. Telefone do Responsavel\n");
+        printf("8. E-mail\n");
+        printf("9. Margem de Lucro\n");
+        printf("0. Salvar e Voltar\n");
+        printf("Escolha: ");
+        scanf("%d", &opcao_alterar);
+        limpar_buffer(); // Limpa o buffer depois do scanf
+
+        switch (opcao_alterar) {
+            case 1:
+                printf("Digite a nova Razao Social: ");
+                fgets(dados_produtora.razao_social, sizeof(dados_produtora.razao_social), stdin);
+                dados_produtora.razao_social[strcspn(dados_produtora.razao_social, "\n")] = 0;
+                break;
+            case 2:
+                printf("Digite o novo Nome do Responsavel: ");
+                fgets(dados_produtora.nome_do_responsavel, sizeof(dados_produtora.nome_do_responsavel), stdin);
+                dados_produtora.nome_do_responsavel[strcspn(dados_produtora.nome_do_responsavel, "\n")] = 0;
+                break;
+            case 3:
+                printf("Digite o novo CNPJ: ");
+                fgets(dados_produtora.cnpj, sizeof(dados_produtora.cnpj), stdin);
+                if (strchr(dados_produtora.cnpj, '\n') == NULL) limpar_buffer();
+                dados_produtora.cnpj[strcspn(dados_produtora.cnpj, "\n")] = 0;
+                break;
+            case 4:
+                printf("Digite a nova Inscricao Estadual: ");
+                fgets(dados_produtora.inscricao_estadual, sizeof(dados_produtora.inscricao_estadual), stdin);
+                dados_produtora.inscricao_estadual[strcspn(dados_produtora.inscricao_estadual, "\n")] = 0;
+                break;
+            case 5:
+                printf("Digite o novo Endereco: ");
+                fgets(dados_produtora.endereco, sizeof(dados_produtora.endereco), stdin);
+                dados_produtora.endereco[strcspn(dados_produtora.endereco, "\n")] = 0;
+                break;
+            case 6:
+                printf("Digite o novo Telefone: ");
+                fgets(dados_produtora.telefone, sizeof(dados_produtora.telefone), stdin);
+                dados_produtora.telefone[strcspn(dados_produtora.telefone, "\n")] = 0;
+                break;
+            case 7:
+                printf("Digite o novo Telefone do Responsavel: ");
+                fgets(dados_produtora.telefone_responsavel, sizeof(dados_produtora.telefone_responsavel), stdin);
+                dados_produtora.telefone_responsavel[strcspn(dados_produtora.telefone_responsavel, "\n")] = 0;
+                break;
+            case 8:
+                printf("Digite o novo E-mail: ");
+                fgets(dados_produtora.email, sizeof(dados_produtora.email), stdin);
+                dados_produtora.email[strcspn(dados_produtora.email, "\n")] = 0;
+                break;
+            case 9:
+                printf("Digite a nova Margem de Lucro (%%): ");
+                scanf("%f", &dados_produtora.margem_lucro);
+                limpar_buffer();
+                break;
+            case 0:
+                printf("\nAlteracoes salvas com sucesso!\n");
+                break;
+            default:
+                printf("\nOpcao invalida!\n");
+                // Pausa para o usuário ver a mensagem de erro
+                int c; while ((c = getchar()) != '\n' && c != EOF);
+                break;
+        }
+
+    } while (opcao_alterar != 0);
+
+    // Salva todas as alterações feitas no arquivo
+    salvarProdutora();
+}
 
 void salvarProdutora() {
     system("mkdir data");
 
     FILE *arquivo = fopen("data/produtora.dat", "wb");
     if (arquivo == NULL) {
-        printf("\nErro ao abrir o arquivo para salvar os dados da produtora!\n");
+        printf("\nErro ao abrir o arquivo para salvar!\n");
         return;
     }
-    fwrite(&dados_produtora, sizeof(Produtora), 1, arquivo);
 
+    fwrite(&dados_produtora, sizeof(Produtora), 1, arquivo);
     fclose(arquivo);
 }
 
@@ -25,34 +123,23 @@ void carregarProdutora() {
         return;
     }
 
-    fread(&dados_produtora, sizeof(Produtora), 1, arquivo);
-
-    produtora_cadastrada = 1;
+    if (fread(&dados_produtora, sizeof(Produtora), 1, arquivo) == 1) {
+        produtora_cadastrada = 1;
+    } else {
+        produtora_cadastrada = 0;
+    }
     
     fclose(arquivo);
-    printf("\nDados da produtora carregados com sucesso!\n");
 }
 
-void limpar_buffer()
-{
-    int c;
-    while ((c = getchar()) != '\n' && c != EOF)
-        ;
-}
-
-static Produtora dados_produtora;
-static int produtora_cadastrada = 0;
-
-void adicionarProdutora()
-{
-    if (produtora_cadastrada)
-    {
-        printf("\nUma produtora ja foi cadastrada. Para cadastrar uma nova, exclua a existente.\n");
+void adicionarProdutora() {
+    if (produtora_cadastrada) {
+        printf("\nUma produtora ja foi cadastrada. Exclua a existente para cadastrar uma nova.\n");
         return;
     }
 
     printf("\n--- Cadastro dos Dados da Produtora ---\n");
-
+    
     printf("Razao Social: ");
     fgets(dados_produtora.razao_social, sizeof(dados_produtora.razao_social), stdin);
     dados_produtora.razao_social[strcspn(dados_produtora.razao_social, "\n")] = 0;
@@ -64,7 +151,7 @@ void adicionarProdutora()
     printf("CNPJ (formato XX.XXX.XXX/XXXX-XX): ");
     fgets(dados_produtora.cnpj, sizeof(dados_produtora.cnpj), stdin);
     dados_produtora.cnpj[strcspn(dados_produtora.cnpj, "\n")] = 0;
-
+    
     printf("Inscricao Estadual: ");
     fgets(dados_produtora.inscricao_estadual, sizeof(dados_produtora.inscricao_estadual), stdin);
     dados_produtora.inscricao_estadual[strcspn(dados_produtora.inscricao_estadual, "\n")] = 0;
@@ -92,17 +179,14 @@ void adicionarProdutora()
     produtora_cadastrada = 1;
     printf("\nDados da produtora '%s' cadastrados com sucesso!\n", dados_produtora.razao_social);
 
-    salvarProdutora(); // <-- CHAME A FUNÇÃO DE SALVAR AQUI!
+    salvarProdutora();
 }
 
-void verDetalhesProdutora()
-{
-    if (!produtora_cadastrada)
-    {
+void verDetalhesProdutora() {
+    if (!produtora_cadastrada) {
         printf("\nNenhuma produtora cadastrada para exibir.\n");
         return;
     }
-
     printf("\n--- Detalhes da Produtora Cadastrada ---\n");
     printf("Razao Social: %s\n", dados_produtora.razao_social);
     printf("Responsavel: %s\n", dados_produtora.nome_do_responsavel);
@@ -115,32 +199,24 @@ void verDetalhesProdutora()
     printf("Margem de Lucro: %.2f%%\n", dados_produtora.margem_lucro);
 }
 
-void alterarProdutora()
-{
-    printf("\nModulo de alteracao de produtora em construcao...\n");
-}
-
-void excluirProdutora()
-{
-    if (!produtora_cadastrada)
-    {
+void excluirProdutora() {
+    if (!produtora_cadastrada) {
         printf("\nNenhuma produtora cadastrada para excluir.\n");
         return;
     }
-
+    
     char confirmacao;
     printf("\nTem certeza que deseja excluir os dados da produtora %s? (s/n): ", dados_produtora.razao_social);
     scanf(" %c", &confirmacao);
     limpar_buffer();
 
     if (confirmacao == 's' || confirmacao == 'S') {
-        
         strcpy(dados_produtora.razao_social, "");
-
+        
         produtora_cadastrada = 0;
-
+        
         salvarProdutora();
-
+        
         printf("\nDados da produtora excluidos com sucesso!\n");
     } else {
         printf("\nExclusao cancelada.\n");

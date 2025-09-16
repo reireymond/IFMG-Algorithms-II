@@ -16,30 +16,25 @@ TARGET = $(BDIR)/produtora
 SOURCES = $(wildcard $(SDIR)/*.c)
 OBJECTS = $(patsubst $(SDIR)/%.c, $(ODIR)/%.o, $(SOURCES))
 
-# Regra principal
+# Regra principal: compila o projeto
 all: $(TARGET)
 
 # Regra para criar o executável final
 $(TARGET): $(OBJECTS)
-	@-mkdir -p $(BDIR)
+	@if not exist "$(BDIR)" mkdir "$(BDIR)"
 	$(CC) $(OBJECTS) -o $@
 
 # Regra para compilar os arquivos .c em .o
 $(ODIR)/%.o: $(SDIR)/%.c
-	@-mkdir -p $(ODIR)
+	@if not exist "$(ODIR)" mkdir "$(ODIR)"
 	$(CC) -c $< -o $@ $(CFLAGS)
 
-# Regra para limpar a tela e rodar o programa
-run: all
-	@echo "Iniciando o programa..."
-	cls
-	$(TARGET).exe
-
-# Regra para limpar o projeto
+# Regra para limpar o projeto (usando 'rd' para remover diretórios no Windows)
 clean:
 	@echo "Limpando arquivos gerados..."
-	rm -f $(ODIR)/*.o $(TARGET).exe
-	@echo "Limpeza concluída."
+	@if exist "$(ODIR)" rd /s /q "$(ODIR)"
+	@if exist "$(BDIR)" rd /s /q "$(BDIR)"
+	@echo "Limpeza concluida."
 
 # Define as regras que não são arquivos
-.PHONY: all clean run
+.PHONY: all clean

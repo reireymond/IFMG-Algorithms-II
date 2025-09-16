@@ -6,11 +6,11 @@ typedef struct
 {
     char razao_social[101];
     char nome_do_responsavel[101];
-    char cnpj[19];
+    char cnpj[20];
     char inscricao_estadual[25];
     char endereco[256];
-    char telefone[16];
-    char telefone_responsavel[16];
+    char telefone[20];
+    char telefone_responsavel[20];
     char email[255];
     float margem_lucro;
 
@@ -22,11 +22,11 @@ typedef struct
     int codigo;
     char razao_social[101];
     char nome_do_cliente[101];
-    char cnpj[19];
-    char cpf[16];
+    char cnpj[20];
+    char cpf[20];
     char inscricao_estadual[25];
     char endereco[256];
-    char telefone[16];
+    char telefone[20];
     char email[255];
     char nome_do_contato[101];
 
@@ -37,7 +37,7 @@ typedef struct
 {
     int codigo;
     char nome[101];
-    char cpf[16];
+    char cpf[20];
     char funcao[50];
     float valor_diaria;
     float valor_hora;
@@ -62,10 +62,10 @@ typedef struct
     int codigo;
     char razao_social[101];
     char nome_fantasia[101];
-    char cnpj[19];
-    char cpf[16];
+    char cnpj[20];
+    char cpf[20];
     char endereco[256];
-    char telefone[16];
+    char telefone[20];
     char tipo_servico[126];
 
 } Fornecedores;
