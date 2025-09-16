@@ -4,7 +4,7 @@
 #include "cadastros.h"
 
 void adicionarCliente() {
-    Cliente novo_cliente;
+    Cliente novo_cliente; 
 
     printf("\n--- Cadastro de Novo Cliente ---\n");
 

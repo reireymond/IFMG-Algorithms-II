@@ -1,29 +1,41 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "/../include/structs.h/"
+#include "structs.h"
 
-Cliente* criarCliente() {
+Produtora* criar_produtora(){
+    Produtora* nova_produtora = (Produtora*) malloc(sizeof(Cliente));
+
+    if (nova_produtora != NULL) {
+        strcpy(nova_produtora->razao_social, "");
+        strcpy(nova_produtora->nome_do_responsavel, "");
+        strcpy(nova_produtora->cnpj, "");
+        strcpy(nova_produtora->inscricao_estadual, "");
+        strcpy(nova_produtora->endereco, "");
+        strcpy(nova_produtora->telefone, "");
+        strcpy(nova_produtora->telefone_responsavel, "");
+        strcpy(nova_produtora->email, "");
+        strcpy(nova_produtora->margem_lucro, "");
+    }
+
+    return nova_produtora;
+}
+
+Cliente* criar_cliente() {
     Cliente* novo_cliente = (Cliente*) malloc(sizeof(Cliente));
 
     if (novo_cliente != NULL) {
         novo_cliente->codigo = 0;
-        strcpy(novo_cliente->nome, "");
+        strcpy(novo_cliente->razao_social, "");
+        strcpy(novo_cliente->nome_do_cliente, "");
         strcpy(novo_cliente->cnpj, "");
+        strcpy(novo_cliente->cpf, "");
+        strcpy(novo_cliente->inscricao_estadual, "");
+        strcpy(novo_cliente->endereco, "");
+        strcpy(novo_cliente->telefone, "");
         strcpy(novo_cliente->email, "");
+        strcpy(novo_cliente->nome_do_contato, "");
     }
 
     return novo_cliente;
-}
-
-Equipamento* criarEquipamento() {
-    Equipamento* novo_equipamento = (Equipamento*) malloc(sizeof(Equipamento));
-    if (novo_equipamento != NULL) {
-        novo_equipamento->codigo = 0;
-        strcpy(novo_equipamento->descricao, "");
-        novo_equipamento->quantidade_estoque = 0;
-        novo_equipamento->preco_custo = 0.0;
-        novo_equipamento->valor_locacao = 0.0;
-    }
-    return novo_equipamento;
 }
