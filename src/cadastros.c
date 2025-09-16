@@ -106,7 +106,7 @@ void alterarProdutora() {
 void salvarProdutora() {
     system("mkdir data");
 
-    FILE *arquivo = fopen("data/produtora.dat", "wb");
+    FILE *arquivo = fopen("../data/produtora.dat", "wb");
     if (arquivo == NULL) {
         printf("\nErro ao abrir o arquivo para salvar!\n");
         return;
@@ -117,7 +117,7 @@ void salvarProdutora() {
 }
 
 void carregarProdutora() {
-    FILE *arquivo = fopen("data/produtora.dat", "rb");
+    FILE *arquivo = fopen("../data/produtora.dat", "rb");
     if (arquivo == NULL) {
         produtora_cadastrada = 0;
         return;

@@ -1,9 +1,10 @@
 #ifndef STRUCTS_H
 #define STRUCTS_H
 
-// Estrutura Produtora
+// Estrutura Produtora - Adicionado "nome_fantasia"
 typedef struct
 {
+    char nome_fantasia[101]; // <-- ADICIONADO
     char razao_social[101];
     char nome_do_responsavel[101];
     char cnpj[20];
@@ -16,15 +17,15 @@ typedef struct
 
 } Produtora;
 
-// Estrutura Cliente
+// Estrutura Cliente - Removido "inscricao_estadual" (opcional)
 typedef struct
 {
     int codigo;
     char razao_social[101];
-    char nome_do_cliente[101];
+    char nome_do_cliente[101]; // Pode ser usado para PF
     char cnpj[20];
     char cpf[20];
-    char inscricao_estadual[25];
+    // char inscricao_estadual[25]; // <-- REMOVIDO (Não está no PDF)
     char endereco[256];
     char telefone[20];
     char email[255];
@@ -44,7 +45,7 @@ typedef struct
 
 } Equipe_Interna;
 
-// Estrutura Recursos
+// Estrutura Recursos (Equipamentos)
 typedef struct
 {
     int codigo;
@@ -70,14 +71,14 @@ typedef struct
 
 } Fornecedores;
 
-// Estrutura Operadores
+// Estrutura Operadores - Corrigido campo "nome"
 typedef struct
 {
     int codigo;
-    char nome_do_cliente[101];
+    char nome[101]; // <-- CORRIGIDO (estava nome_do_cliente)
     char usuario[26];
-    char hash_senha[128];
+    char hash_senha[128]; // Ótima prática usar hash!
 
 } Operadores;
 
-#endif // CADASTRO_H
+#endif // STRUCTS_H
