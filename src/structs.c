@@ -34,7 +34,6 @@ Cliente *criar_cliente()
         strcpy(novo_cliente->nome_do_cliente, "");
         strcpy(novo_cliente->cnpj, "");
         strcpy(novo_cliente->cpf, "");
-        strcpy(novo_cliente->inscricao_estadual, "");
         strcpy(novo_cliente->endereco, "");
         strcpy(novo_cliente->telefone, "");
         strcpy(novo_cliente->email, "");
