@@ -20,9 +20,8 @@ void alterarProdutora() {
 
     int opcao_alterar;
     do {
-        system("cls"); // Limpa a tela para mostrar os dados e o menu de alteração
+        system("cls");
         printf("--- Alterar Dados da Produtora ---\n");
-        // Mostra os dados atuais antes de pedir para alterar
         verDetalhesProdutora(); 
 
         printf("\nQual campo deseja alterar?\n");
@@ -39,7 +38,7 @@ void alterarProdutora() {
         printf("0. Salvar e Voltar\n");
         printf("Escolha: ");
         scanf("%d", &opcao_alterar);
-        limpar_buffer(); // Limpa o buffer depois do scanf
+        limpar_buffer();
 
         switch (opcao_alterar) {
             case 1:
@@ -98,14 +97,11 @@ void alterarProdutora() {
                 break;
             default:
                 printf("\nOpcao invalida!\n");
-                // Pausa para o usuário ver a mensagem de erro
                 int c; while ((c = getchar()) != '\n' && c != EOF);
                 break;
         }
 
     } while (opcao_alterar != 0);
-
-    // Salva todas as alterações feitas no arquivo
     salvarProdutora();
 }
 

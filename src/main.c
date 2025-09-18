@@ -1,21 +1,54 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "cadastros.h"
+#include "config.h"
 
-// Protótipos das funções de menu
 void menuGestaoDeDados();
+
 void menuProdutora();
 
-// Função para pausar a tela e esperar o usuário pressionar Enter
+void pausar(); 
+
+void menuEscolherArmazenamento() {
+    int opcao;
+    printf("\n--- Configuracao de Armazenamento ---\n");
+    printf("Escolha como os dados devem ser salvos:\n");
+    printf("1. Arquivo Binario (Mais rapido)\n");
+    printf("2. Arquivo de Texto (Legivel)\n");
+    printf("3. Apenas em Memoria (Dados nao serao salvos)\n");
+    printf("Escolha: ");
+    scanf("%d", &opcao);
+
+    switch(opcao) {
+        case 1:
+            definirModoDeArmazenamento(ARQUIVO_BINARIO);
+            printf("Modo de armazenamento definido para: Binario.\n");
+            break;
+        case 2:
+            definirModoDeArmazenamento(ARQUIVO_TEXTO);
+            printf("Modo de armazenamento definido para: Texto.\n");
+            break;
+        case 3:
+            definirModoDeArmazenamento(MEMORIA);
+            printf("Modo de armazenamento definido para: Memoria.\n");
+            break;
+        default:
+            printf("Opcao invalida. Usando o modo padrao (Binario).\n");
+            break;
+    }
+    pausar();
+}
+
 void pausar() {
     printf("\nPressione Enter para continuar...");
-    // Limpa o buffer de qualquer caractere restante
     while(getchar() != '\n' && getchar() != EOF);
-    // Espera o usuário pressionar Enter
     getchar();
 }
 
 int main() {
+
+    menuEscolherArmazenamento();
+
     carregarProdutora(); 
 
     int menu_de_opcoes;
@@ -36,8 +69,17 @@ int main() {
                 menuGestaoDeDados();
                 break;
             case 2:
+                printf("\nModulo em construcao...\n");
+                pausar();
+                break;
             case 3:
+                printf("\nModulo em construcao...\n");
+                pausar();
+                break;
             case 4:
+                printf("\nModulo em construcao...\n");
+                pausar();
+                break;
             case 5:
                 printf("\nModulo em construcao...\n");
                 pausar();
@@ -74,20 +116,27 @@ void menuGestaoDeDados() {
             case 1:
                 menuProdutora();
                 break;
-            
-            // --- ESTA É A PARTE IMPORTANTE PARA OS SUBMENUS ---
-            // Todos os casos em construção agora levam para a mesma mensagem e pausa
-            case 2: // Clientes
-            case 3: // Equipe Interna
-            case 4: // Recursos
-            case 5: // Fornecedores
-            case 6: // Operadores
+            case 2:
                 printf("\nModulo em construcao...\n");
-                pausar(); // A pausa agora funciona para todos estes submenus
+                pausar();
                 break;
-            
+            case 3:
+                printf("\nModulo em construcao...\n");
+                pausar();
+                break;
+            case 4:
+                printf("\nModulo em construcao...\n");
+                pausar();
+                break;
+            case 5:
+                printf("\nModulo em construcao...\n");
+                pausar();
+                break;
+            case 6:
+                printf("\nModulo em construcao...\n");
+                pausar();
+                break;
             case 0:
-                // Não faz nada, apenas volta ao menu principal
                 break;
             default:
                 printf("\nOpcao invalida!\n");
@@ -98,7 +147,6 @@ void menuGestaoDeDados() {
     } while (opcao_gestao != 0);
 }
 
-// A função menuProdutora() continua a mesma, pois já está completa
 void menuProdutora() {
     int op_prod;
     do {
