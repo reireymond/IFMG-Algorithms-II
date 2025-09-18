@@ -1,8 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "cadastros.h"
 #include "utils.h"
+#include "ui/menu.h"
+
+#include "cadastros/produtora.h"
+#include "cadastros/cliente.h"
+// #include "cadastros/equipe.h"
+// #include "cadastros/recurso.h"
+// #include "cadastros/fornecedor.h"
+#include "cadastros/operador.h"
 
 // --- DECLARAÇÕES DE FUNÇÕES EXTERNAS ---
 // Funções que estão em outros arquivos mas são usadas aqui.
