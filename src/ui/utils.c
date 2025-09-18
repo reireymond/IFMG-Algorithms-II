@@ -20,9 +20,5 @@ void limpar_buffer()
 void pausar()
 {
     printf("\nPressione Enter para continuar...");
-    // Limpa o buffer de entrada para aguardar o Enter
-    int c;
-    while ((c = getchar()) != '\n' && c != EOF)
-        ;
-    getchar();
+    getchar(); // Apenas espera por um 'Enter'
 }
