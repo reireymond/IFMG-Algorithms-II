@@ -115,40 +115,6 @@ void alterarProdutora()
     salvarProdutora();
 }
 
-void salvarProdutora()
-{
-    FILE *arquivo = fopen("../data/produtora.dat", "wb");
-    if (arquivo == NULL)
-    {
-        printf("\nErro ao abrir o arquivo para salvar!\n");
-        return;
-    }
-
-    fwrite(&dados_produtora, sizeof(Produtora), 1, arquivo);
-    fclose(arquivo);
-}
-
-void carregarProdutora()
-{
-    FILE *arquivo = fopen("../data/produtora.dat", "rb");
-    if (arquivo == NULL)
-    {
-        produtora_cadastrada = 0;
-        return;
-    }
-
-    if (fread(&dados_produtora, sizeof(Produtora), 1, arquivo) == 1)
-    {
-        produtora_cadastrada = 1;
-    }
-    else
-    {
-        produtora_cadastrada = 0;
-    }
-
-    fclose(arquivo);
-}
-
 void adicionarProdutora()
 {
     if (produtora_cadastrada)
