@@ -111,28 +111,96 @@ void alterarCliente()
     if (num_clientes == 0)
         return;
 
-    int codigo, i;
+    int codigo;
+    int indice_cliente = -1; // Usaremos o índice para evitar procurar o cliente repetidamente
+
     printf("\nDigite o codigo do cliente que deseja alterar: ");
     scanf("%d", &codigo);
     limpar_buffer();
 
-    for (i = 0; i < num_clientes; i++)
+    // Primeiro, encontra o índice do cliente na lista
+    for (int i = 0; i < num_clientes; i++)
     {
         if (lista_clientes[i].codigo == codigo)
         {
-            printf("\n--- Alterando Cliente: %s ---\n", lista_clientes[i].razao_social);
-            printf("Novo Nome / Razao Social: ");
-            fgets(lista_clientes[i].razao_social, sizeof(lista_clientes[i].razao_social), stdin);
-            lista_clientes[i].razao_social[strcspn(lista_clientes[i].razao_social, "\n")] = 0;
-
-            // Obs: aqui ainda falta lógica para alterar outros campos
-
-            printf("\nCliente alterado com sucesso!\n");
-            salvarClientes();
-            return;
+            indice_cliente = i;
+            break;
         }
     }
-    printf("\nCliente com codigo %d nao encontrado.\n", codigo);
+
+    // Se o cliente não foi encontrado, informa o usuário e sai da função
+    if (indice_cliente == -1)
+    {
+        printf("\nCliente com codigo %d nao encontrado.\n", codigo);
+        return;
+    }
+
+    int opcao_alterar;
+    do
+    {
+        system("cls");
+        printf("--- Alterando Cliente: %s ---\n", lista_clientes[indice_cliente].razao_social);
+        printf("Codigo: %d\n\n", lista_clientes[indice_cliente].codigo);
+
+        printf("Qual campo deseja alterar?\n");
+        printf("1. Nome / Razao Social\n");
+        printf("2. CPF / CNPJ\n");
+        printf("3. Endereco Completo\n");
+        printf("4. Telefone\n");
+        printf("5. E-mail\n");
+        printf("6. Nome do Contato\n");
+        printf("0. Salvar e Voltar\n");
+        printf("Escolha: ");
+        scanf("%d", &opcao_alterar);
+        limpar_buffer();
+
+        switch (opcao_alterar)
+        {
+        case 1:
+            printf("Digite o novo Nome / Razao Social: ");
+            fgets(lista_clientes[indice_cliente].razao_social, sizeof(lista_clientes[indice_cliente].razao_social), stdin);
+            lista_clientes[indice_cliente].razao_social[strcspn(lista_clientes[indice_cliente].razao_social, "\n")] = 0;
+            break;
+        case 2:
+            printf("Digite o novo CPF / CNPJ: ");
+            fgets(lista_clientes[indice_cliente].cnpj, sizeof(lista_clientes[indice_cliente].cnpj), stdin);
+            lista_clientes[indice_cliente].cnpj[strcspn(lista_clientes[indice_cliente].cnpj, "\n")] = 0;
+            break;
+        case 3:
+            printf("Digite o novo Endereco Completo: ");
+            fgets(lista_clientes[indice_cliente].endereco, sizeof(lista_clientes[indice_cliente].endereco), stdin);
+            lista_clientes[indice_cliente].endereco[strcspn(lista_clientes[indice_cliente].endereco, "\n")] = 0;
+            break;
+        case 4:
+            printf("Digite o novo Telefone: ");
+            fgets(lista_clientes[indice_cliente].telefone, sizeof(lista_clientes[indice_cliente].telefone), stdin);
+            lista_clientes[indice_cliente].telefone[strcspn(lista_clientes[indice_cliente].telefone, "\n")] = 0;
+            break;
+        case 5:
+            printf("Digite o novo E-mail: ");
+            fgets(lista_clientes[indice_cliente].email, sizeof(lista_clientes[indice_cliente].email), stdin);
+            lista_clientes[indice_cliente].email[strcspn(lista_clientes[indice_cliente].email, "\n")] = 0;
+            break;
+        case 6:
+            printf("Digite o novo Nome do Contato: ");
+            fgets(lista_clientes[indice_cliente].nome_do_contato, sizeof(lista_clientes[indice_cliente].nome_do_contato), stdin);
+            lista_clientes[indice_cliente].nome_do_contato[strcspn(lista_clientes[indice_cliente].nome_do_contato, "\n")] = 0;
+            break;
+        case 0:
+            printf("\nAlteracoes salvas com sucesso!\n");
+            break;
+        default:
+            printf("\nOpcao invalida!\n");
+            // Adiciona uma pequena pausa para o usuário ler a mensagem de erro
+            printf("Pressione Enter para tentar novamente...");
+            getchar();
+            break;
+        }
+
+    } while (opcao_alterar != 0);
+
+    // Salva todas as alterações no arquivo de uma só vez, após sair do menu
+    salvarClientes();
 }
 
 /* =========================================================
