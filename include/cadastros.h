@@ -3,54 +3,70 @@
 
 #include "structs.h"
 
+/* =========================================================
+   Arquivo: cadastros.h
+   Objetivo: Declara todas as funções relacionadas aos
+   cadastros do sistema (Produtora, Clientes, Equipe Interna,
+   Recursos, Fornecedores e Operadores).
+
+   Essas funções implementam operações de CRUD (Cadastrar,
+   Alterar, Consultar, Excluir) e também cuidam da
+   persistência em arquivo ou memória.
+   ========================================================= */
+
+// ----------------- FUNÇÕES AUXILIARES -----------------
+
+/**
+ * Função: limpar_buffer
+ * Objetivo: Limpa o buffer de entrada para evitar problemas
+ * com leitura de strings após scanf.
+ */
 void limpar_buffer();
 
-// Setor Produtora
-void adicionarProdutora();
-void alterarProdutora();
-void excluirProdutora();
-void verDetalhesProdutora();
-void salvarProdutora();
-void carregarProdutora();
+// ----------------- PRODUTORA -----------------
 
-// Setor Cliente
-void adicionarCliente();
-void alterarCliente();
-void excluirCliente();
-void listarClientes(); 
-void salvarClientes();
-void carregarClientes();
+void adicionarProdutora();   // Cadastra uma nova produtora
+void alterarProdutora();     // Altera dados da produtora já cadastrada
+void verDetalhesProdutora(); // Exibe informações da produtora
+void excluirProdutora();     // Remove o cadastro da produtora
+void salvarProdutora();      // Persiste os dados em disco
+void carregarProdutora();    // Recupera os dados salvos
 
-// Setor Equipe Interna
-void adicionarEquipe_Interna();
-void alterarEquipe_Interna();
-void excluirEquipe_Interna();
-void verDetalhesEquipe_Interna();
-void salvarEquipe_Interna();
-void carregarEquipe_Interna();
+// ----------------- CLIENTES -----------------
 
-// Setor Recursos
-void adicionarRecursos();
-void alterarRecursos();
-void excluirRecursos();
-void verDetalhesRecursos();
-void salvarEquipe_Interna();
-void carregarEquipe_Interna();
+void adicionarCliente(); // Cadastra um novo cliente
+void alterarCliente();   // Altera dados de um cliente existente
+void listarClientes();   // Lista todos os clientes cadastrados
+void excluirCliente();   // Remove um cliente do sistema
+void salvarClientes();   // Persiste os clientes em disco
+void carregarClientes(); // Recupera os clientes salvos
 
-// Setor Fornecedores
-void adicionarFornecedores();
-void alterarFornecedores();
-void excluirFornecedores();
-void verDetalhesFornecedores();
-void salvarFornecedores();
-void carregarFornecedores();
+// ----------------- EQUIPE INTERNA -----------------
+// (A ser implementado futuramente)
+void adicionarEquipeInterna();
+void alterarEquipeInterna();
+void listarEquipeInterna();
+void excluirEquipeInterna();
 
-// Setor Operadores
-void adicionarOperadores();
-void alterarOperadores();
-void excluirOperadores();
-void verDetalhesOperadores();
-void salvarOperadores();
-void carregarOperadores();
+// ----------------- RECURSOS -----------------
+// (A ser implementado futuramente)
+void adicionarRecurso();
+void alterarRecurso();
+void listarRecursos();
+void excluirRecurso();
+
+// ----------------- FORNECEDORES -----------------
+// (A ser implementado futuramente)
+void adicionarFornecedor();
+void alterarFornecedor();
+void listarFornecedores();
+void excluirFornecedor();
+
+// ----------------- OPERADORES -----------------
+// (A ser implementado futuramente)
+void adicionarOperador();
+void alterarOperador();
+void listarOperadores();
+void excluirOperador();
 
 #endif

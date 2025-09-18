@@ -1,84 +1,89 @@
 #ifndef STRUCTS_H
 #define STRUCTS_H
 
-// Estrutura Produtora - Adicionado "nome_fantasia"
+/* =========================================================
+   Arquivo: structs.h
+   Objetivo: Define as estruturas de dados principais do
+   sistema (Produtora, Cliente, Equipe Interna, Recursos,
+   Fornecedores e Operadores).
+
+   Cada struct representa uma entidade real do sistema.
+   ========================================================= */
+
+// ----------------- ESTRUTURA: PRODUTORA -----------------
+
+/**
+ * Estrutura: Produtora
+ * Representa a empresa responsável pelos eventos.
+ */
 typedef struct
 {
-    char nome_fantasia[101]; // <-- ADICIONADO
-    char razao_social[101];
-    char nome_do_responsavel[101];
+    char nome_fantasia[100];
+    char razao_social[100];
+    char nome_do_responsavel[100];
     char cnpj[20];
-    char inscricao_estadual[25];
-    char endereco[256];
+    char inscricao_estadual[20];
+    char endereco[150];
     char telefone[20];
     char telefone_responsavel[20];
-    char email[255];
+    char email[50];
     float margem_lucro;
-
 } Produtora;
 
-// Estrutura Cliente - Removido "inscricao_estadual" (opcional)
+// ----------------- ESTRUTURA: CLIENTE -----------------
+
+/**
+ * Estrutura: Cliente
+ * Representa um cliente da produtora (pessoa física ou jurídica).
+ */
 typedef struct
 {
     int codigo;
-    char razao_social[101];
-    char nome_do_cliente[101]; // Pode ser usado para PF
+    char razao_social[100];
     char cnpj[20];
-    char cpf[20];
-    // char inscricao_estadual[25]; // <-- REMOVIDO (Não está no PDF)
-    char endereco[256];
+    char endereco[150];
     char telefone[20];
-    char email[255];
-    char nome_do_contato[101];
-
+    char email[50];
+    char nome_do_contato[100];
 } Cliente;
 
-// Estrutura Equipe_Interna
+// ----------------- ESTRUTURA: EQUIPE INTERNA -----------------
+// (Futuro desenvolvimento: gerenciar funcionários)
 typedef struct
 {
-    int codigo;
-    char nome[101];
-    char cpf[20];
-    char funcao[50];
-    float valor_diaria;
-    float valor_hora;
+    int id;
+    char nome[100];
+    char cargo[50];
+    float salario;
+} EquipeInterna;
 
-} Equipe_Interna;
-
-// Estrutura Recursos (Equipamentos)
+// ----------------- ESTRUTURA: RECURSO -----------------
+// (Futuro desenvolvimento: recursos materiais usados em eventos)
 typedef struct
 {
-    int codigo;
-    char descricao[128];
-    char categoria[50];
-    int estoque;
-    float preco_custo;
-    float valor_locacao;
+    int id;
+    char nome[100];
+    int quantidade;
+} Recurso;
 
-} Recursos;
-
-// Estrutura Fornecedores
+// ----------------- ESTRUTURA: FORNECEDOR -----------------
+// (Futuro desenvolvimento: fornecedores de serviços/produtos)
 typedef struct
 {
-    int codigo;
-    char razao_social[101];
-    char nome_fantasia[101];
+    int id;
+    char nome[100];
     char cnpj[20];
-    char cpf[20];
-    char endereco[256];
     char telefone[20];
-    char tipo_servico[126];
+    char email[50];
+} Fornecedor;
 
-} Fornecedores;
-
-// Estrutura Operadores - Corrigido campo "nome"
+// ----------------- ESTRUTURA: OPERADOR -----------------
+// (Futuro desenvolvimento: operadores contratados pela produtora)
 typedef struct
 {
-    int codigo;
-    char nome[101]; // <-- CORRIGIDO (estava nome_do_cliente)
-    char usuario[26];
-    char hash_senha[128]; // Ótima prática usar hash!
+    int id;
+    char nome[100];
+    char funcao[50];
+} Operador;
 
-} Operadores;
-
-#endif // STRUCTS_H
+#endif
