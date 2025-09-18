@@ -5,23 +5,30 @@
 
 /* =========================================================
    Arquivo: main.c
-   Objetivo: Este é o ponto de entrada do sistema de gestão
-   da Produtora de Eventos. Ele contém o menu principal e
-   os submenus de cada módulo (Gestão de Dados, Eventos,
-   Transações, etc.), chamando as funções apropriadas que
-   estão implementadas em outros arquivos.
-
-   Aqui também é feita a configuração inicial do modo de
-   armazenamento (binário, texto ou apenas memória).
+   Objetivo: Ponto de entrada do sistema. Responsável por
+   inicializar os dados, controlar o loop principal do
+   programa e liberar os recursos ao finalizar.
    ========================================================= */
 
-// Declarações de funções de menu usadas neste arquivo
+// --- DECLARAÇÕES DE FUNÇÕES EXTERNAS ---
+// Funções implementadas em outros arquivos que são chamadas aqui.
 void menuGestaoDeDados();
-void menuProdutora();
-void menuClientes(); // Menu específico de Clientes
 
-// Função utilitária para pausar a execução
-void pausar();
+// --- FUNÇÕES UTILITÁRIAS ---
+
+/* =========================================================
+   Função: pausar
+   Objetivo: Serve para segurar a tela até que o usuário
+   pressione Enter.
+   ========================================================= */
+void pausar()
+{
+    printf("\nPressione Enter para continuar...");
+    // Limpa o buffer de entrada para aguardar o Enter
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+    getchar();
+}
 
 /* =========================================================
    Função: menuEscolherArmazenamento
@@ -38,8 +45,8 @@ void menuEscolherArmazenamento()
     printf("3. Apenas em Memoria (Dados nao serao salvos)\n");
     printf("Escolha: ");
     scanf("%d", &opcao);
+    limpar_buffer();
 
-    // Define o modo de acordo com a escolha do usuário
     switch (opcao)
     {
     case 1:
@@ -56,45 +63,32 @@ void menuEscolherArmazenamento()
         break;
     default:
         printf("Opcao invalida. Usando o modo padrao (Binario).\n");
+        definirModoDeArmazenamento(ARQUIVO_BINARIO);
         break;
     }
-    pausar(); // Aguarda antes de prosseguir
-}
-
-/* =========================================================
-   Função: pausar
-   Objetivo: Serve para segurar a tela até que o usuário
-   pressione Enter, evitando que o programa volte ao menu
-   imediatamente.
-   ========================================================= */
-void pausar()
-{
-    printf("\nPressione Enter para continuar...");
-    while (getchar() != '\n' && getchar() != EOF)
-        ;
-    getchar(); // Captura o Enter
+    pausar();
 }
 
 /* =========================================================
    Função: main
-   Objetivo: Função principal do programa. É aqui que tudo
-   começa. Carrega os dados do sistema, mostra o menu
-   principal e controla o fluxo entre os módulos.
+   Objetivo: Função principal do programa.
    ========================================================= */
 int main()
 {
-
-    // Primeiro, pergunta como o usuário quer salvar os dados
     menuEscolherArmazenamento();
 
-    // Carrega dados já existentes (se houver)
+    // Carrega todos os dados dos arquivos
     carregarProdutora();
     carregarClientes();
+    // carregarEquipeInterna();
+    // carregarRecursos();
+    // carregarFornecedores();
+    // carregarOperadores();
 
     int menu_de_opcoes;
     do
     {
-        system("cls"); // Limpa a tela (funciona no Windows)
+        system("cls");
         printf("\n--- MENU PRINCIPAL ---\n");
         printf("1. Gestao de Dados\n");
         printf("2. Gestao de Eventos\n");
@@ -104,8 +98,8 @@ int main()
         printf("0. Sair\n");
         printf("\nEscolha sua opcao de modulo desejada: ");
         scanf("%d", &menu_de_opcoes);
+        limpar_buffer();
 
-        // Redireciona para o módulo escolhido
         switch (menu_de_opcoes)
         {
         case 1:
@@ -136,170 +130,14 @@ int main()
             break;
         }
 
-    } while (menu_de_opcoes != 0); // Repete até o usuário sair
-    
+    } while (menu_de_opcoes != 0);
+
+    // Libera toda a memória alocada antes de sair
     liberarMemoriaClientes();
+    // liberarMemoriaEquipe();
+    // liberarMemoriaRecursos();
+    // liberarMemoriaFornecedores();
+    // liberarMemoriaOperadores();
+
     return 0;
-}
-
-/* =========================================================
-   Função: menuGestaoDeDados
-   Objetivo: Apresenta as opções de gerenciamento de dados
-   da produtora: clientes, equipe, recursos, fornecedores
-   e operadores. Algumas partes ainda estão em construção.
-   ========================================================= */
-void menuGestaoDeDados()
-{
-    int opcao_gestao;
-    do
-    {
-        system("cls");
-        printf("\n--- GESTAO DE DADOS ---\n");
-        printf("1. Gerenciar Produtora\n");
-        printf("2. Gerenciar Clientes\n");
-        printf("3. Gerenciar Equipe Interna\n");
-        printf("4. Gerenciar Recursos\n");
-        printf("5. Gerenciar Fornecedores\n");
-        printf("6. Gerenciar Operadores\n");
-        printf("0. Voltar ao Menu Principal\n");
-        printf("\nEscolha uma opcao: ");
-        scanf("%d", &opcao_gestao);
-        limpar_buffer(); // Evita problemas com Enter no buffer
-
-        switch (opcao_gestao)
-        {
-        case 1:
-            menuProdutora();
-            break;
-        case 2:
-            menuClientes();
-            break;
-        case 3:
-            printf("\nModulo em construcao...\n");
-            pausar();
-            break;
-        case 4:
-            printf("\nModulo em construcao...\n");
-            pausar();
-            break;
-        case 5:
-            printf("\nModulo em construcao...\n");
-            pausar();
-            break;
-        case 6:
-            printf("\nModulo em construcao...\n");
-            pausar();
-            break;
-        case 0:
-            break;
-        default:
-            printf("\nOpcao invalida!\n");
-            pausar();
-            break;
-        }
-
-    } while (opcao_gestao != 0);
-}
-
-/* =========================================================
-   Função: menuProdutora
-   Objetivo: Permite ao usuário gerenciar os dados da
-   produtora de eventos (cadastrar, alterar, ver e excluir).
-   ========================================================= */
-void menuProdutora()
-{
-    int op_prod;
-    do
-    {
-        system("cls");
-        printf("\n--- Menu Produtora ---\n");
-        printf("1. Cadastrar Dados\n");
-        printf("2. Alterar Dados\n");
-        printf("3. Ver Detalhes\n");
-        printf("4. Excluir Dados\n");
-        printf("0. Voltar ao Menu Anterior\n");
-        printf("Escolha: ");
-        scanf("%d", &op_prod);
-
-        int c;
-        while ((c = getchar()) != '\n' && c != EOF)
-            ; // Limpa buffer
-
-        switch (op_prod)
-        {
-        case 1:
-            adicionarProdutora();
-            break;
-        case 2:
-            alterarProdutora();
-            break;
-        case 3:
-            verDetalhesProdutora();
-            break;
-        case 4:
-            excluirProdutora();
-            break;
-        case 0:
-            break;
-        default:
-            printf("\nOpcao invalida para Produtora!\n");
-            break;
-        }
-
-        if (op_prod != 0)
-        {
-            pausar();
-        }
-
-    } while (op_prod != 0);
-}
-
-/* =========================================================
-   Função: menuClientes
-   Objetivo: Permite ao usuário gerenciar os clientes do
-   sistema: adicionar, alterar, listar e excluir.
-   ========================================================= */
-void menuClientes()
-{
-    int op_cli;
-    do
-    {
-        system("cls");
-        printf("\n--- Menu Clientes ---\n");
-        printf("1. Adicionar Novo Cliente\n");
-        printf("2. Alterar Cliente Existente\n");
-        printf("3. Listar Todos os Clientes\n");
-        printf("4. Excluir Cliente\n");
-        printf("0. Voltar ao Menu Anterior\n");
-        printf("Escolha: ");
-        scanf("%d", &op_cli);
-        limpar_buffer(); // Limpa buffer para evitar erros
-
-        switch (op_cli)
-        {
-        case 1:
-            adicionarCliente();
-            break;
-        case 2:
-            alterarCliente();
-            break;
-        case 3:
-            listarClientes();
-            break;
-        case 4:
-            excluirCliente();
-            break;
-        case 0:
-            break;
-        default:
-            printf("\nOpcao invalida para Clientes!\n");
-            break;
-        }
-
-        if (op_cli != 0)
-        {
-            pausar();
-        }
-
-    } while (op_cli != 0);
 }

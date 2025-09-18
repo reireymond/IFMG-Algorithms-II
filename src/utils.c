@@ -1,0 +1,13 @@
+#include <stdio.h>
+
+/* =========================================================
+   Função: limpar_buffer
+   Objetivo: Garante que o buffer de entrada (stdin) seja
+   esvaziado, evitando problemas com leituras subsequentes.
+   ========================================================= */
+void limpar_buffer()
+{
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF)
+        ;
+}
