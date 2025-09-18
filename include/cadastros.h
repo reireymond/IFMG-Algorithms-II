@@ -34,40 +34,48 @@ void carregarProdutora();    // Recupera os dados salvos
 
 // ----------------- CLIENTES -----------------
 
-void adicionarCliente();        // Cadastra um novo cliente
-void alterarCliente();          // Altera dados de um cliente existente
-void listarClientes();          // Lista todos os clientes cadastrados
-void excluirCliente();          // Remove um cliente do sistema
-void salvarClientes();          // Persiste os clientes em disco
-void carregarClientes();        // Recupera os clientes salvos
-void liberarMemoriaClientes();  // Libera memória alocada para clientes
+void adicionarCliente();       // Cadastra um novo cliente
+void alterarCliente();         // Altera dados de um cliente existente
+void listarClientes();         // Lista todos os clientes cadastrados
+void excluirCliente();         // Remove um cliente do sistema
+void salvarClientes();         // Persiste os clientes em disco
+void carregarClientes();       // Recupera os clientes salvos
+void liberarMemoriaClientes(); // Libera memória alocada para clientes
 
 // ----------------- EQUIPE INTERNA -----------------
-// (A ser implementado futuramente)
 void adicionarEquipeInterna();
 void alterarEquipeInterna();
 void listarEquipeInterna();
 void excluirEquipeInterna();
+void salvarEquipeInterna();
+void carregarEquipeInterna();
+void liberarMemoriaEquipe();
 
-// ----------------- RECURSOS -----------------
-// (A ser implementado futuramente)
+// ----------------- RECURSOS E EQUIPAMENTOS -----------------
 void adicionarRecurso();
 void alterarRecurso();
 void listarRecursos();
 void excluirRecurso();
+void salvarRecursos();
+void carregarRecursos();
+void liberarMemoriaRecursos();
 
-// ----------------- FORNECEDORES -----------------
-// (A ser implementado futuramente)
+// ----------------- FORNECEDORES E PARCEIROS -----------------
 void adicionarFornecedor();
 void alterarFornecedor();
 void listarFornecedores();
 void excluirFornecedor();
+void salvarFornecedores();
+void carregarFornecedores();
+void liberarMemoriaFornecedores();
 
-// ----------------- OPERADORES -----------------
-// (A ser implementado futuramente)
+// ----------------- OPERADORES DO SISTEMA -----------------
 void adicionarOperador();
 void alterarOperador();
 void listarOperadores();
 void excluirOperador();
+void salvarOperadores();
+void carregarOperadores();
+void liberarMemoriaOperadores();
 
 #endif
