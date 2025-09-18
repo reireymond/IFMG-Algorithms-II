@@ -15,9 +15,14 @@ BDIR = bin
 # Nome do executável final
 TARGET = $(BDIR)/produtora
 
-# Encontra todos os arquivos .c e os converte para .o
-SOURCES = $(wildcard $(SDIR)/*.c)
-OBJECTS = $(patsubst $(SDIR)%.c, $(ODIR)/%.o, $(SOURCES))
+# --- ALTERAÇÃO PRINCIPAL AQUI ---
+# Encontra todos os arquivos .c recursivamente dentro da pasta src
+SOURCES = $(shell find $(SDIR) -name '*.c')
+
+# Converte a lista de fontes .c para uma lista de objetos .o
+# Mantendo a mesma estrutura de pastas dentro de 'obj'
+OBJECTS = $(patsubst $(SDIR)/%.c, $(ODIR)/%.o, $(SOURCES))
+# ---------------------------------
 
 # Regra principal: compila o projeto
 all: $(TARGET)
@@ -26,15 +31,16 @@ all: $(TARGET)
 $(TARGET): $(OBJECTS)
 	@if not exist "$(BDIR)" mkdir "$(BDIR)"
 	@echo "--> Vinculando objetos para criar o executavel..."
-	@if exist "$(TARGET)" $(RM) "$(subst /,\,$(TARGET))"
 	$(CC) $(OBJECTS) -o $@
 	@echo "--> Executavel '$(TARGET)' criado com sucesso."
 
-# Regra para compilar os arquivos .c em .o
+# --- ALTERAÇÃO NA REGRA DE COMPILAÇÃO ---
+# Regra para compilar os arquivos .c em .o, criando as subpastas em 'obj'
 $(ODIR)/%.o: $(SDIR)/%.c
-	@if not exist "$(ODIR)" mkdir "$(ODIR)"
+	@mkdir -p $(@D)
 	@echo "--> Compilando $<..."
 	$(CC) -c $< -o $@ $(CFLAGS)
+# ----------------------------------------
 
 # Regra para limpar o projeto (usando 'rd' para remover diretórios no Windows)
 clean:
