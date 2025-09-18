@@ -4,8 +4,8 @@
 #include "config.h"
 
 void menuGestaoDeDados();
-
 void menuProdutora();
+void menuClientes(); // <-- Nova declaração
 
 void pausar(); 
 
@@ -49,7 +49,9 @@ int main() {
 
     menuEscolherArmazenamento();
 
+    // Carrega todos os dados dos arquivos ao iniciar
     carregarProdutora(); 
+    carregarClientes();
 
     int menu_de_opcoes;
     do {
@@ -111,14 +113,14 @@ void menuGestaoDeDados() {
         printf("0. Voltar ao Menu Principal\n");
         printf("\nEscolha uma opcao: ");
         scanf("%d", &opcao_gestao);
+        limpar_buffer(); // Limpa o buffer após ler o número
 
         switch (opcao_gestao) {
             case 1:
                 menuProdutora();
                 break;
             case 2:
-                printf("\nModulo em construcao...\n");
-                pausar();
+                menuClientes(); // <-- Chamada para o novo menu
                 break;
             case 3:
                 printf("\nModulo em construcao...\n");
@@ -188,4 +190,47 @@ void menuProdutora() {
         }
 
     } while (op_prod != 0);
+}
+
+
+// --- NOVO MENU PARA CLIENTES ---
+void menuClientes() {
+    int op_cli;
+    do {
+        system("cls");
+        printf("\n--- Menu Clientes ---\n");
+        printf("1. Adicionar Novo Cliente\n");
+        printf("2. Alterar Cliente Existente\n");
+        printf("3. Listar Todos os Clientes\n");
+        printf("4. Excluir Cliente\n");
+        printf("0. Voltar ao Menu Anterior\n");
+        printf("Escolha: ");
+        scanf("%d", &op_cli);
+        limpar_buffer(); // Limpa o buffer após ler o número
+
+        switch (op_cli) {
+            case 1:
+                adicionarCliente();
+                break;
+            case 2:
+                alterarCliente();
+                break;
+            case 3:
+                listarClientes();
+                break;
+            case 4:
+                excluirCliente();
+                break;
+            case 0:
+                break;
+            default:
+                printf("\nOpcao invalida para Clientes!\n");
+                break;
+        }
+        
+        if (op_cli != 0) {
+            pausar();
+        }
+
+    } while (op_cli != 0);
 }

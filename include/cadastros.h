@@ -3,6 +3,8 @@
 
 #include "structs.h"
 
+void limpar_buffer();
+
 // Setor Produtora
 void adicionarProdutora();
 void alterarProdutora();
@@ -15,9 +17,9 @@ void carregarProdutora();
 void adicionarCliente();
 void alterarCliente();
 void excluirCliente();
-void verDetalhesCliente();
-void salvarCliente();
-void carregarCliente();
+void listarClientes(); 
+void salvarClientes();
+void carregarClientes();
 
 // Setor Equipe Interna
 void adicionarEquipe_Interna();
