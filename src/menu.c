@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 #include "cadastros.h"
+#include "utils.h"
 
 // --- DECLARAÇÕES DE FUNÇÕES EXTERNAS ---
 // Funções que estão em outros arquivos mas são usadas aqui.

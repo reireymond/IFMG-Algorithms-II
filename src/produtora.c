@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include "cadastros.h"
 #include "config.h"
+#include "utils.h"
 
 // --- VARIÁVEIS GLOBAIS PARA PRODUTORA ---
 static Produtora dados_produtora;
@@ -254,7 +256,8 @@ void salvarProdutora()
 {
     TipoArmazenamento modo = obterModoDeArmazenamento();
 
-    if (modo == MEMORIA) return;
+    if (modo == MEMORIA)
+        return;
 
     FILE *arquivo = NULL;
 
@@ -267,7 +270,8 @@ void salvarProdutora()
             return;
         }
         fwrite(&produtora_cadastrada, sizeof(int), 1, arquivo);
-        if (produtora_cadastrada) {
+        if (produtora_cadastrada)
+        {
             fwrite(&dados_produtora, sizeof(Produtora), 1, arquivo);
         }
     }

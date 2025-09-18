@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include "cadastros.h"
 #include "config.h"
+#include "utils.h"
 
 // --- VARIÁVEIS GLOBAIS PARA CLIENTES ---
 static Cliente *lista_clientes = NULL; // ponteiro para a lista de clientes
@@ -254,7 +256,8 @@ void carregarClientes()
         if (arquivo != NULL)
         {
             fscanf(arquivo, "%d\n", &num_clientes);
-            if(num_clientes > 0) {
+            if (num_clientes > 0)
+            {
                 lista_clientes = malloc(num_clientes * sizeof(Cliente));
                 capacidade_clientes = num_clientes;
                 for (int i = 0; i < num_clientes; i++)

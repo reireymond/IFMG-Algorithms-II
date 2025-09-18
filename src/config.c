@@ -22,7 +22,7 @@ static TipoArmazenamento modo_de_armazenamento = ARQUIVO_BINARIO;
    ========================================================= */
 void definirModoDeArmazenamento(TipoArmazenamento modo)
 {
-    modo_de_armazenamento = modo;
+   modo_de_armazenamento = modo;
 }
 
 /* =========================================================
@@ -32,5 +32,5 @@ void definirModoDeArmazenamento(TipoArmazenamento modo)
    ========================================================= */
 TipoArmazenamento obterModoDeArmazenamento()
 {
-    return modo_de_armazenamento;
+   return modo_de_armazenamento;
 }

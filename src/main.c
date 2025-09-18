@@ -1,7 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 #include "cadastros.h"
 #include "config.h"
+#include "menu.h"
+#include "utils.h"
 
 /* =========================================================
    Arquivo: main.c
@@ -26,7 +29,8 @@ void pausar()
     printf("\nPressione Enter para continuar...");
     // Limpa o buffer de entrada para aguardar o Enter
     int c;
-    while ((c = getchar()) != '\n' && c != EOF);
+    while ((c = getchar()) != '\n' && c != EOF)
+        ;
     getchar();
 }
 

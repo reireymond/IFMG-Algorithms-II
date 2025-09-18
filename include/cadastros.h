@@ -14,15 +14,6 @@
    persistência em arquivo ou memória.
    ========================================================= */
 
-// ----------------- FUNÇÕES AUXILIARES -----------------
-
-/**
- * Função: limpar_buffer
- * Objetivo: Limpa o buffer de entrada para evitar problemas
- * com leitura de strings após scanf.
- */
-void limpar_buffer();
-
 // ----------------- PRODUTORA -----------------
 
 void adicionarProdutora();   // Cadastra uma nova produtora
