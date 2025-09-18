@@ -234,7 +234,7 @@ void salvarProdutora()
 
     if (modo == ARQUIVO_BINARIO)
     {
-        arquivo = fopen("../data/produtora.dat", "wb");
+        arquivo = fopen("../data/produtora.txt", "wb");
         if (arquivo == NULL)
         {
             return;
@@ -273,7 +273,7 @@ void carregarProdutora()
 
     if (modo == ARQUIVO_BINARIO)
     {
-        arquivo = fopen("../data/produtora.dat", "rb");
+        arquivo = fopen("../data/produtora.dat", "wb");
         if (arquivo != NULL)
         {
             if (fread(&dados_produtora, sizeof(Produtora), 1, arquivo) == 1)
