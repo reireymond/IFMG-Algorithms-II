@@ -1,10 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "cadastros.h"
 #include "config.h"
 #include "menu.h"
 #include "utils.h"
+
+#include "cadastros/produtora.h"
+#include "cadastros/cliente.h"
+// #include "cadastros/equipe.h"
+// #include "cadastros/recurso.h"
+// #include "cadastros/fornecedor.h"
+#include "cadastros/operador.h"
+
 
 /* =========================================================
    Arquivo: main.c
@@ -87,7 +94,7 @@ int main()
     // carregarEquipeInterna();
     // carregarRecursos();
     // carregarFornecedores();
-    // carregarOperadores();
+    carregarOperadores();
 
     int menu_de_opcoes;
     do
@@ -137,11 +144,12 @@ int main()
     } while (menu_de_opcoes != 0);
 
     // Libera toda a memória alocada antes de sair
+    liberarMemoriaProdutora();
     liberarMemoriaClientes();
     // liberarMemoriaEquipe();
     // liberarMemoriaRecursos();
     // liberarMemoriaFornecedores();
-    // liberarMemoriaOperadores();
+    liberarMemoriaOperadores();
 
     return 0;
 }

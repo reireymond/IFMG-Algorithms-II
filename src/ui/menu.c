@@ -8,11 +8,14 @@
 // Funções que estão em outros arquivos mas são usadas aqui.
 void pausar();
 
+
 // --- DECLARAÇÕES DE FUNÇÕES DE MENU ---
 // Funções que estão neste arquivo e podem ser chamadas por outras.
 void menuGestaoDeDados();
 void menuProdutora();
 void menuClientes();
+// COMPLETAR AQUI //
+void menuOperadores();
 
 /* =========================================================
    Função: menuGestaoDeDados
@@ -59,7 +62,7 @@ void menuGestaoDeDados()
             pausar();
             break;
         case 6:
-            printf("\nModulo em construcao...\n");
+            menuOperadores();
             pausar();
             break;
         case 0:

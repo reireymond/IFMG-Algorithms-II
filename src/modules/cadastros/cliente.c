@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "cadastros.h"
+#include "cadastros/cliente.h"
 #include "config.h"
 #include "utils.h"
 
