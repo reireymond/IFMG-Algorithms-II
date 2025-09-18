@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "config.h"
 #include "utils.h"
 #include "ui/menu.h"
 
 #include "cadastros/produtora.h"
 #include "cadastros/cliente.h"
-// #include "cadastros/equipe.h"
-// #include "cadastros/recurso.h"
+#include "cadastros/equipe.h"
+#include "cadastros/recurso.h"
 // #include "cadastros/fornecedor.h"
 #include "cadastros/operador.h"
 
@@ -21,8 +22,102 @@ void pausar();
 void menuGestaoDeDados();
 void menuProdutora();
 void menuClientes();
-// COMPLETAR AQUI //
+void menuEquipeInterna();
+void menuRecursos();
 void menuOperadores();
+
+/* =========================================================
+   Função: menuEscolherArmazenamento
+   Objetivo: Permite ao usuário escolher como os dados serão
+   salvos no sistema.
+   ========================================================= */
+void menuEscolherArmazenamento()
+{
+    int opcao;
+    printf("\n--- Configuracao de Armazenamento ---\n");
+    printf("Escolha como os dados devem ser salvos:\n");
+    printf("1. Arquivo Binario (Mais rapido)\n");
+    printf("2. Arquivo de Texto (Legivel)\n");
+    printf("3. Apenas em Memoria (Dados nao serao salvos)\n");
+    printf("Escolha: ");
+    scanf("%d", &opcao);
+    limpar_buffer();
+
+    switch (opcao)
+    {
+    case 1:
+        definirModoDeArmazenamento(ARQUIVO_BINARIO);
+        printf("Modo de armazenamento definido para: Binario.\n");
+        break;
+    case 2:
+        definirModoDeArmazenamento(ARQUIVO_TEXTO);
+        printf("Modo de armazenamento definido para: Texto.\n");
+        break;
+    case 3:
+        definirModoDeArmazenamento(MEMORIA);
+        printf("Modo de armazenamento definido para: Memoria.\n");
+        break;
+    default:
+        printf("Opcao invalida. Usando o modo padrao (Binario).\n");
+        definirModoDeArmazenamento(ARQUIVO_BINARIO);
+        break;
+    }
+    pausar();
+}
+
+/* =========================================================
+   Função: menuPrincipal
+   Objetivo: Exibe o menu principal e controla a navegação.
+   ========================================================= */
+void menuPrincipal()
+{
+    int menu_de_opcoes;
+    do
+    {
+        system("cls");
+        printf("\n--- MENU PRINCIPAL ---\n");
+        printf("1. Gestao de Dados\n");
+        printf("2. Gestao de Eventos\n");
+        printf("3. Transacoes\n");
+        printf("4. FeedBack\n");
+        printf("5. Importar ou Exportar Dados\n");
+        printf("0. Sair\n");
+        printf("\nEscolha sua opcao de modulo desejada: ");
+        scanf("%d", &menu_de_opcoes);
+        limpar_buffer();
+
+        switch (menu_de_opcoes)
+        {
+        case 1:
+            menuGestaoDeDados();
+            break;
+        case 2:
+            printf("\nModulo em construcao...\n");
+            pausar();
+            break;
+        case 3:
+            printf("\nModulo em construcao...\n");
+            pausar();
+            break;
+        case 4:
+            printf("\nModulo em construcao...\n");
+            pausar();
+            break;
+        case 5:
+            printf("\nModulo em construcao...\n");
+            pausar();
+            break;
+        case 0:
+            printf("\nSaindo do programa...\n");
+            break;
+        default:
+            printf("\nOpcao invalida! Tente novamente.\n");
+            pausar();
+            break;
+        }
+
+    } while (menu_de_opcoes != 0);
+}
 
 /* =========================================================
    Função: menuGestaoDeDados
@@ -30,7 +125,8 @@ void menuOperadores();
    da produtora: clientes, equipe, recursos, fornecedores
    e operadores.
    ========================================================= */
-void menuGestaoDeDados()
+
+   void menuGestaoDeDados()
 {
     int opcao_gestao;
     do
@@ -57,12 +153,10 @@ void menuGestaoDeDados()
             menuClientes();
             break;
         case 3:
-            printf("\nModulo em construcao...\n");
-            pausar();
+            menuEquipeInterna();
             break;
         case 4:
-            printf("\nModulo em construcao...\n");
-            pausar();
+            menuRecursos();
             break;
         case 5:
             printf("\nModulo em construcao...\n");
@@ -230,4 +324,105 @@ void menuOperadores()
         }
 
     } while (op_op != 0);
+}
+
+/* =========================================================
+   Função: menuEquipeInterna
+   Objetivo: Permite ao usuário gerenciar a equipe interna
+   do sistema: adicionar, alterar, listar e excluir.
+   ========================================================= */
+void menuEquipeInterna()
+{
+    int op_eq;
+    do
+    {
+        system("cls");
+        printf("\n--- Menu Equipe Interna ---\n");
+        printf("1. Adicionar Novo Membro\n");
+        printf("2. Alterar Membro Existente\n");
+        printf("3. Listar Todos os Membros\n");
+        printf("4. Excluir Membro\n");
+        printf("0. Voltar ao Menu Anterior\n");
+        printf("Escolha: ");
+        scanf("%d", &op_eq);
+        limpar_buffer();
+
+        switch (op_eq)
+        {
+        case 1:
+            adicionarEquipeInterna();
+            break;
+        case 2:
+            alterarEquipeInterna();
+            break;
+        case 3:
+            listarEquipeInterna();
+            break;
+        case 4:
+            excluirEquipeInterna();
+            break;
+        case 0:
+            break;
+        default:
+            printf("\nOpcao invalida para Equipe!\n");
+            break;
+        }
+
+        if (op_eq != 0)
+        {
+            pausar();
+        }
+
+    } while (op_eq != 0);
+}
+
+/* =========================================================
+   Função: menuRecursos
+   Objetivo: Permite ao usuário gerenciar os recursos e do
+   equipamentos do sistema: adicionar, alterar, listar e excluir.
+   ========================================================= */
+
+void menuRecursos()
+{
+    int op_rec;
+    do
+    {
+        system("cls");
+        printf("\n--- Menu Recursos e Equipamentos ---\n");
+        printf("1. Adicionar Novo Recurso\n");
+        printf("2. Alterar Recurso Existente\n");
+        printf("3. Listar Todos os Recursos\n");
+        printf("4. Excluir Recurso\n");
+        printf("0. Voltar ao Menu Anterior\n");
+        printf("Escolha: ");
+        scanf("%d", &op_rec);
+        limpar_buffer();
+
+        switch (op_rec)
+        {
+        case 1:
+            adicionarRecurso();
+            break;
+        case 2:
+            alterarRecurso();
+            break;
+        case 3:
+            listarRecursos();
+            break;
+        case 4:
+            excluirRecurso();
+            break;
+        case 0:
+            break;
+        default:
+            printf("\nOpcao invalida para Recursos!\n");
+            break;
+        }
+
+        if (op_rec != 0)
+        {
+            pausar();
+        }
+
+    } while (op_rec != 0);
 }
