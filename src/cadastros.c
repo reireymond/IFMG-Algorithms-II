@@ -25,10 +25,10 @@
 static Produtora dados_produtora;
 static int produtora_cadastrada = 0; // flag indicando se já existe cadastro
 
-// Lista de clientes (array fixo para simplificação)
-#define MAX_CLIENTES 100
-static Cliente lista_clientes[MAX_CLIENTES];
-static int num_clientes = 0; // contador de clientes cadastrados
+// Estrutura única de variáveis globais para os dados dos Clientes
+static Cliente *lista_clientes = NULL; // ponteiro para a lista de clientes
+static int num_clientes = 0;           // contador de clientes cadastrados
+static int capacidade_clientes = 0;    // capacidade atual do array alocado
 
 // --- FUNÇÕES AUXILIARES ---
 
@@ -423,16 +423,26 @@ void carregarProdutora()
    ========================================================= */
 void adicionarCliente()
 {
-    if (num_clientes >= MAX_CLIENTES)
+    // Verifica se a lista precisa de mais espaço
+    if (num_clientes == capacidade_clientes)
     {
-        printf("\nLimite de clientes atingido!\n");
-        return;
+        // Define uma nova capacidade (começa com 10 e depois dobra)
+        int nova_capacidade = (capacidade_clientes == 0) ? 10 : capacidade_clientes * 2;
+        Cliente *temp = realloc(lista_clientes, nova_capacidade * sizeof(Cliente));
+
+        if (temp == NULL)
+        {
+            printf("\nErro critico de alocacao de memoria para clientes!\n");
+            return; // Interrompe a função se a alocação falhar
+        }
+        lista_clientes = temp;
+        capacidade_clientes = nova_capacidade;
     }
 
+    // O restante do código para ler os dados do cliente permanece o mesmo
     Cliente novo_cliente;
     printf("\n--- Cadastro de Novo Cliente ---\n");
 
-    // Geração de código simples (incremental)
     novo_cliente.codigo = num_clientes + 1;
     printf("Codigo do Cliente: %d\n", novo_cliente.codigo);
 
@@ -630,7 +640,19 @@ void carregarClientes()
         if (arquivo != NULL)
         {
             fread(&num_clientes, sizeof(int), 1, arquivo);
-            fread(lista_clientes, sizeof(Cliente), num_clientes, arquivo);
+            if (num_clientes > 0)
+            {
+                // aloca memória exata para os clientes salvos
+                lista_clientes = malloc(num_clientes * sizeof(Cliente));
+                if (lista_clientes == NULL)
+                {
+                    printf("Erro ao alocar memoria para carregar clientes.\n");
+                    num_clientes = 0;
+                    return;
+                }
+                fread(lista_clientes, sizeof(Cliente), num_clientes, arquivo);
+                capacidade_clientes = num_clientes; // a capacidade é igual ao número de clientes carregados
+            }
         }
     }
     else if (modo == ARQUIVO_TEXTO)
@@ -639,24 +661,43 @@ void carregarClientes()
         if (arquivo != NULL)
         {
             fscanf(arquivo, "%d\n", &num_clientes);
-            for (int i = 0; i < num_clientes; i++)
-            {
-                fscanf(arquivo, "%d\n", &lista_clientes[i].codigo);
-                fgets(lista_clientes[i].razao_social, sizeof(lista_clientes[i].razao_social), arquivo);
-                lista_clientes[i].razao_social[strcspn(lista_clientes[i].razao_social, "\n")] = 0;
-                fgets(lista_clientes[i].cnpj, sizeof(lista_clientes[i].cnpj), arquivo);
-                lista_clientes[i].cnpj[strcspn(lista_clientes[i].cnpj, "\n")] = 0;
-                fgets(lista_clientes[i].endereco, sizeof(lista_clientes[i].endereco), arquivo);
-                lista_clientes[i].endereco[strcspn(lista_clientes[i].endereco, "\n")] = 0;
-                fgets(lista_clientes[i].telefone, sizeof(lista_clientes[i].telefone), arquivo);
-                lista_clientes[i].telefone[strcspn(lista_clientes[i].telefone, "\n")] = 0;
-                fgets(lista_clientes[i].email, sizeof(lista_clientes[i].email), arquivo);
-                lista_clientes[i].email[strcspn(lista_clientes[i].email, "\n")] = 0;
-                fgets(lista_clientes[i].nome_do_contato, sizeof(lista_clientes[i].nome_do_contato), arquivo);
-                lista_clientes[i].nome_do_contato[strcspn(lista_clientes[i].nome_do_contato, "\n")] = 0;
+            if(num_clientes > 0) {
+                // também aloca memória para o modo texto
+                lista_clientes = malloc(num_clientes * sizeof(Cliente));
+                capacidade_clientes = num_clientes;
+                for (int i = 0; i < num_clientes; i++)
+                {
+                    fscanf(arquivo, "%d\n", &lista_clientes[i].codigo);
+                    fgets(lista_clientes[i].razao_social, sizeof(lista_clientes[i].razao_social), arquivo);
+                    lista_clientes[i].razao_social[strcspn(lista_clientes[i].razao_social, "\n")] = 0;
+                    fgets(lista_clientes[i].cnpj, sizeof(lista_clientes[i].cnpj), arquivo);
+                    lista_clientes[i].cnpj[strcspn(lista_clientes[i].cnpj, "\n")] = 0;
+                    fgets(lista_clientes[i].endereco, sizeof(lista_clientes[i].endereco), arquivo);
+                    lista_clientes[i].endereco[strcspn(lista_clientes[i].endereco, "\n")] = 0;
+                    fgets(lista_clientes[i].telefone, sizeof(lista_clientes[i].telefone), arquivo);
+                    lista_clientes[i].telefone[strcspn(lista_clientes[i].telefone, "\n")] = 0;
+                    fgets(lista_clientes[i].email, sizeof(lista_clientes[i].email), arquivo);
+                    lista_clientes[i].email[strcspn(lista_clientes[i].email, "\n")] = 0;
+                    fgets(lista_clientes[i].nome_do_contato, sizeof(lista_clientes[i].nome_do_contato), arquivo);
+                    lista_clientes[i].nome_do_contato[strcspn(lista_clientes[i].nome_do_contato, "\n")] = 0;
+                }
             }
         }
     }
     if (arquivo != NULL)
         fclose(arquivo);
+}
+
+/* =========================================================
+   Função: liberarMemoriaClientes
+   Objetivo: Libera a memória alocada dinamicamente para
+   a lista de clientes.
+   ========================================================= */
+void liberarMemoriaClientes()
+{
+    if (lista_clientes != NULL)
+    {
+        free(lista_clientes);
+        lista_clientes = NULL; // evita ponteiros inválidos
+    }
 }

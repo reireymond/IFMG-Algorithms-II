@@ -34,12 +34,13 @@ void carregarProdutora();    // Recupera os dados salvos
 
 // ----------------- CLIENTES -----------------
 
-void adicionarCliente(); // Cadastra um novo cliente
-void alterarCliente();   // Altera dados de um cliente existente
-void listarClientes();   // Lista todos os clientes cadastrados
-void excluirCliente();   // Remove um cliente do sistema
-void salvarClientes();   // Persiste os clientes em disco
-void carregarClientes(); // Recupera os clientes salvos
+void adicionarCliente();        // Cadastra um novo cliente
+void alterarCliente();          // Altera dados de um cliente existente
+void listarClientes();          // Lista todos os clientes cadastrados
+void excluirCliente();          // Remove um cliente do sistema
+void salvarClientes();          // Persiste os clientes em disco
+void carregarClientes();        // Recupera os clientes salvos
+void liberarMemoriaClientes();  // Libera memória alocada para clientes
 
 // ----------------- EQUIPE INTERNA -----------------
 // (A ser implementado futuramente)

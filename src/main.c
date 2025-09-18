@@ -137,6 +137,8 @@ int main()
         }
 
     } while (menu_de_opcoes != 0); // Repete até o usuário sair
+    
+    liberarMemoriaClientes();
     return 0;
 }
 
