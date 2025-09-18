@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "cadastros.h"
+#include "config.h"
 
 static Produtora dados_produtora;
 static int produtora_cadastrada = 0;
@@ -250,5 +251,83 @@ void excluirProdutora()
     else
     {
         printf("\nExclusao cancelada.\n");
+    }
+}
+
+void salvarProdutora()
+{
+    TipoArmazenamento modo = obterModoDeArmazenamento();
+
+    if (modo == MEMORIA)
+    {
+        printf("\nModo 'Memoria': Dados nao serao salvos em arquivo.\n");
+        return;
+    }
+
+    FILE *arquivo = NULL;
+
+    if (modo == ARQUIVO_BINARIO)
+    {
+        arquivo = fopen("../data/produtora.dat", "wb");
+        if (arquivo == NULL)
+        {
+            return;
+        }
+        fwrite(&dados_produtora, sizeof(Produtora), 1, arquivo);
+    }
+    else if (modo == ARQUIVO_TEXTO)
+    {
+        arquivo = fopen("../data/produtora.txt", "w");
+        if (arquivo == NULL)
+        {
+            return;
+        }
+        fprintf(arquivo, "Nome Fantasia: %s\n", dados_produtora.nome_fantasia);
+        fprintf(arquivo, "Razao Social: %s\n", dados_produtora.razao_social);
+    }
+
+    if (arquivo != NULL)
+    {
+        fclose(arquivo);
+    }
+}
+
+void carregarProdutora()
+{
+    TipoArmazenamento modo = obterModoDeArmazenamento();
+
+    if (modo == MEMORIA)
+    {
+        produtora_cadastrada = 0;
+        return;
+    }
+
+    FILE *arquivo = NULL;
+    int sucesso = 0;
+
+    if (modo == ARQUIVO_BINARIO)
+    {
+        arquivo = fopen("../data/produtora.dat", "rb");
+        if (arquivo != NULL)
+        {
+            if (fread(&dados_produtora, sizeof(Produtora), 1, arquivo) == 1)
+            {
+                sucesso = 1;
+            }
+        }
+    }
+    else if (modo == ARQUIVO_TEXTO)
+    {
+        arquivo = fopen("../data/produtora.txt", "r");
+        if (arquivo != NULL)
+        {
+            printf("\nCarregamento do arquivo de texto ainda a ser implementado.\n");
+        }
+    }
+
+    produtora_cadastrada = sucesso;
+    if (arquivo != NULL)
+    {
+        fclose(arquivo);
     }
 }
