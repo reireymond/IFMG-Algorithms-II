@@ -9,6 +9,6 @@ void verDetalhesProdutora();
 void excluirProdutora();
 void salvarProdutora();
 void carregarProdutora();
-void liberarMemoriaProdutora(); // Supondo que você mantenha a versão com malloc
+void liberarMemoriaProdutora();
 
 #endif

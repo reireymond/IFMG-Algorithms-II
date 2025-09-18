@@ -7,68 +7,11 @@
 #include "utils.h"
 
 // --- VARIÁVEL GLOBAL PARA PRODUTORA (AGORA UM PONTEIRO) ---
-static Produtora *dados_produtora = NULL; // Alterado de static Produtora para um ponteiro
+static Produtora *dados_produtora = NULL;
 
 // =========================================================
 //           SEÇÃO: PRODUTORA
 // =========================================================
-
-void alterarProdutora()
-{
-    if (dados_produtora == NULL) // Verifica se o ponteiro é nulo
-    {
-        printf("\nNenhuma produtora cadastrada para alterar. Por favor, adicione uma primeiro.\n");
-        return;
-    }
-
-    int opcao_alterar;
-    do
-    {
-        system("cls");
-        printf("--- Alterar Dados da Produtora ---\n");
-        verDetalhesProdutora();
-
-        // O menu de alteração continua o mesmo...
-        printf("\nQual campo deseja alterar?\n");
-        printf("1. Nome Fantasia\n");
-        // ... (outras opções)
-        printf("0. Salvar e Voltar\n");
-        printf("Escolha: ");
-        scanf("%d", &opcao_alterar);
-        limpar_buffer();
-
-        switch (opcao_alterar)
-        {
-        case 1:
-            printf("Digite o novo Nome Fantasia: ");
-            fgets(dados_produtora->nome_fantasia, sizeof(dados_produtora->nome_fantasia), stdin);
-            dados_produtora->nome_fantasia[strcspn(dados_produtora->nome_fantasia, "\n")] = 0;
-            break;
-        // --- IMPORTANTE: Note o uso de '->' em vez de '.' para aceder aos campos ---
-        case 2:
-            printf("Digite a nova Razao Social: ");
-            fgets(dados_produtora->razao_social, sizeof(dados_produtora->razao_social), stdin);
-            dados_produtora->razao_social[strcspn(dados_produtora->razao_social, "\n")] = 0;
-            break;
-        // ... (repita o padrão '->' para todos os outros cases)
-        case 10:
-            printf("Digite a nova Margem de Lucro (%%): ");
-            scanf("%f", &dados_produtora->margem_lucro);
-            limpar_buffer();
-            break;
-        case 0:
-            printf("\nAlteracoes salvas com sucesso!\n");
-            break;
-        default:
-            printf("\nOpcao invalida!\n");
-            pausar();
-            break;
-        }
-
-    } while (opcao_alterar != 0);
-
-    salvarProdutora();
-}
 
 void adicionarProdutora()
 {
@@ -86,18 +29,144 @@ void adicionarProdutora()
     }
 
     printf("\n--- Cadastro dos Dados da Produtora ---\n");
-    // Note o uso de '->' para aceder aos campos do ponteiro
+    
     printf("Nome Fantasia: ");
     fgets(dados_produtora->nome_fantasia, sizeof(dados_produtora->nome_fantasia), stdin);
     dados_produtora->nome_fantasia[strcspn(dados_produtora->nome_fantasia, "\n")] = 0;
 
-    // ... (faça o mesmo para todos os outros campos: razao_social, cnpj, etc.)
+    printf("Razao Social: ");
+    fgets(dados_produtora->razao_social, sizeof(dados_produtora->razao_social), stdin);
+    dados_produtora->razao_social[strcspn(dados_produtora->razao_social, "\n")] = 0;
+
+    printf("Nome do Responsavel: ");
+    fgets(dados_produtora->nome_do_responsavel, sizeof(dados_produtora->nome_do_responsavel), stdin);
+    dados_produtora->nome_do_responsavel[strcspn(dados_produtora->nome_do_responsavel, "\n")] = 0;
+
+    printf("CNPJ: ");
+    fgets(dados_produtora->cnpj, sizeof(dados_produtora->cnpj), stdin);
+    dados_produtora->cnpj[strcspn(dados_produtora->cnpj, "\n")] = 0;
+
+    printf("Inscricao Estadual: ");
+    fgets(dados_produtora->inscricao_estadual, sizeof(dados_produtora->inscricao_estadual), stdin);
+    dados_produtora->inscricao_estadual[strcspn(dados_produtora->inscricao_estadual, "\n")] = 0;
+
+    printf("Endereco: ");
+    fgets(dados_produtora->endereco, sizeof(dados_produtora->endereco), stdin);
+    dados_produtora->endereco[strcspn(dados_produtora->endereco, "\n")] = 0;
+
+    printf("Telefone: ");
+    fgets(dados_produtora->telefone, sizeof(dados_produtora->telefone), stdin);
+    dados_produtora->telefone[strcspn(dados_produtora->telefone, "\n")] = 0;
+
+    printf("Telefone do Responsavel: ");
+    fgets(dados_produtora->telefone_responsavel, sizeof(dados_produtora->telefone_responsavel), stdin);
+    dados_produtora->telefone_responsavel[strcspn(dados_produtora->telefone_responsavel, "\n")] = 0;
+
+    printf("E-mail: ");
+    fgets(dados_produtora->email, sizeof(dados_produtora->email), stdin);
+    dados_produtora->email[strcspn(dados_produtora->email, "\n")] = 0;
 
     printf("Margem de Lucro (%%): ");
     scanf("%f", &dados_produtora->margem_lucro);
     limpar_buffer();
     
-    printf("\nDados da produtora '%s' cadastrados com sucesso!\n", dados_produtora->razao_social);
+    printf("\nDados da produtora '%s' cadastrados com sucesso!\n", dados_produtora->nome_fantasia);
+    salvarProdutora();
+}
+
+void alterarProdutora()
+{
+    if (dados_produtora == NULL)
+    {
+        printf("\nNenhuma produtora cadastrada para alterar. Por favor, adicione uma primeiro.\n");
+        return;
+    }
+
+    int opcao_alterar;
+    do
+    {
+        system("cls");
+        printf("--- Alterar Dados da Produtora ---\n\n");
+        verDetalhesProdutora(); // Mostra os dados atuais
+
+        printf("\n\nQual campo deseja alterar?\n");
+        printf("1. Nome Fantasia\n");
+        printf("2. Razao Social\n");
+        printf("3. Nome do Responsavel\n");
+        printf("4. CNPJ\n");
+        printf("5. Inscricao Estadual\n");
+        printf("6. Endereco\n");
+        printf("7. Telefone\n");
+        printf("8. Telefone do Responsavel\n");
+        printf("9. E-mail\n");
+        printf("10. Margem de Lucro\n");
+        printf("0. Salvar e Voltar\n");
+        printf("Escolha: ");
+        scanf("%d", &opcao_alterar);
+        limpar_buffer();
+
+        switch (opcao_alterar)
+        {
+        case 1:
+            printf("Digite o novo Nome Fantasia: ");
+            fgets(dados_produtora->nome_fantasia, sizeof(dados_produtora->nome_fantasia), stdin);
+            dados_produtora->nome_fantasia[strcspn(dados_produtora->nome_fantasia, "\n")] = 0;
+            break;
+        case 2:
+            printf("Digite a nova Razao Social: ");
+            fgets(dados_produtora->razao_social, sizeof(dados_produtora->razao_social), stdin);
+            dados_produtora->razao_social[strcspn(dados_produtora->razao_social, "\n")] = 0;
+            break;
+        case 3:
+            printf("Digite o novo Nome do Responsavel: ");
+            fgets(dados_produtora->nome_do_responsavel, sizeof(dados_produtora->nome_do_responsavel), stdin);
+            dados_produtora->nome_do_responsavel[strcspn(dados_produtora->nome_do_responsavel, "\n")] = 0;
+            break;
+        case 4:
+            printf("Digite o novo CNPJ: ");
+            fgets(dados_produtora->cnpj, sizeof(dados_produtora->cnpj), stdin);
+            dados_produtora->cnpj[strcspn(dados_produtora->cnpj, "\n")] = 0;
+            break;
+        case 5:
+            printf("Digite a nova Inscricao Estadual: ");
+            fgets(dados_produtora->inscricao_estadual, sizeof(dados_produtora->inscricao_estadual), stdin);
+            dados_produtora->inscricao_estadual[strcspn(dados_produtora->inscricao_estadual, "\n")] = 0;
+            break;
+        case 6:
+            printf("Digite o novo Endereco: ");
+            fgets(dados_produtora->endereco, sizeof(dados_produtora->endereco), stdin);
+            dados_produtora->endereco[strcspn(dados_produtora->endereco, "\n")] = 0;
+            break;
+        case 7:
+            printf("Digite o novo Telefone: ");
+            fgets(dados_produtora->telefone, sizeof(dados_produtora->telefone), stdin);
+            dados_produtora->telefone[strcspn(dados_produtora->telefone, "\n")] = 0;
+            break;
+        case 8:
+            printf("Digite o novo Telefone do Responsavel: ");
+            fgets(dados_produtora->telefone_responsavel, sizeof(dados_produtora->telefone_responsavel), stdin);
+            dados_produtora->telefone_responsavel[strcspn(dados_produtora->telefone_responsavel, "\n")] = 0;
+            break;
+        case 9:
+            printf("Digite o novo E-mail: ");
+            fgets(dados_produtora->email, sizeof(dados_produtora->email), stdin);
+            dados_produtora->email[strcspn(dados_produtora->email, "\n")] = 0;
+            break;
+        case 10:
+            printf("Digite a nova Margem de Lucro (%%): ");
+            scanf("%f", &dados_produtora->margem_lucro);
+            limpar_buffer();
+            break;
+        case 0:
+            printf("\nAlteracoes salvas com sucesso!\n");
+            break;
+        default:
+            printf("\nOpcao invalida!\n");
+            pausar();
+            break;
+        }
+    } while (opcao_alterar != 0);
+
     salvarProdutora();
 }
 
@@ -110,7 +179,14 @@ void verDetalhesProdutora()
     }
     printf("\n--- Detalhes da Produtora Cadastrada ---\n");
     printf("Nome Fantasia: %s\n", dados_produtora->nome_fantasia);
-    // ... (use '->' para todos os outros campos)
+    printf("Razao Social: %s\n", dados_produtora->razao_social);
+    printf("Nome do Responsavel: %s\n", dados_produtora->nome_do_responsavel);
+    printf("CNPJ: %s\n", dados_produtora->cnpj);
+    printf("Inscricao Estadual: %s\n", dados_produtora->inscricao_estadual);
+    printf("Endereco: %s\n", dados_produtora->endereco);
+    printf("Telefone: %s\n", dados_produtora->telefone);
+    printf("Telefone do Responsavel: %s\n", dados_produtora->telefone_responsavel);
+    printf("E-mail: %s\n", dados_produtora->email);
     printf("Margem de Lucro: %.2f%%\n", dados_produtora->margem_lucro);
 }
 
