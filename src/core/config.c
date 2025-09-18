@@ -19,7 +19,7 @@ static TipoArmazenamento modo_de_armazenamento = ARQUIVO_BINARIO;
    Função: definirModoDeArmazenamento
    Objetivo: Permite alterar o modo de armazenamento,
    recebendo como parâmetro o novo modo.
-   ========================================================= */
+   =====================F==================================== */
 void definirModoDeArmazenamento(TipoArmazenamento modo)
 {
    modo_de_armazenamento = modo;

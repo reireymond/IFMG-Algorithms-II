@@ -52,7 +52,7 @@ void adicionarRecurso()
     printf("Preco de Custo (unitario): R$ ");
     scanf("%f", &novo_recurso.preco_custo);
     limpar_buffer();
-    
+
     printf("Valor da Locacao (diaria): R$ ");
     scanf("%f", &novo_recurso.valor_locacao);
     limpar_buffer();
@@ -231,7 +231,8 @@ void excluirRecurso()
 void salvarRecursos()
 {
     TipoArmazenamento modo = obterModoDeArmazenamento();
-    if (modo == MEMORIA) return;
+    if (modo == MEMORIA)
+        return;
 
     FILE *arquivo = fopen("../data/recursos.dat", "wb");
     if (arquivo == NULL)
@@ -251,7 +252,8 @@ void salvarRecursos()
 void carregarRecursos()
 {
     TipoArmazenamento modo = obterModoDeArmazenamento();
-    if (modo == MEMORIA) return;
+    if (modo == MEMORIA)
+        return;
 
     FILE *arquivo = fopen("../data/recursos.dat", "rb");
     if (arquivo != NULL)

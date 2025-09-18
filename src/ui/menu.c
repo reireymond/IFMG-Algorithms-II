@@ -16,7 +16,6 @@
 // Funções que estão em outros arquivos mas são usadas aqui.
 void pausar();
 
-
 // --- DECLARAÇÕES DE FUNÇÕES DE MENU ---
 // Funções que estão neste arquivo e podem ser chamadas por outras.
 void menuGestaoDeDados();
@@ -126,7 +125,7 @@ void menuPrincipal()
    e operadores.
    ========================================================= */
 
-   void menuGestaoDeDados()
+void menuGestaoDeDados()
 {
     int opcao_gestao;
     do

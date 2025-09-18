@@ -23,13 +23,14 @@ void adicionarProdutora()
 
     // Aloca memória para a produtora
     dados_produtora = (Produtora *)malloc(sizeof(Produtora));
-    if (dados_produtora == NULL) {
+    if (dados_produtora == NULL)
+    {
         printf("Erro fatal: Nao foi possivel alocar memoria para a produtora.\n");
         return;
     }
 
     printf("\n--- Cadastro dos Dados da Produtora ---\n");
-    
+
     printf("Nome Fantasia: ");
     fgets(dados_produtora->nome_fantasia, sizeof(dados_produtora->nome_fantasia), stdin);
     dados_produtora->nome_fantasia[strcspn(dados_produtora->nome_fantasia, "\n")] = 0;
@@ -69,7 +70,7 @@ void adicionarProdutora()
     printf("Margem de Lucro (%%): ");
     scanf("%f", &dados_produtora->margem_lucro);
     limpar_buffer();
-    
+
     printf("\nDados da produtora '%s' cadastrados com sucesso!\n", dados_produtora->nome_fantasia);
     salvarProdutora();
 }
@@ -205,9 +206,9 @@ void excluirProdutora()
 
     if (confirmacao == 's' || confirmacao == 'S')
     {
-        free(dados_produtora); // Liberta a memória
+        free(dados_produtora);  // Liberta a memória
         dados_produtora = NULL; // Aponta o ponteiro para NULL
-        
+
         salvarProdutora(); // Salva o estado "vazio"
 
         printf("\nDados da produtora excluidos com sucesso!\n");
@@ -221,36 +222,43 @@ void excluirProdutora()
 void salvarProdutora()
 {
     TipoArmazenamento modo = obterModoDeArmazenamento();
-    if (modo == MEMORIA) return;
-    
+    if (modo == MEMORIA)
+        return;
+
     int produtora_existe = (dados_produtora != NULL);
 
     FILE *arquivo = fopen("../data/produtora.dat", "wb");
-    if (arquivo == NULL) {
+    if (arquivo == NULL)
+    {
         perror("Nao foi possivel abrir o arquivo da produtora");
         return;
     }
-    
+
     fwrite(&produtora_existe, sizeof(int), 1, arquivo);
-    if (produtora_existe) {
+    if (produtora_existe)
+    {
         fwrite(dados_produtora, sizeof(Produtora), 1, arquivo);
     }
-    
+
     fclose(arquivo);
 }
 
 void carregarProdutora()
 {
     TipoArmazenamento modo = obterModoDeArmazenamento();
-    if (modo == MEMORIA) return;
-    
+    if (modo == MEMORIA)
+        return;
+
     int produtora_existe = 0;
     FILE *arquivo = fopen("../data/produtora.dat", "rb");
-    if (arquivo != NULL) {
+    if (arquivo != NULL)
+    {
         fread(&produtora_existe, sizeof(int), 1, arquivo);
-        if (produtora_existe) {
+        if (produtora_existe)
+        {
             dados_produtora = (Produtora *)malloc(sizeof(Produtora));
-            if (dados_produtora != NULL) {
+            if (dados_produtora != NULL)
+            {
                 fread(dados_produtora, sizeof(Produtora), 1, arquivo);
             }
         }
@@ -258,8 +266,10 @@ void carregarProdutora()
     }
 }
 
-void liberarMemoriaProdutora() {
-    if (dados_produtora != NULL) {
+void liberarMemoriaProdutora()
+{
+    if (dados_produtora != NULL)
+    {
         free(dados_produtora);
         dados_produtora = NULL;
     }

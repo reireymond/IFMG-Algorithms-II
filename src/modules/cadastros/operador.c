@@ -5,7 +5,7 @@
 #include "cadastros/operador.h"
 #include "config.h"
 #include "utils.h"
-#include "sha256.h"
+// #include "sha256.h" // REMOVIDO
 
 // --- VARIÁVEIS GLOBAIS PARA OPERADORES ---
 static Operador *lista_operadores = NULL;
@@ -14,7 +14,7 @@ static int capacidade_operadores = 0;
 
 /* =========================================================
    Função: adicionarOperador
-   Objetivo: Cadastra um novo operador, criptografando a senha.
+   Objetivo: Cadastra um novo operador com senha em texto plano.
    ========================================================= */
 void adicionarOperador() {
     if (num_operadores == capacidade_operadores) {
@@ -41,15 +41,10 @@ void adicionarOperador() {
     fgets(novo.usuario, sizeof(novo.usuario), stdin);
     novo.usuario[strcspn(novo.usuario, "\n")] = 0;
 
-    char senha_temp[100];
+    // LÓGICA DE HASH REMOVIDA
     printf("Senha: ");
-    fgets(senha_temp, sizeof(senha_temp), stdin);
-    senha_temp[strcspn(senha_temp, "\n")] = 0;
-
-    char hash_senha[65];
-    sha256_string(senha_temp, hash_senha);
-    strncpy(novo.senha, hash_senha, sizeof(novo.senha));
-    novo.senha[sizeof(novo.senha) - 1] = '\0';
+    fgets(novo.senha, sizeof(novo.senha), stdin);
+    novo.senha[strcspn(novo.senha, "\n")] = 0;
 
     lista_operadores[num_operadores] = novo;
     num_operadores++;
@@ -60,7 +55,7 @@ void adicionarOperador() {
 
 /* =========================================================
    Função: listarOperadores
-   Objetivo: Exibe todos os operadores (sem mostrar a senha).
+   Objetivo: Exibe todos os operadores (agora mostrando a senha).
    ========================================================= */
 void listarOperadores() {
     if (num_operadores == 0) {
@@ -73,7 +68,7 @@ void listarOperadores() {
         printf("Codigo: %d\n", lista_operadores[i].codigo);
         printf("Nome: %s\n", lista_operadores[i].nome);
         printf("Usuario: %s\n", lista_operadores[i].usuario);
-        printf("Senha Hash: %s\n", lista_operadores[i].senha);
+        printf("Senha: %s\n", lista_operadores[i].senha); // Alterado de "Senha Hash" para "Senha"
     }
     printf("----------------------------------\n");
 }
@@ -126,19 +121,13 @@ void alterarOperador() {
                 fgets(lista_operadores[indice].usuario, sizeof(lista_operadores[indice].usuario), stdin);
                 lista_operadores[indice].usuario[strcspn(lista_operadores[indice].usuario, "\n")] = 0;
                 break;
-            case 3: {
-                char senha_temp[100];
+            case 3: 
+                // LÓGICA DE HASH REMOVIDA
                 printf("Nova Senha: ");
-                fgets(senha_temp, sizeof(senha_temp), stdin);
-                senha_temp[strcspn(senha_temp, "\n")] = 0;
-
-                char hash_senha[65];
-                sha256_string(senha_temp, hash_senha);
-                strncpy(lista_operadores[indice].senha, hash_senha, sizeof(lista_operadores[indice].senha));
-                 lista_operadores[indice].senha[sizeof(lista_operadores[indice].senha) - 1] = '\0';
+                fgets(lista_operadores[indice].senha, sizeof(lista_operadores[indice].senha), stdin);
+                lista_operadores[indice].senha[strcspn(lista_operadores[indice].senha, "\n")] = 0;
                 printf("Senha alterada com sucesso.\n");
                 break;
-            }
             case 0:
                 printf("\nAlteracoes salvas!\n");
                 break;
@@ -150,10 +139,11 @@ void alterarOperador() {
 }
 
 
-/* =========================================================
-   Função: excluirOperador
-   Objetivo: Remove um operador do sistema.
-   ========================================================= */
+/* ... O resto do arquivo (excluir, salvar, carregar, liberar) permanece igual ... */
+// =========================================================
+// ... cole o resto das funções a partir de excluirOperador() aqui ...
+// =========================================================
+
 void excluirOperador() {
     listarOperadores();
     if (num_operadores == 0) return;
@@ -184,11 +174,6 @@ void excluirOperador() {
     printf("\nOperador com codigo %d nao encontrado.\n", codigo);
 }
 
-
-/* =========================================================
-   Função: salvarOperadores
-   Objetivo: Salva a lista de operadores no arquivo.
-   ========================================================= */
 void salvarOperadores() {
     TipoArmazenamento modo = obterModoDeArmazenamento();
     if (modo == MEMORIA) return;
@@ -203,11 +188,6 @@ void salvarOperadores() {
     fclose(arquivo);
 }
 
-
-/* =========================================================
-   Função: carregarOperadores
-   Objetivo: Carrega a lista de operadores do arquivo.
-   ========================================================= */
 void carregarOperadores() {
     TipoArmazenamento modo = obterModoDeArmazenamento();
     if (modo == MEMORIA) return;
@@ -226,10 +206,6 @@ void carregarOperadores() {
     }
 }
 
-/* =========================================================
-   Função: liberarMemoriaOperadores
-   Objetivo: Libera a memória alocada para operadores.
-   ========================================================= */
 void liberarMemoriaOperadores() {
     if (lista_operadores != NULL) {
         free(lista_operadores);
