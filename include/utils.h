@@ -9,5 +9,6 @@
  * com leitura de strings após scanf.
  */
 void limpar_buffer();
+void pausar();
 
 #endif

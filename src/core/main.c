@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 #include "config.h"
-#include "menu.h"
+#include "ui/menu.h"
 #include "utils.h"
 
 #include "cadastros/produtora.h"
@@ -23,23 +23,6 @@
 // --- DECLARAÇÕES DE FUNÇÕES EXTERNAS ---
 // Funções implementadas em outros arquivos que são chamadas aqui.
 void menuGestaoDeDados();
-
-// --- FUNÇÕES UTILITÁRIAS ---
-
-/* =========================================================
-   Função: pausar
-   Objetivo: Serve para segurar a tela até que o usuário
-   pressione Enter.
-   ========================================================= */
-void pausar()
-{
-    printf("\nPressione Enter para continuar...");
-    // Limpa o buffer de entrada para aguardar o Enter
-    int c;
-    while ((c = getchar()) != '\n' && c != EOF)
-        ;
-    getchar();
-}
 
 /* =========================================================
    Função: menuEscolherArmazenamento

@@ -70,7 +70,6 @@ void menuGestaoDeDados()
             break;
         case 6:
             menuOperadores();
-            pausar();
             break;
         case 0:
             break;
@@ -181,4 +180,54 @@ void menuClientes()
         }
 
     } while (op_cli != 0);
+}
+
+/* =========================================================
+   Função: menuOperadores
+   Objetivo: Permite ao usuário gerenciar os operadores do
+   sistema: adicionar, alterar, listar e excluir.
+   ========================================================= */
+void menuOperadores()
+{
+    int op_op;
+    do
+    {
+        system("cls");
+        printf("\n--- Menu Operadores ---\n");
+        printf("1. Adicionar Novo Operador\n");
+        printf("2. Alterar Operador Existente\n");
+        printf("3. Listar Todos os Operadores\n");
+        printf("4. Excluir Operador\n");
+        printf("0. Voltar ao Menu Anterior\n");
+        printf("Escolha: ");
+        scanf("%d", &op_op);
+        limpar_buffer();
+
+        switch (op_op)
+        {
+        case 1:
+            adicionarOperador();
+            break;
+        case 2:
+            alterarOperador();
+            break;
+        case 3:
+            listarOperadores();
+            break;
+        case 4:
+            excluirOperador();
+            break;
+        case 0:
+            break;
+        default:
+            printf("\nOpcao invalida para Operadores!\n");
+            break;
+        }
+
+        if (op_op != 0)
+        {
+            pausar();
+        }
+
+    } while (op_op != 0);
 }
