@@ -131,7 +131,7 @@ void alterarFornecedor()
     int opcao;
     do
     {
-        system("cls");
+        limpar_tela();
         printf("--- Alterando Fornecedor: %s ---\n", lista_fornecedores[indice].nome_fantasia);
         printf("1. Alterar Nome Fantasia\n");
         printf("2. Alterar Razao Social\n");

@@ -67,7 +67,7 @@ void menuPrincipal()
     int menu_de_opcoes;
     do
     {
-        system("cls");
+        limpar_tela();
         printf("\n--- MENU PRINCIPAL ---\n");
         printf("1. Gestao de Dados\n");
         printf("2. Gestao de Eventos\n");
@@ -120,7 +120,7 @@ void menuGestaoDeDados()
     int opcao_gestao;
     do
     {
-        system("cls");
+        limpar_tela();
         printf("\n--- GESTAO DE DADOS ---\n");
         printf("1. Gerenciar Produtora\n");
         printf("2. Gerenciar Clientes\n");
@@ -173,7 +173,7 @@ void menuProdutora()
     int op_prod;
     do
     {
-        system("cls");
+        limpar_tela();
         printf("\n--- Menu Produtora ---\n");
         printf("1. Cadastrar Dados\n");
         printf("2. Alterar Dados\n");
@@ -202,7 +202,7 @@ void menuClientes()
     int op_cli;
     do
     {
-        system("cls");
+        limpar_tela();
         printf("\n--- Menu Clientes ---\n");
         printf("1. Adicionar Novo Cliente\n");
         printf("2. Alterar Cliente Existente\n");
@@ -231,7 +231,7 @@ void menuEquipeInterna()
     int op_eq;
     do
     {
-        system("cls");
+        limpar_tela();
         printf("\n--- Menu Equipe Interna ---\n");
         printf("1. Adicionar Novo Membro\n");
         printf("2. Alterar Membro Existente\n");
@@ -260,7 +260,7 @@ void menuRecursos()
     int op_rec;
     do
     {
-        system("cls");
+        limpar_tela();
         printf("\n--- Menu Recursos e Equipamentos ---\n");
         printf("1. Adicionar Novo Recurso\n");
         printf("2. Alterar Recurso Existente\n");
@@ -289,7 +289,7 @@ void menuFornecedores()
     int op_forn;
     do
     {
-        system("cls");
+        limpar_tela();
         printf("\n--- Menu Fornecedores e Parceiros ---\n");
         printf("1. Adicionar Novo Fornecedor\n");
         printf("2. Alterar Fornecedor Existente\n");
@@ -318,7 +318,7 @@ void menuOperadores()
     int op_op;
     do
     {
-        system("cls");
+        limpar_tela();
         printf("\n--- Menu Operadores ---\n");
         printf("1. Adicionar Novo Operador\n");
         printf("2. Alterar Operador Existente\n");

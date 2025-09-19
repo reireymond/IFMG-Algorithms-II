@@ -2,6 +2,9 @@
 CC = gcc
 
 # Flags de compilação
+# -Wall: Ativa a maioria dos avisos
+# -Iinclude: Procura por arquivos de cabeçalho na pasta 'include'
+# -g: Adiciona informações de debug
 CFLAGS = -Wall -Iinclude -g
 
 # Diretórios
@@ -12,8 +15,7 @@ BDIR = bin
 # Nome do executável final
 TARGET = $(BDIR)/produtora
 
-# Encontra TODOS os arquivos .c nos subdiretórios de 'src'
-# Esta é a linha corrigida para garantir que todos os arquivos sejam incluídos.
+# Encontra todos os arquivos .c automaticamente
 SOURCES := $(wildcard src/core/*.c) $(wildcard src/modules/cadastros/*.c) $(wildcard src/ui/*.c)
 
 # Converte a lista de fontes .c para uma lista de objetos .o
@@ -30,6 +32,7 @@ $(TARGET): $(OBJECTS)
 	@echo "--> Executavel '$(TARGET)' criado com sucesso."
 
 # Regra para compilar os arquivos .c em .o
+# A mágica está no uso de $(@D) que pega o diretório do arquivo de destino
 $(ODIR)/%.o: $(SDIR)/%.c
 	@if not exist "$(@D)" mkdir "$(@D)"
 	@echo "--> Compilando $<..."

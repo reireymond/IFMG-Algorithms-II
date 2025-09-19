@@ -5,7 +5,6 @@
 #include "cadastros/operador.h"
 #include "config.h"
 #include "utils.h"
-// #include "sha256.h" // REMOVIDO
 
 // --- VARIÁVEIS GLOBAIS PARA OPERADORES ---
 static Operador *lista_operadores = NULL;
@@ -41,7 +40,6 @@ void adicionarOperador() {
     fgets(novo.usuario, sizeof(novo.usuario), stdin);
     novo.usuario[strcspn(novo.usuario, "\n")] = 0;
 
-    // LÓGICA DE HASH REMOVIDA
     printf("Senha: ");
     fgets(novo.senha, sizeof(novo.senha), stdin);
     novo.senha[strcspn(novo.senha, "\n")] = 0;
@@ -100,7 +98,7 @@ void alterarOperador() {
 
     int opcao;
     do {
-        system("cls");
+        limpar_tela();
         printf("--- Alterando Operador: %s ---\n", lista_operadores[indice].usuario);
         printf("1. Alterar Nome\n");
         printf("2. Alterar Usuario\n");

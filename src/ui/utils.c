@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 /* =========================================================
    Função: limpar_buffer
@@ -21,4 +22,17 @@ void pausar()
 {
     printf("\nPressione Enter para continuar...");
     getchar(); // Apenas espera por um 'Enter'
+}
+
+/* =========================================================
+   Função: limpar tela
+   Objetivo: Serve para limpar a tela, compativel com
+   Windows e Linux.
+   ========================================================= */
+void limpar_tela() {
+    #ifdef _WIN32
+        system("cls");
+    #else
+        system("clear");
+    #endif
 }

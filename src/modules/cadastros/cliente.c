@@ -6,6 +6,9 @@
 #include "config.h"
 #include "utils.h"
 
+#define CLIENTES_DATA_FILE "../data/clientes.dat"
+#define CLIENTES_TEXT_FILE "../data/clientes.txt"
+
 // --- VARIÁVEIS GLOBAIS PARA CLIENTES ---
 static Cliente *lista_clientes = NULL; // ponteiro para a lista de clientes
 static int num_clientes = 0;           // contador de clientes cadastrados
@@ -138,7 +141,7 @@ void alterarCliente()
     int opcao_alterar;
     do
     {
-        system("cls");
+        limpar_tela();
         printf("--- Alterando Cliente: %s ---\n", lista_clientes[indice_cliente].razao_social);
         printf("Codigo: %d\n\n", lista_clientes[indice_cliente].codigo);
 
@@ -259,7 +262,7 @@ void salvarClientes()
     FILE *arquivo = NULL;
     if (modo == ARQUIVO_BINARIO)
     {
-        arquivo = fopen("../data/clientes.dat", "wb");
+        arquivo = fopen(CLIENTES_DATA_FILE, "wb");
         if (arquivo == NULL)
             return;
         fwrite(&num_clientes, sizeof(int), 1, arquivo);
@@ -267,7 +270,7 @@ void salvarClientes()
     }
     else if (modo == ARQUIVO_TEXTO)
     {
-        arquivo = fopen("../data/clientes.txt", "w");
+        arquivo = fopen(CLIENTES_TEXT_FILE, "w");
         if (arquivo == NULL)
             return;
         fprintf(arquivo, "%d\n", num_clientes);
@@ -300,7 +303,7 @@ void carregarClientes()
     FILE *arquivo = NULL;
     if (modo == ARQUIVO_BINARIO)
     {
-        arquivo = fopen("../data/clientes.dat", "rb");
+        arquivo = fopen(CLIENTES_DATA_FILE, "rb");
         if (arquivo != NULL)
         {
             fread(&num_clientes, sizeof(int), 1, arquivo);
@@ -320,7 +323,7 @@ void carregarClientes()
     }
     else if (modo == ARQUIVO_TEXTO)
     {
-        arquivo = fopen("../data/clientes.txt", "r");
+        arquivo = fopen(CLIENTES_TEXT_FILE, "r");
         if (arquivo != NULL)
         {
             fscanf(arquivo, "%d\n", &num_clientes);

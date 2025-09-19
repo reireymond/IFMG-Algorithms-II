@@ -108,7 +108,7 @@ void alterarEquipeInterna() // Nome da função corrigido
     int opcao;
     do
     {
-        system("cls");
+        limpar_tela();
         printf("--- Alterando Membro: %s ---\n", lista_equipe[indice].nome);
         printf("1. Alterar Nome\n");
         printf("2. Alterar CPF\n");

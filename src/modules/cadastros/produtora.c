@@ -86,7 +86,7 @@ void alterarProdutora()
     int opcao_alterar;
     do
     {
-        system("cls");
+        limpar_tela();
         printf("--- Alterar Dados da Produtora ---\n\n");
         verDetalhesProdutora(); // Mostra os dados atuais
 

@@ -125,7 +125,7 @@ void alterarRecurso()
     int opcao;
     do
     {
-        system("cls");
+        limpar_tela();
         printf("--- Alterando Recurso: %s ---\n", lista_recursos[indice].descricao);
         printf("1. Alterar Descricao\n");
         printf("2. Alterar Categoria\n");
