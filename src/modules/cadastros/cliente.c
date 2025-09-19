@@ -9,22 +9,19 @@
 #define CLIENTES_DATA_FILE "../data/clientes.dat"
 #define CLIENTES_TEXT_FILE "../data/clientes.txt"
 
-// --- VARIÁVEIS GLOBAIS PARA CLIENTES ---
-static Cliente *lista_clientes = NULL; // ponteiro para a lista de clientes
-static int num_clientes = 0;           // contador de clientes cadastrados
-static int capacidade_clientes = 0;    // capacidade atual do array alocado
+// Ponteiro para a lista de clientes.
+static Cliente *lista_clientes = NULL;
+// Número de clientes cadastrados.
+static int num_clientes = 0;
+// Capacidade atual do array de clientes.
+static int capacidade_clientes = 0;
 
-// =========================================================
-//           SEÇÃO: CLIENTES
-// =========================================================
-
-/* =========================================================
-   Função: adicionarCliente
-   Objetivo: Cadastra um novo cliente, alocando memória
-   dinamicamente quando necessário.
-   ========================================================= */
+/*
+  Adiciona um novo cliente.
+ */
 void adicionarCliente()
 {
+    // Realoca a memória se a capacidade máxima for atingida.
     if (num_clientes == capacidade_clientes)
     {
         int nova_capacidade = (capacidade_clientes == 0) ? 10 : capacidade_clientes * 2;
@@ -39,6 +36,7 @@ void adicionarCliente()
         capacidade_clientes = nova_capacidade;
     }
 
+    // Cria um novo cliente e solicita os dados.
     Cliente novo_cliente;
     printf("\n--- Cadastro de Novo Cliente ---\n");
 
@@ -69,6 +67,7 @@ void adicionarCliente()
     fgets(novo_cliente.nome_do_contato, sizeof(novo_cliente.nome_do_contato), stdin);
     novo_cliente.nome_do_contato[strcspn(novo_cliente.nome_do_contato, "\n")] = 0;
 
+    // Adiciona o novo cliente à lista e incrementa o contador.
     lista_clientes[num_clientes] = novo_cliente;
     num_clientes++;
 
@@ -76,10 +75,9 @@ void adicionarCliente()
     salvarClientes();
 }
 
-/* =========================================================
-   Função: listarClientes
-   Objetivo: Exibe todos os clientes cadastrados.
-   ========================================================= */
+/*
+  Lista todos os clientes cadastrados.
+ */
 void listarClientes()
 {
     if (num_clientes == 0)
@@ -103,11 +101,9 @@ void listarClientes()
     printf("----------------------------------\n");
 }
 
-/* =========================================================
-   Função: alterarCliente
-   Objetivo: Permite editar os dados de um cliente
-   existente, localizado pelo seu código.
-   ========================================================= */
+/*
+  Altera os dados de um cliente existente.
+ */
 void alterarCliente()
 {
     listarClientes();
@@ -115,13 +111,13 @@ void alterarCliente()
         return;
 
     int codigo;
-    int indice_cliente = -1; // Usaremos o índice para evitar procurar o cliente repetidamente
+    int indice_cliente = -1;
 
     printf("\nDigite o codigo do cliente que deseja alterar: ");
     scanf("%d", &codigo);
     limpar_buffer();
 
-    // Primeiro, encontra o índice do cliente na lista
+    // Encontra o índice do cliente na lista.
     for (int i = 0; i < num_clientes; i++)
     {
         if (lista_clientes[i].codigo == codigo)
@@ -131,13 +127,13 @@ void alterarCliente()
         }
     }
 
-    // Se o cliente não foi encontrado, informa o usuário e sai da função
     if (indice_cliente == -1)
     {
         printf("\nCliente com codigo %d nao encontrado.\n", codigo);
         return;
     }
 
+    // Exibe um menu para o usuário escolher o que alterar.
     int opcao_alterar;
     do
     {
@@ -194,7 +190,6 @@ void alterarCliente()
             break;
         default:
             printf("\nOpcao invalida!\n");
-            // Adiciona uma pequena pausa para o usuário ler a mensagem de erro
             printf("Pressione Enter para tentar novamente...");
             getchar();
             break;
@@ -202,15 +197,12 @@ void alterarCliente()
 
     } while (opcao_alterar != 0);
 
-    // Salva todas as alterações no arquivo de uma só vez, após sair do menu
     salvarClientes();
 }
 
-/* =========================================================
-   Função: excluirCliente
-   Objetivo: Remove um cliente da lista, realocando os
-   elementos do array para não deixar "buracos".
-   ========================================================= */
+/*
+  Exclui um cliente.
+ */
 void excluirCliente()
 {
     listarClientes();
@@ -233,7 +225,8 @@ void excluirCliente()
 
             if (confirmacao == 's' || confirmacao == 'S')
             {
-                lista_clientes[i] = lista_clientes[num_clientes - 1]; // substitui pelo último
+                // Substitui o cliente a ser excluído pelo último da lista.
+                lista_clientes[i] = lista_clientes[num_clientes - 1];
                 num_clientes--;
                 printf("\nCliente excluido com sucesso!\n");
                 salvarClientes();
@@ -248,11 +241,9 @@ void excluirCliente()
     printf("\nCliente com codigo %d nao encontrado.\n", codigo);
 }
 
-/* =========================================================
-   Função: salvarClientes
-   Objetivo: Persiste os dados de clientes em disco de
-   acordo com o modo de armazenamento escolhido.
-   ========================================================= */
+/*
+  Salva os dados dos clientes em um arquivo.
+ */
 void salvarClientes()
 {
     TipoArmazenamento modo = obterModoDeArmazenamento();
@@ -289,11 +280,9 @@ void salvarClientes()
         fclose(arquivo);
 }
 
-/* =========================================================
-   Função: carregarClientes
-   Objetivo: Lê os clientes de um arquivo (texto ou binário)
-   e carrega na memória ao iniciar o sistema.
-   ========================================================= */
+/*
+  Carrega os dados dos clientes de um arquivo.
+ */
 void carregarClientes()
 {
     TipoArmazenamento modo = obterModoDeArmazenamento();
@@ -354,11 +343,9 @@ void carregarClientes()
         fclose(arquivo);
 }
 
-/* =========================================================
-   Função: liberarMemoriaClientes
-   Objetivo: Libera a memória alocada dinamicamente para
-   a lista de clientes.
-   ========================================================= */
+/*
+  Libera a memória alocada para a lista de clientes.
+ */
 void liberarMemoriaClientes()
 {
     if (lista_clientes != NULL)

@@ -1,11 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/* =========================================================
-   Função: limpar_buffer
-   Objetivo: Garante que o buffer de entrada (stdin) seja
-   esvaziado, evitando problemas com leituras subsequentes.
-   ========================================================= */
+/*
+  Limpa o buffer de entrada do teclado.
+ */
 void limpar_buffer()
 {
     int c;
@@ -13,22 +11,18 @@ void limpar_buffer()
         ;
 }
 
-/* =========================================================
-   Função: pausar
-   Objetivo: Serve para segurar a tela até que o usuário
-   pressione Enter.
-   ========================================================= */
+/*
+  Pausa a execução do programa até que o usuário pressione Enter.
+ */
 void pausar()
 {
     printf("\nPressione Enter para continuar...");
-    getchar(); // Apenas espera por um 'Enter'
+    getchar();
 }
 
-/* =========================================================
-   Função: limpar tela
-   Objetivo: Serve para limpar a tela, compativel com
-   Windows e Linux.
-   ========================================================= */
+/*
+  Limpa a tela do console.
+ */
 void limpar_tela() {
     #ifdef _WIN32
         system("cls");

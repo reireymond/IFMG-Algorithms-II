@@ -5,7 +5,6 @@
 #include "utils.h"
 #include "ui/menu.h"
 
-// Includes para os módulos de cadastro
 #include "cadastros/produtora.h"
 #include "cadastros/cliente.h"
 #include "cadastros/equipe.h"
@@ -13,7 +12,6 @@
 #include "cadastros/fornecedor.h"
 #include "cadastros/operador.h"
 
-// --- Declarações das funções de menu (para organização) ---
 void menuGestaoDeDados();
 void menuProdutora();
 void menuClientes();
@@ -22,9 +20,9 @@ void menuRecursos();
 void menuFornecedores();
 void menuOperadores();
 
-/* =========================================================
-   Função: menuEscolherArmazenamento
-   ========================================================= */
+/*
+  Exibe o menu para o usuário escolher o modo de armazenamento.
+ */
 void menuEscolherArmazenamento()
 {
     int opcao;
@@ -59,9 +57,9 @@ void menuEscolherArmazenamento()
     pausar();
 }
 
-/* =========================================================
-   Função: menuPrincipal
-   ========================================================= */
+/*
+  Exibe o menu principal do sistema.
+ */
 void menuPrincipal()
 {
     int menu_de_opcoes;
@@ -112,9 +110,9 @@ void menuPrincipal()
     } while (menu_de_opcoes != 0);
 }
 
-/* =========================================================
-   Função: menuGestaoDeDados
-   ========================================================= */
+/*
+  Exibe o menu de gestão de dados.
+ */
 void menuGestaoDeDados()
 {
     int opcao_gestao;
@@ -164,10 +162,9 @@ void menuGestaoDeDados()
     } while (opcao_gestao != 0);
 }
 
-/* =========================================================
-   Funções para os submenus de cadastro
-   ========================================================= */
-
+/*
+  Exibe o menu de gerenciamento da produtora.
+ */
 void menuProdutora()
 {
     int op_prod;
@@ -197,6 +194,9 @@ void menuProdutora()
     } while (op_prod != 0);
 }
 
+/*
+  Exibe o menu de gerenciamento de clientes.
+ */
 void menuClientes()
 {
     int op_cli;
@@ -226,6 +226,9 @@ void menuClientes()
     } while (op_cli != 0);
 }
 
+/*
+  Exibe o menu de gerenciamento da equipe interna.
+ */
 void menuEquipeInterna()
 {
     int op_eq;
@@ -255,6 +258,9 @@ void menuEquipeInterna()
     } while (op_eq != 0);
 }
 
+/*
+  Exibe o menu de gerenciamento de recursos.
+ */
 void menuRecursos()
 {
     int op_rec;
@@ -284,6 +290,9 @@ void menuRecursos()
     } while (op_rec != 0);
 }
 
+/*
+ Exibe o menu de gerenciamento de fornecedores.
+ */
 void menuFornecedores()
 {
     int op_forn;
@@ -313,6 +322,9 @@ void menuFornecedores()
     } while (op_forn != 0);
 }
 
+/*
+  Exibe o menu de gerenciamento de operadores.
+ */
 void menuOperadores()
 {
     int op_op;

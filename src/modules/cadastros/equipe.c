@@ -6,11 +6,16 @@
 #include "config.h"
 #include "utils.h"
 
-// Variaveis globais para equipe interna
-static EquipeInterna *lista_equipe = NULL; // Padronizado o nome da variável
+// Ponteiro para a lista de membros da equipe.
+static EquipeInterna *lista_equipe = NULL;
+// Número de membros da equipe cadastrados.
 static int num_equipe = 0;
+// Capacidade atual do array de membros da equipe.
 static int capacidade_equipe = 0;
 
+/*
+  Adiciona um novo membro à equipe.
+ */
 void adicionarEquipeInterna()
 {
     if (num_equipe == capacidade_equipe)
@@ -25,13 +30,12 @@ void adicionarEquipeInterna()
         lista_equipe = temp;
         capacidade_equipe = nova_capacidade;
     }
-    // Novo membro da equipe
+
     EquipeInterna novo_membro;
     printf("\n--- Cadastro de Novo Membro da Equipe ---\n");
     novo_membro.codigo = num_equipe + 1;
     printf("Codigo do Membro: %d\n", novo_membro.codigo);
 
-    // Coletar dados do usuario
     printf("Nome: ");
     fgets(novo_membro.nome, sizeof(novo_membro.nome), stdin);
     novo_membro.nome[strcspn(novo_membro.nome, "\n")] = 0;
@@ -46,16 +50,18 @@ void adicionarEquipeInterna()
 
     printf("Valor da diaria: R$ ");
     scanf("%f", &novo_membro.valor_diaria);
-    limpar_buffer(); //Limpa o buffer de entrada
+    limpar_buffer();
 
-    // Salvar no vetor dinâmico
     lista_equipe[num_equipe] = novo_membro;
     num_equipe++;
 
     printf("\nMembro '%s' cadastrado com sucesso!!\n", novo_membro.nome);
-    salvarEquipeInterna(); // Salva as alterações
+    salvarEquipeInterna();
 }
 
+/*
+  Lista todos os membros da equipe.
+ */
 void listarEquipeInterna()
 {
     if (num_equipe == 0)
@@ -77,7 +83,10 @@ void listarEquipeInterna()
     printf("----------------------------------\n");
 }
 
-void alterarEquipeInterna() // Nome da função corrigido
+/*
+  Altera os dados de um membro da equipe.
+ */
+void alterarEquipeInterna()
 {
     listarEquipeInterna();
     if (num_equipe == 0)
@@ -95,7 +104,7 @@ void alterarEquipeInterna() // Nome da função corrigido
         if (lista_equipe[i].codigo == codigo)
         {
             indice = i;
-            break; // Sai do loop assim que encontra
+            break;
         }
     }
 
@@ -151,8 +160,9 @@ void alterarEquipeInterna() // Nome da função corrigido
     salvarEquipeInterna();
 }
 
-// ============== FUNÇÕES QUE ESTAVAM FALTANDO ==============
-
+/*
+  Exclui um membro da equipe.
+ */
 void excluirEquipeInterna()
 {
     listarEquipeInterna();
@@ -199,6 +209,9 @@ void excluirEquipeInterna()
     }
 }
 
+/*
+  Salva os dados da equipe em um arquivo binário.
+ */
 void salvarEquipeInterna()
 {
     TipoArmazenamento modo = obterModoDeArmazenamento();
@@ -216,6 +229,9 @@ void salvarEquipeInterna()
     fclose(arquivo);
 }
 
+/*
+  Carrega os dados da equipe de um arquivo binário.
+ */
 void carregarEquipeInterna()
 {
     TipoArmazenamento modo = obterModoDeArmazenamento();
@@ -239,6 +255,9 @@ void carregarEquipeInterna()
     }
 }
 
+/*
+  Libera a memória alocada para a lista da equipe.
+ */
 void liberarMemoriaEquipe()
 {
     if (lista_equipe != NULL)

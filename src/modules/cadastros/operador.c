@@ -6,15 +6,16 @@
 #include "config.h"
 #include "utils.h"
 
-// --- VARIÁVEIS GLOBAIS PARA OPERADORES ---
+// Ponteiro para a lista de operadores.
 static Operador *lista_operadores = NULL;
+// Número de operadores cadastrados.
 static int num_operadores = 0;
+// Capacidade atual do array de operadores.
 static int capacidade_operadores = 0;
 
-/* =========================================================
-   Função: adicionarOperador
-   Objetivo: Cadastra um novo operador com senha em texto plano.
-   ========================================================= */
+/*
+  Adiciona um novo operador.
+ */
 void adicionarOperador() {
     if (num_operadores == capacidade_operadores) {
         int nova_capacidade = (capacidade_operadores == 0) ? 10 : capacidade_operadores * 2;
@@ -51,10 +52,9 @@ void adicionarOperador() {
     salvarOperadores();
 }
 
-/* =========================================================
-   Função: listarOperadores
-   Objetivo: Exibe todos os operadores (agora mostrando a senha).
-   ========================================================= */
+/*
+  Lista todos os operadores.
+ */
 void listarOperadores() {
     if (num_operadores == 0) {
         printf("\nNenhum operador cadastrado.\n");
@@ -66,15 +66,14 @@ void listarOperadores() {
         printf("Codigo: %d\n", lista_operadores[i].codigo);
         printf("Nome: %s\n", lista_operadores[i].nome);
         printf("Usuario: %s\n", lista_operadores[i].usuario);
-        printf("Senha: %s\n", lista_operadores[i].senha); // Alterado de "Senha Hash" para "Senha"
+        printf("Senha: %s\n", lista_operadores[i].senha);
     }
     printf("----------------------------------\n");
 }
 
-/* =========================================================
-   Função: alterarOperador
-   Objetivo: Altera dados de um operador, incluindo a senha.
-   ========================================================= */
+/*
+  Altera os dados de um operador.
+ */
 void alterarOperador() {
     listarOperadores();
     if (num_operadores == 0) return;
@@ -119,8 +118,7 @@ void alterarOperador() {
                 fgets(lista_operadores[indice].usuario, sizeof(lista_operadores[indice].usuario), stdin);
                 lista_operadores[indice].usuario[strcspn(lista_operadores[indice].usuario, "\n")] = 0;
                 break;
-            case 3: 
-                // LÓGICA DE HASH REMOVIDA
+            case 3:
                 printf("Nova Senha: ");
                 fgets(lista_operadores[indice].senha, sizeof(lista_operadores[indice].senha), stdin);
                 lista_operadores[indice].senha[strcspn(lista_operadores[indice].senha, "\n")] = 0;
@@ -136,12 +134,9 @@ void alterarOperador() {
     salvarOperadores();
 }
 
-
-/* ... O resto do arquivo (excluir, salvar, carregar, liberar) permanece igual ... */
-// =========================================================
-// ... cole o resto das funções a partir de excluirOperador() aqui ...
-// =========================================================
-
+/*
+  Exclui um operador.
+ */
 void excluirOperador() {
     listarOperadores();
     if (num_operadores == 0) return;
@@ -172,6 +167,9 @@ void excluirOperador() {
     printf("\nOperador com codigo %d nao encontrado.\n", codigo);
 }
 
+/*
+  Salva os dados dos operadores em um arquivo binário.
+ */
 void salvarOperadores() {
     TipoArmazenamento modo = obterModoDeArmazenamento();
     if (modo == MEMORIA) return;
@@ -186,6 +184,9 @@ void salvarOperadores() {
     fclose(arquivo);
 }
 
+/*
+  Carrega os dados dos operadores de um arquivo binário.
+ */
 void carregarOperadores() {
     TipoArmazenamento modo = obterModoDeArmazenamento();
     if (modo == MEMORIA) return;
@@ -204,6 +205,9 @@ void carregarOperadores() {
     }
 }
 
+/*
+  Libera a memória alocada para a lista de operadores.
+ */
 void liberarMemoriaOperadores() {
     if (lista_operadores != NULL) {
         free(lista_operadores);

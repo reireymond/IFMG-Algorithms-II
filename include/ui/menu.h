@@ -1,27 +1,18 @@
 #ifndef MENU_H
 #define MENU_H
 
-// ----------------- FUNÇÕES DE MENU -----------------
-
-/**
- * Função: menuEscolherArmazenamento
- * Objetivo: Exibe o menu inicial para o usuário definir
- * o modo de persistência dos dados.
+/*
+ * Exibe o menu para o usuário escolher o modo de armazenamento.
  */
 void menuEscolherArmazenamento();
 
-/**
- * Função: menuPrincipal
- * Objetivo: Apresenta o menu principal do sistema e gerencia
- * a navegação entre os módulos.
+/*
+ * Exibe o menu principal do sistema.
  */
 void menuPrincipal();
 
-/**
- * Função: menuGestaoDeDados
- * Objetivo: Apresenta o submenu de Gestão de Dados, permitindo 
- * ao usuário navegar para os cadastros específicos do 
- * sistema (Produtora, Clientes, Equipe, etc.).
+/*
+ * Exibe o menu de gestão de dados.
  */
 void menuGestaoDeDados();
 

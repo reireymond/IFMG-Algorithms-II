@@ -6,15 +6,16 @@
 #include "config.h"
 #include "utils.h"
 
-// --- VARIÁVEIS GLOBAIS PARA RECURSOS ---
+// Ponteiro para a lista de recursos.
 static Recurso *lista_recursos = NULL;
+// Número de recursos cadastrados.
 static int num_recursos = 0;
+// Capacidade atual do array de recursos.
 static int capacidade_recursos = 0;
 
-/* =========================================================
-   Função: adicionarRecurso
-   Objetivo: Cadastra um novo recurso ou equipamento.
-   ========================================================= */
+/*
+  Adiciona um novo recurso.
+ */
 void adicionarRecurso()
 {
     if (num_recursos == capacidade_recursos)
@@ -64,10 +65,9 @@ void adicionarRecurso()
     salvarRecursos();
 }
 
-/* =========================================================
-   Função: listarRecursos
-   Objetivo: Exibe todos os recursos cadastrados.
-   ========================================================= */
+/*
+  Lista todos os recursos.
+ */
 void listarRecursos()
 {
     if (num_recursos == 0)
@@ -90,10 +90,9 @@ void listarRecursos()
     printf("----------------------------------\n");
 }
 
-/* =========================================================
-   Função: alterarRecurso
-   Objetivo: Permite editar os dados de um recurso.
-   ========================================================= */
+/*
+  Altera os dados de um recurso.
+ */
 void alterarRecurso()
 {
     listarRecursos();
@@ -174,10 +173,9 @@ void alterarRecurso()
     salvarRecursos();
 }
 
-/* =========================================================
-   Função: excluirRecurso
-   Objetivo: Remove um recurso do sistema.
-   ========================================================= */
+/*
+  Exclui um recurso.
+ */
 void excluirRecurso()
 {
     listarRecursos();
@@ -224,10 +222,9 @@ void excluirRecurso()
     }
 }
 
-/* =========================================================
-   Função: salvarRecursos
-   Objetivo: Salva a lista de recursos no arquivo.
-   ========================================================= */
+/*
+  Salva os dados dos recursos em um arquivo binário.
+ */
 void salvarRecursos()
 {
     TipoArmazenamento modo = obterModoDeArmazenamento();
@@ -245,10 +242,9 @@ void salvarRecursos()
     fclose(arquivo);
 }
 
-/* =========================================================
-   Função: carregarRecursos
-   Objetivo: Carrega a lista de recursos do arquivo.
-   ========================================================= */
+/*
+  Carrega os dados dos recursos de um arquivo binário.
+ */
 void carregarRecursos()
 {
     TipoArmazenamento modo = obterModoDeArmazenamento();
@@ -272,10 +268,9 @@ void carregarRecursos()
     }
 }
 
-/* =========================================================
-   Função: liberarMemoriaRecursos
-   Objetivo: Libera a memória alocada para os recursos.
-   ========================================================= */
+/*
+  Libera a memória alocada para a lista de recursos.
+ */
 void liberarMemoriaRecursos()
 {
     if (lista_recursos != NULL)

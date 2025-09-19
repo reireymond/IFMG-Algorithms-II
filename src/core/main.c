@@ -5,7 +5,6 @@
 #include "ui/menu.h"
 #include "utils.h"
 
-// Includes de cadastros
 #include "cadastros/produtora.h"
 #include "cadastros/cliente.h"
 #include "cadastros/equipe.h"
@@ -13,16 +12,17 @@
 #include "cadastros/fornecedor.h"
 #include "cadastros/operador.h"
 
-/* =========================================================
-   Função: main
-   Objetivo: Função principal do programa.
-   Aqui onde tudo começa.
-   ========================================================= */
+/*
+ * Ponto de entrada principal do programa.
+ *
+ * Esta função inicializa o sistema, carrega os dados e exibe o menu principal.
+ */
 int main()
 {
+    // Exibe o menu para o usuário escolher o modo de armazenamento dos dados.
     menuEscolherArmazenamento();
 
-    // Carrega todos os dados dos arquivos
+    // Carrega todos os dados dos arquivos de acordo com o modo de armazenamento escolhido.
     carregarProdutora();
     carregarClientes();
     carregarEquipeInterna();
@@ -30,10 +30,10 @@ int main()
     carregarFornecedores();
     carregarOperadores();
 
-    // Chama o menu principal, que agora controla o loop do programa
+    // Exibe o menu principal, que controla o fluxo de execução do programa.
     menuPrincipal();
 
-    // Libera toda a memória alocada antes de sair
+    // Libera toda a memória alocada dinamicamente antes de encerrar o programa.
     liberarMemoriaProdutora();
     liberarMemoriaClientes();
     liberarMemoriaEquipe();

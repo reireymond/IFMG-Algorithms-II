@@ -6,15 +6,16 @@
 #include "config.h"
 #include "utils.h"
 
-// --- VARIÁVEIS GLOBAIS PARA FORNECEDORES ---
+// Ponteiro para a lista de fornecedores.
 static Fornecedor *lista_fornecedores = NULL;
+// Número de fornecedores cadastrados.
 static int num_fornecedores = 0;
+// Capacidade atual do array de fornecedores.
 static int capacidade_fornecedores = 0;
 
-/* =========================================================
-   Função: adicionarFornecedor
-   Objetivo: Cadastra um novo fornecedor.
-   ========================================================= */
+/*
+  Adiciona um novo fornecedor.
+ */
 void adicionarFornecedor()
 {
     if (num_fornecedores == capacidade_fornecedores)
@@ -69,10 +70,9 @@ void adicionarFornecedor()
     salvarFornecedores();
 }
 
-/* =========================================================
-   Função: listarFornecedores
-   Objetivo: Exibe todos os fornecedores cadastrados.
-   ========================================================= */
+/*
+  Lista todos os fornecedores.
+ */
 void listarFornecedores()
 {
     if (num_fornecedores == 0)
@@ -96,10 +96,9 @@ void listarFornecedores()
     printf("----------------------------------\n");
 }
 
-/* =========================================================
-   Função: alterarFornecedor
-   Objetivo: Permite editar os dados de um fornecedor.
-   ========================================================= */
+/*
+  Altera os dados de um fornecedor.
+ */
 void alterarFornecedor()
 {
     listarFornecedores();
@@ -186,10 +185,9 @@ void alterarFornecedor()
     salvarFornecedores();
 }
 
-/* =========================================================
-   Função: excluirFornecedor
-   Objetivo: Remove um fornecedor do sistema.
-   ========================================================= */
+/*
+  Exclui um fornecedor.
+ */
 void excluirFornecedor()
 {
     listarFornecedores();
@@ -236,10 +234,9 @@ void excluirFornecedor()
     }
 }
 
-/* =========================================================
-   Função: salvarFornecedores
-   Objetivo: Salva a lista de fornecedores no arquivo.
-   ========================================================= */
+/*
+  Salva os dados dos fornecedores em um arquivo binário.
+ */
 void salvarFornecedores()
 {
     TipoArmazenamento modo = obterModoDeArmazenamento();
@@ -257,10 +254,9 @@ void salvarFornecedores()
     fclose(arquivo);
 }
 
-/* =========================================================
-   Função: carregarFornecedores
-   Objetivo: Carrega a lista de fornecedores do arquivo.
-   ========================================================= */
+/*
+  Carrega os dados dos fornecedores de um arquivo binário.
+ */
 void carregarFornecedores()
 {
     TipoArmazenamento modo = obterModoDeArmazenamento();
@@ -284,10 +280,9 @@ void carregarFornecedores()
     }
 }
 
-/* =========================================================
-   Função: liberarMemoriaFornecedores
-   Objetivo: Libera a memória alocada para os fornecedores.
-   ========================================================= */
+/*
+  Libera a memória alocada para a lista de fornecedores.
+ */
 void liberarMemoriaFornecedores()
 {
     if (lista_fornecedores != NULL)

@@ -6,22 +6,22 @@
 #include "config.h"
 #include "utils.h"
 
-// --- VARIÁVEL GLOBAL PARA PRODUTORA (AGORA UM PONTEIRO) ---
+// Ponteiro global que armazena os dados da produtora.
 static Produtora *dados_produtora = NULL;
 
-// =========================================================
-//           SEÇÃO: PRODUTORA
-// =========================================================
-
+/*
+  Adiciona os dados da produtora.
+ */
 void adicionarProdutora()
 {
+    // Verifica se já existe uma produtora cadastrada.
     if (dados_produtora != NULL)
     {
         printf("\nUma produtora ja foi cadastrada. Exclua a existente para cadastrar uma nova.\n");
         return;
     }
 
-    // Aloca memória para a produtora
+    // Aloca memória para a produtora.
     dados_produtora = (Produtora *)malloc(sizeof(Produtora));
     if (dados_produtora == NULL)
     {
@@ -29,6 +29,7 @@ void adicionarProdutora()
         return;
     }
 
+    // Solicita e armazena os dados da produtora.
     printf("\n--- Cadastro dos Dados da Produtora ---\n");
 
     printf("Nome Fantasia: ");
@@ -75,6 +76,9 @@ void adicionarProdutora()
     salvarProdutora();
 }
 
+/*
+  Altera os dados da produtora.
+ */
 void alterarProdutora()
 {
     if (dados_produtora == NULL)
@@ -88,7 +92,7 @@ void alterarProdutora()
     {
         limpar_tela();
         printf("--- Alterar Dados da Produtora ---\n\n");
-        verDetalhesProdutora(); // Mostra os dados atuais
+        verDetalhesProdutora();
 
         printf("\n\nQual campo deseja alterar?\n");
         printf("1. Nome Fantasia\n");
@@ -171,6 +175,9 @@ void alterarProdutora()
     salvarProdutora();
 }
 
+/*
+  Exibe os detalhes da produtora.
+ */
 void verDetalhesProdutora()
 {
     if (dados_produtora == NULL)
@@ -191,6 +198,9 @@ void verDetalhesProdutora()
     printf("Margem de Lucro: %.2f%%\n", dados_produtora->margem_lucro);
 }
 
+/*
+  Exclui os dados da produtora.
+ */
 void excluirProdutora()
 {
     if (dados_produtora == NULL)
@@ -206,10 +216,10 @@ void excluirProdutora()
 
     if (confirmacao == 's' || confirmacao == 'S')
     {
-        free(dados_produtora);  // Liberta a memória
-        dados_produtora = NULL; // Aponta o ponteiro para NULL
+        free(dados_produtora);
+        dados_produtora = NULL;
 
-        salvarProdutora(); // Salva o estado "vazio"
+        salvarProdutora();
 
         printf("\nDados da produtora excluidos com sucesso!\n");
     }
@@ -219,6 +229,9 @@ void excluirProdutora()
     }
 }
 
+/*
+  Salva os dados da produtora em um arquivo binário.
+ */
 void salvarProdutora()
 {
     TipoArmazenamento modo = obterModoDeArmazenamento();
@@ -243,6 +256,9 @@ void salvarProdutora()
     fclose(arquivo);
 }
 
+/*
+  Carrega os dados da produtora de um arquivo binário.
+ */
 void carregarProdutora()
 {
     TipoArmazenamento modo = obterModoDeArmazenamento();
@@ -266,6 +282,9 @@ void carregarProdutora()
     }
 }
 
+/*
+  Libera a memória alocada para a produtora.
+ */
 void liberarMemoriaProdutora()
 {
     if (dados_produtora != NULL)

@@ -1,14 +1,14 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-// ----------------- FUNÇÕES AUXILIARES -----------------
-
-/**
- * Função: limpar_buffer
- * Objetivo: Limpa o buffer de entrada para evitar problemas
- * com leitura de strings após scanf.
+/*
+  Limpa o buffer de entrada do teclado.
  */
 void limpar_buffer();
+
+/*
+  Pausa a execução do programa até que o usuário pressione Enter.
+ */
 void pausar();
 
 #endif

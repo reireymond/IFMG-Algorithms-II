@@ -1,35 +1,21 @@
 #include "config.h"
 
-/* =========================================================
-   Arquivo: config.c
-   Objetivo: Gerencia a configuração global do sistema,
-   mais especificamente o "modo de armazenamento" usado
-   para salvar e carregar os dados (em memória, arquivo
-   de texto ou arquivo binário).
-
-   Aqui temos funções simples de "get" e "set" para
-   manipular a variável global que guarda essa escolha.
-   ========================================================= */
-
-// Variável global que guarda o modo de armazenamento atual.
-// Por padrão, começa com ARQUIVO_BINARIO.
+// Mantém o modo de armazenamento de dados escolhido pelo usuário.
+// Por padrão, o sistema inicia com ARQUIVO_BINARIO.
 static TipoArmazenamento modo_de_armazenamento = ARQUIVO_BINARIO;
 
-/* =========================================================
-   Função: definirModoDeArmazenamento
-   Objetivo: Permite alterar o modo de armazenamento,
-   recebendo como parâmetro o novo modo.
-   =====================F==================================== */
+/*
+ *  Define o modo de armazenamento de dados do sistema.
+ * * (MEMORIA, ARQUIVO_TEXTO ou ARQUIVO_BINARIO).
+ */
 void definirModoDeArmazenamento(TipoArmazenamento modo)
 {
    modo_de_armazenamento = modo;
 }
 
-/* =========================================================
-   Função: obterModoDeArmazenamento
-   Objetivo: Retorna qual é o modo de armazenamento
-   atualmente configurado no sistema.
-   ========================================================= */
+/*
+ * Obtém o modo de armazenamento de dados atualmente configurado.
+ */
 TipoArmazenamento obterModoDeArmazenamento()
 {
    return modo_de_armazenamento;

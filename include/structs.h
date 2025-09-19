@@ -1,13 +1,9 @@
 #ifndef STRUCTS_H
 #define STRUCTS_H
 
-/* =========================================================
-   Arquivo: structs.h
-   Objetivo: Define as estruturas de dados principais do
-   sistema, conforme especificado no enunciado do trabalho.
-   ========================================================= */
-
-// ----------------- ESTRUTURA: PRODUTORA -----------------
+/*
+  Estrutura para armazenar os dados da produtora.
+ */
 typedef struct
 {
     char nome_fantasia[100];
@@ -22,7 +18,9 @@ typedef struct
     float margem_lucro;
 } Produtora;
 
-// ----------------- ESTRUTURA: CLIENTE -----------------
+/*
+  Estrutura para armazenar os dados de um cliente.
+ */
 typedef struct
 {
     int codigo;
@@ -34,7 +32,9 @@ typedef struct
     char nome_do_contato[100];
 } Cliente;
 
-// ----------------- ESTRUTURA: EQUIPE INTERNA -----------------
+/*
+  Estrutura para armazenar os dados de um membro da equipe interna.
+ */
 typedef struct
 {
     int codigo;
@@ -44,7 +44,9 @@ typedef struct
     float valor_diaria;
 } EquipeInterna;
 
-// ----------------- ESTRUTURA: RECURSO E EQUIPAMENTO -----------------
+/*
+  Estrutura para armazenar os dados de um recurso ou equipamento.
+ */
 typedef struct
 {
     int codigo;
@@ -55,7 +57,9 @@ typedef struct
     float valor_locacao;
 } Recurso;
 
-// ----------------- ESTRUTURA: FORNECEDOR E PARCEIRO -----------------
+/*
+  Estrutura para armazenar os dados de um fornecedor ou parceiro.
+ */
 typedef struct
 {
     int codigo;
@@ -67,7 +71,9 @@ typedef struct
     char tipo_servico[100];
 } Fornecedor;
 
-// ----------------- ESTRUTURA: OPERADOR DO SISTEMA -----------------
+/*
+  Estrutura para armazenar os dados de um operador do sistema.
+ */
 typedef struct
 {
     int codigo;
