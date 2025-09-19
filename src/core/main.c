@@ -28,7 +28,7 @@ int main()
     carregarRecursos();
     // carregarFornecedores();
     carregarOperadores();
-F
+
     // Chama o menu principal, que agora controla o loop do programa
     menuPrincipal();
 
