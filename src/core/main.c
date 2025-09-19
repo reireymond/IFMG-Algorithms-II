@@ -10,6 +10,7 @@
 #include "cadastros/cliente.h"
 #include "cadastros/equipe.h"
 #include "cadastros/recurso.h"
+#include "cadastros/fornecedor.h"
 #include "cadastros/operador.h"
 
 /* =========================================================
@@ -26,7 +27,7 @@ int main()
     carregarClientes();
     carregarEquipeInterna();
     carregarRecursos();
-    // carregarFornecedores();
+    carregarFornecedores();
     carregarOperadores();
 
     // Chama o menu principal, que agora controla o loop do programa
@@ -37,7 +38,7 @@ int main()
     liberarMemoriaClientes();
     liberarMemoriaEquipe();
     liberarMemoriaRecursos();
-    // liberarMemoriaFornecedores();
+    liberarMemoriaFornecedores();
     liberarMemoriaOperadores();
 
     return 0;

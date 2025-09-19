@@ -5,30 +5,25 @@
 #include "utils.h"
 #include "ui/menu.h"
 
+// Includes para os módulos de cadastro
 #include "cadastros/produtora.h"
 #include "cadastros/cliente.h"
 #include "cadastros/equipe.h"
 #include "cadastros/recurso.h"
-// #include "cadastros/fornecedor.h"
+#include "cadastros/fornecedor.h"
 #include "cadastros/operador.h"
 
-// --- DECLARAÇÕES DE FUNÇÕES EXTERNAS ---
-// Funções que estão em outros arquivos mas são usadas aqui.
-void pausar();
-
-// --- DECLARAÇÕES DE FUNÇÕES DE MENU ---
-// Funções que estão neste arquivo e podem ser chamadas por outras.
+// --- Declarações das funções de menu (para organização) ---
 void menuGestaoDeDados();
 void menuProdutora();
 void menuClientes();
 void menuEquipeInterna();
 void menuRecursos();
+void menuFornecedores();
 void menuOperadores();
 
 /* =========================================================
    Função: menuEscolherArmazenamento
-   Objetivo: Permite ao usuário escolher como os dados serão
-   salvos no sistema.
    ========================================================= */
 void menuEscolherArmazenamento()
 {
@@ -66,7 +61,6 @@ void menuEscolherArmazenamento()
 
 /* =========================================================
    Função: menuPrincipal
-   Objetivo: Exibe o menu principal e controla a navegação.
    ========================================================= */
 void menuPrincipal()
 {
@@ -120,11 +114,7 @@ void menuPrincipal()
 
 /* =========================================================
    Função: menuGestaoDeDados
-   Objetivo: Apresenta as opções de gerenciamento de dados
-   da produtora: clientes, equipe, recursos, fornecedores
-   e operadores.
    ========================================================= */
-
 void menuGestaoDeDados()
 {
     int opcao_gestao;
@@ -141,7 +131,7 @@ void menuGestaoDeDados()
         printf("0. Voltar ao Menu Principal\n");
         printf("\nEscolha uma opcao: ");
         scanf("%d", &opcao_gestao);
-        limpar_buffer(); // Evita problemas com Enter no buffer
+        limpar_buffer();
 
         switch (opcao_gestao)
         {
@@ -158,8 +148,7 @@ void menuGestaoDeDados()
             menuRecursos();
             break;
         case 5:
-            printf("\nModulo em construcao...\n");
-            pausar();
+            menuFornecedores();
             break;
         case 6:
             menuOperadores();
@@ -176,10 +165,9 @@ void menuGestaoDeDados()
 }
 
 /* =========================================================
-   Função: menuProdutora
-   Objetivo: Permite ao usuário gerenciar os dados da
-   produtora de eventos (cadastrar, alterar, ver e excluir).
+   Funções para os submenus de cadastro
    ========================================================= */
+
 void menuProdutora()
 {
     int op_prod;
@@ -191,45 +179,24 @@ void menuProdutora()
         printf("2. Alterar Dados\n");
         printf("3. Ver Detalhes\n");
         printf("4. Excluir Dados\n");
-        printf("0. Voltar ao Menu Anterior\n");
+        printf("0. Voltar\n");
         printf("Escolha: ");
         scanf("%d", &op_prod);
         limpar_buffer();
 
         switch (op_prod)
         {
-        case 1:
-            adicionarProdutora();
-            break;
-        case 2:
-            alterarProdutora();
-            break;
-        case 3:
-            verDetalhesProdutora();
-            break;
-        case 4:
-            excluirProdutora();
-            break;
-        case 0:
-            break;
-        default:
-            printf("\nOpcao invalida para Produtora!\n");
-            break;
+        case 1: adicionarProdutora(); break;
+        case 2: alterarProdutora(); break;
+        case 3: verDetalhesProdutora(); break;
+        case 4: excluirProdutora(); break;
+        case 0: break;
+        default: printf("\nOpcao invalida!\n"); break;
         }
-
-        if (op_prod != 0)
-        {
-            pausar();
-        }
-
+        if (op_prod != 0) pausar();
     } while (op_prod != 0);
 }
 
-/* =========================================================
-   Função: menuClientes
-   Objetivo: Permite ao usuário gerenciar os clientes do
-   sistema: adicionar, alterar, listar e excluir.
-   ========================================================= */
 void menuClientes()
 {
     int op_cli;
@@ -241,95 +208,24 @@ void menuClientes()
         printf("2. Alterar Cliente Existente\n");
         printf("3. Listar Todos os Clientes\n");
         printf("4. Excluir Cliente\n");
-        printf("0. Voltar ao Menu Anterior\n");
+        printf("0. Voltar\n");
         printf("Escolha: ");
         scanf("%d", &op_cli);
         limpar_buffer();
 
         switch (op_cli)
         {
-        case 1:
-            adicionarCliente();
-            break;
-        case 2:
-            alterarCliente();
-            break;
-        case 3:
-            listarClientes();
-            break;
-        case 4:
-            excluirCliente();
-            break;
-        case 0:
-            break;
-        default:
-            printf("\nOpcao invalida para Clientes!\n");
-            break;
+        case 1: adicionarCliente(); break;
+        case 2: alterarCliente(); break;
+        case 3: listarClientes(); break;
+        case 4: excluirCliente(); break;
+        case 0: break;
+        default: printf("\nOpcao invalida!\n"); break;
         }
-
-        if (op_cli != 0)
-        {
-            pausar();
-        }
-
+        if (op_cli != 0) pausar();
     } while (op_cli != 0);
 }
 
-/* =========================================================
-   Função: menuOperadores
-   Objetivo: Permite ao usuário gerenciar os operadores do
-   sistema: adicionar, alterar, listar e excluir.
-   ========================================================= */
-void menuOperadores()
-{
-    int op_op;
-    do
-    {
-        system("cls");
-        printf("\n--- Menu Operadores ---\n");
-        printf("1. Adicionar Novo Operador\n");
-        printf("2. Alterar Operador Existente\n");
-        printf("3. Listar Todos os Operadores\n");
-        printf("4. Excluir Operador\n");
-        printf("0. Voltar ao Menu Anterior\n");
-        printf("Escolha: ");
-        scanf("%d", &op_op);
-        limpar_buffer();
-
-        switch (op_op)
-        {
-        case 1:
-            adicionarOperador();
-            break;
-        case 2:
-            alterarOperador();
-            break;
-        case 3:
-            listarOperadores();
-            break;
-        case 4:
-            excluirOperador();
-            break;
-        case 0:
-            break;
-        default:
-            printf("\nOpcao invalida para Operadores!\n");
-            break;
-        }
-
-        if (op_op != 0)
-        {
-            pausar();
-        }
-
-    } while (op_op != 0);
-}
-
-/* =========================================================
-   Função: menuEquipeInterna
-   Objetivo: Permite ao usuário gerenciar a equipe interna
-   do sistema: adicionar, alterar, listar e excluir.
-   ========================================================= */
 void menuEquipeInterna()
 {
     int op_eq;
@@ -341,45 +237,23 @@ void menuEquipeInterna()
         printf("2. Alterar Membro Existente\n");
         printf("3. Listar Todos os Membros\n");
         printf("4. Excluir Membro\n");
-        printf("0. Voltar ao Menu Anterior\n");
+        printf("0. Voltar\n");
         printf("Escolha: ");
         scanf("%d", &op_eq);
         limpar_buffer();
 
         switch (op_eq)
         {
-        case 1:
-            adicionarEquipeInterna();
-            break;
-        case 2:
-            alterarEquipeInterna();
-            break;
-        case 3:
-            listarEquipeInterna();
-            break;
-        case 4:
-            excluirEquipeInterna();
-            break;
-        case 0:
-            break;
-        default:
-            printf("\nOpcao invalida para Equipe!\n");
-            break;
+        case 1: adicionarEquipeInterna(); break;
+        case 2: alterarEquipeInterna(); break;
+        case 3: listarEquipeInterna(); break;
+        case 4: excluirEquipeInterna(); break;
+        case 0: break;
+        default: printf("\nOpcao invalida!\n"); break;
         }
-
-        if (op_eq != 0)
-        {
-            pausar();
-        }
-
+        if (op_eq != 0) pausar();
     } while (op_eq != 0);
 }
-
-/* =========================================================
-   Função: menuRecursos
-   Objetivo: Permite ao usuário gerenciar os recursos e do
-   equipamentos do sistema: adicionar, alterar, listar e excluir.
-   ========================================================= */
 
 void menuRecursos()
 {
@@ -392,36 +266,78 @@ void menuRecursos()
         printf("2. Alterar Recurso Existente\n");
         printf("3. Listar Todos os Recursos\n");
         printf("4. Excluir Recurso\n");
-        printf("0. Voltar ao Menu Anterior\n");
+        printf("0. Voltar\n");
         printf("Escolha: ");
         scanf("%d", &op_rec);
         limpar_buffer();
 
         switch (op_rec)
         {
-        case 1:
-            adicionarRecurso();
-            break;
-        case 2:
-            alterarRecurso();
-            break;
-        case 3:
-            listarRecursos();
-            break;
-        case 4:
-            excluirRecurso();
-            break;
-        case 0:
-            break;
-        default:
-            printf("\nOpcao invalida para Recursos!\n");
-            break;
+        case 1: adicionarRecurso(); break;
+        case 2: alterarRecurso(); break;
+        case 3: listarRecursos(); break;
+        case 4: excluirRecurso(); break;
+        case 0: break;
+        default: printf("\nOpcao invalida!\n"); break;
         }
-
-        if (op_rec != 0)
-        {
-            pausar();
-        }
-
+        if (op_rec != 0) pausar();
     } while (op_rec != 0);
+}
+
+void menuFornecedores()
+{
+    int op_forn;
+    do
+    {
+        system("cls");
+        printf("\n--- Menu Fornecedores e Parceiros ---\n");
+        printf("1. Adicionar Novo Fornecedor\n");
+        printf("2. Alterar Fornecedor Existente\n");
+        printf("3. Listar Todos os Fornecedores\n");
+        printf("4. Excluir Fornecedor\n");
+        printf("0. Voltar\n");
+        printf("Escolha: ");
+        scanf("%d", &op_forn);
+        limpar_buffer();
+
+        switch (op_forn)
+        {
+        case 1: adicionarFornecedor(); break;
+        case 2: alterarFornecedor(); break;
+        case 3: listarFornecedores(); break;
+        case 4: excluirFornecedor(); break;
+        case 0: break;
+        default: printf("\nOpcao invalida!\n"); break;
+        }
+        if (op_forn != 0) pausar();
+    } while (op_forn != 0);
+}
+
+void menuOperadores()
+{
+    int op_op;
+    do
+    {
+        system("cls");
+        printf("\n--- Menu Operadores ---\n");
+        printf("1. Adicionar Novo Operador\n");
+        printf("2. Alterar Operador Existente\n");
+        printf("3. Listar Todos os Operadores\n");
+        printf("4. Excluir Operador\n");
+        printf("0. Voltar\n");
+        printf("Escolha: ");
+        scanf("%d", &op_op);
+        limpar_buffer();
+
+        switch (op_op)
+        {
+        case 1: adicionarOperador(); break;
+        case 2: alterarOperador(); break;
+        case 3: listarOperadores(); break;
+        case 4: excluirOperador(); break;
+        case 0: break;
+        default: printf("\nOpcao invalida!\n"); break;
+        }
+        if (op_op != 0) pausar();
+    } while (op_op != 0);
 }

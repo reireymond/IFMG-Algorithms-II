@@ -2,7 +2,7 @@
 CC = gcc
 
 # Flags de compilação
-CFLAGS = -Wall -Iinclude
+CFLAGS = -Wall -Iinclude -g
 
 # Diretórios
 SDIR = src
@@ -12,9 +12,9 @@ BDIR = bin
 # Nome do executável final
 TARGET = $(BDIR)/produtora
 
-# --- CORREÇÃO AQUI ---
-# Lista os arquivos .c usando wildcard, que é compatível com Windows.
-SOURCES = $(wildcard src/core/*.c src/lib/*.c src/modules/cadastros/*.c src/ui/*.c)
+# Encontra TODOS os arquivos .c nos subdiretórios de 'src'
+# Esta é a linha corrigida para garantir que todos os arquivos sejam incluídos.
+SOURCES := $(wildcard src/core/*.c) $(wildcard src/modules/cadastros/*.c) $(wildcard src/ui/*.c)
 
 # Converte a lista de fontes .c para uma lista de objetos .o
 OBJECTS = $(patsubst $(SDIR)/%.c, $(ODIR)/%.o, $(SOURCES))
@@ -22,17 +22,16 @@ OBJECTS = $(patsubst $(SDIR)/%.c, $(ODIR)/%.o, $(SOURCES))
 # Regra principal: compila o projeto
 all: $(TARGET)
 
-# Regra para criar o executável final
+# Regra para criar o executável final (linking)
 $(TARGET): $(OBJECTS)
 	@if not exist "$(BDIR)" mkdir "$(BDIR)"
 	@echo "--> Vinculando objetos para criar o executavel..."
 	$(CC) $(OBJECTS) -o $@
 	@echo "--> Executavel '$(TARGET)' criado com sucesso."
 
-# --- CORREÇÃO NA REGRA DE COMPILAÇÃO ---
-# Regra para compilar os arquivos .c em .o, com criação de pastas para Windows
+# Regra para compilar os arquivos .c em .o
 $(ODIR)/%.o: $(SDIR)/%.c
-	@if not exist "$(dir $@)" mkdir "$(dir $@)"
+	@if not exist "$(@D)" mkdir "$(@D)"
 	@echo "--> Compilando $<..."
 	$(CC) $(CFLAGS) -c $< -o $@
 
@@ -43,5 +42,10 @@ clean:
 	@if exist "$(BDIR)" rmdir /s /q "$(BDIR)"
 	@echo "Limpeza concluida."
 
+# Regra para compilar e executar o programa
+run: all
+	@echo "--> Executando o programa..."
+	$(TARGET)
+
 # Define as regras que não são arquivos
-.PHONY: all clean
+.PHONY: all clean run
