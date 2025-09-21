@@ -9,9 +9,9 @@
 // Ponteiro global que armazena os dados da produtora.
 static Produtora *dados_produtora = NULL;
 
-/*
-  Adiciona os dados da produtora.
- */
+
+  // Adiciona os dados da produtora.
+ 
 void adicionarProdutora()
 {
     // Verifica se já existe uma produtora cadastrada.
@@ -76,9 +76,9 @@ void adicionarProdutora()
     salvarProdutora();
 }
 
-/*
-  Altera os dados da produtora.
- */
+
+ // Altera os dados da produtora.
+ 
 void alterarProdutora()
 {
     if (dados_produtora == NULL)
@@ -175,9 +175,9 @@ void alterarProdutora()
     salvarProdutora();
 }
 
-/*
-  Exibe os detalhes da produtora.
- */
+
+ // Exibe os detalhes da produtora.
+ 
 void verDetalhesProdutora()
 {
     if (dados_produtora == NULL)
@@ -198,9 +198,9 @@ void verDetalhesProdutora()
     printf("Margem de Lucro: %.2f%%\n", dados_produtora->margem_lucro);
 }
 
-/*
-  Exclui os dados da produtora.
- */
+
+  // Exclui os dados da produtora.
+ 
 void excluirProdutora()
 {
     if (dados_produtora == NULL)
@@ -229,9 +229,9 @@ void excluirProdutora()
     }
 }
 
-/*
-  Salva os dados da produtora em um arquivo binário.
- */
+
+   // Salva os dados da produtora em um arquivo binário.
+ 
 void salvarProdutora()
 {
     TipoArmazenamento modo = obterModoDeArmazenamento();
@@ -256,9 +256,9 @@ void salvarProdutora()
     fclose(arquivo);
 }
 
-/*
-  Carrega os dados da produtora de um arquivo binário.
- */
+
+   // Carrega os dados da produtora de um arquivo binário.
+ 
 void carregarProdutora()
 {
     TipoArmazenamento modo = obterModoDeArmazenamento();
@@ -282,9 +282,9 @@ void carregarProdutora()
     }
 }
 
-/*
-  Libera a memória alocada para a produtora.
- */
+
+   // Libera a memória alocada para a produtora.
+ 
 void liberarMemoriaProdutora()
 {
     if (dados_produtora != NULL)

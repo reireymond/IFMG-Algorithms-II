@@ -13,9 +13,9 @@ static int num_recursos = 0;
 // Capacidade atual do array de recursos.
 static int capacidade_recursos = 0;
 
-/*
-  Adiciona um novo recurso.
- */
+
+   // Adiciona um novo recurso.
+ 
 void adicionarRecurso()
 {
     if (num_recursos == capacidade_recursos)
@@ -65,9 +65,9 @@ void adicionarRecurso()
     salvarRecursos();
 }
 
-/*
-  Lista todos os recursos.
- */
+
+   // Lista todos os recursos.
+ 
 void listarRecursos()
 {
     if (num_recursos == 0)
@@ -90,9 +90,9 @@ void listarRecursos()
     printf("----------------------------------\n");
 }
 
-/*
-  Altera os dados de um recurso.
- */
+
+   // Altera os dados de um recurso.
+ 
 void alterarRecurso()
 {
     listarRecursos();
@@ -173,9 +173,9 @@ void alterarRecurso()
     salvarRecursos();
 }
 
-/*
-  Exclui um recurso.
- */
+
+  // Exclui um recurso.
+ 
 void excluirRecurso()
 {
     listarRecursos();
@@ -222,9 +222,9 @@ void excluirRecurso()
     }
 }
 
-/*
-  Salva os dados dos recursos em um arquivo binário.
- */
+
+  // Salva os dados dos recursos em um arquivo binário.
+ 
 void salvarRecursos()
 {
     TipoArmazenamento modo = obterModoDeArmazenamento();
@@ -242,9 +242,9 @@ void salvarRecursos()
     fclose(arquivo);
 }
 
-/*
-  Carrega os dados dos recursos de um arquivo binário.
- */
+
+   // Carrega os dados dos recursos de um arquivo binário.
+ 
 void carregarRecursos()
 {
     TipoArmazenamento modo = obterModoDeArmazenamento();
@@ -268,9 +268,9 @@ void carregarRecursos()
     }
 }
 
-/*
-  Libera a memória alocada para a lista de recursos.
- */
+
+  // Libera a memória alocada para a lista de recursos.
+ 
 void liberarMemoriaRecursos()
 {
     if (lista_recursos != NULL)

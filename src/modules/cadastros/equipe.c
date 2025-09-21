@@ -13,9 +13,9 @@ static int num_equipe = 0;
 // Capacidade atual do array de membros da equipe.
 static int capacidade_equipe = 0;
 
-/*
-  Adiciona um novo membro à equipe.
- */
+
+ // Adiciona um novo membro à equipe.
+ 
 void adicionarEquipeInterna()
 {
     if (num_equipe == capacidade_equipe)
@@ -59,9 +59,9 @@ void adicionarEquipeInterna()
     salvarEquipeInterna();
 }
 
-/*
-  Lista todos os membros da equipe.
- */
+
+  // Lista todos os membros da equipe.
+ 
 void listarEquipeInterna()
 {
     if (num_equipe == 0)
@@ -83,9 +83,9 @@ void listarEquipeInterna()
     printf("----------------------------------\n");
 }
 
-/*
-  Altera os dados de um membro da equipe.
- */
+
+  // Altera os dados de um membro da equipe.
+
 void alterarEquipeInterna()
 {
     listarEquipeInterna();
@@ -160,9 +160,9 @@ void alterarEquipeInterna()
     salvarEquipeInterna();
 }
 
-/*
-  Exclui um membro da equipe.
- */
+
+  // Exclui um membro da equipe.
+ 
 void excluirEquipeInterna()
 {
     listarEquipeInterna();
@@ -209,9 +209,9 @@ void excluirEquipeInterna()
     }
 }
 
-/*
-  Salva os dados da equipe em um arquivo binário.
- */
+
+  // Salva os dados da equipe em um arquivo binário.
+ 
 void salvarEquipeInterna()
 {
     TipoArmazenamento modo = obterModoDeArmazenamento();
@@ -229,9 +229,9 @@ void salvarEquipeInterna()
     fclose(arquivo);
 }
 
-/*
-  Carrega os dados da equipe de um arquivo binário.
- */
+
+ // Carrega os dados da equipe de um arquivo binário.
+ 
 void carregarEquipeInterna()
 {
     TipoArmazenamento modo = obterModoDeArmazenamento();
@@ -255,9 +255,9 @@ void carregarEquipeInterna()
     }
 }
 
-/*
-  Libera a memória alocada para a lista da equipe.
- */
+
+  //Libera a memória alocada para a lista da equipe.
+ 
 void liberarMemoriaEquipe()
 {
     if (lista_equipe != NULL)

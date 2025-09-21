@@ -13,9 +13,9 @@ static int num_operadores = 0;
 // Capacidade atual do array de operadores.
 static int capacidade_operadores = 0;
 
-/*
-  Adiciona um novo operador.
- */
+
+ // Adiciona um novo operador.
+ 
 void adicionarOperador() {
     if (num_operadores == capacidade_operadores) {
         int nova_capacidade = (capacidade_operadores == 0) ? 10 : capacidade_operadores * 2;
@@ -52,9 +52,9 @@ void adicionarOperador() {
     salvarOperadores();
 }
 
-/*
-  Lista todos os operadores.
- */
+
+ // Lista todos os operadores.
+ 
 void listarOperadores() {
     if (num_operadores == 0) {
         printf("\nNenhum operador cadastrado.\n");
@@ -71,9 +71,9 @@ void listarOperadores() {
     printf("----------------------------------\n");
 }
 
-/*
-  Altera os dados de um operador.
- */
+
+ // Altera os dados de um operador.
+ 
 void alterarOperador() {
     listarOperadores();
     if (num_operadores == 0) return;
@@ -134,9 +134,9 @@ void alterarOperador() {
     salvarOperadores();
 }
 
-/*
-  Exclui um operador.
- */
+
+  // Exclui um operador.
+ 
 void excluirOperador() {
     listarOperadores();
     if (num_operadores == 0) return;
@@ -167,9 +167,9 @@ void excluirOperador() {
     printf("\nOperador com codigo %d nao encontrado.\n", codigo);
 }
 
-/*
-  Salva os dados dos operadores em um arquivo binário.
- */
+
+  //Salva os dados dos operadores em um arquivo binário.
+ 
 void salvarOperadores() {
     TipoArmazenamento modo = obterModoDeArmazenamento();
     if (modo == MEMORIA) return;
@@ -184,9 +184,9 @@ void salvarOperadores() {
     fclose(arquivo);
 }
 
-/*
-  Carrega os dados dos operadores de um arquivo binário.
- */
+
+   // Carrega os dados dos operadores de um arquivo binário.
+ 
 void carregarOperadores() {
     TipoArmazenamento modo = obterModoDeArmazenamento();
     if (modo == MEMORIA) return;
@@ -205,9 +205,9 @@ void carregarOperadores() {
     }
 }
 
-/*
-  Libera a memória alocada para a lista de operadores.
- */
+
+   // Libera a memória alocada para a lista de operadores.
+ 
 void liberarMemoriaOperadores() {
     if (lista_operadores != NULL) {
         free(lista_operadores);

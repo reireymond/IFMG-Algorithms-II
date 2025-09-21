@@ -13,9 +13,9 @@ static int num_fornecedores = 0;
 // Capacidade atual do array de fornecedores.
 static int capacidade_fornecedores = 0;
 
-/*
-  Adiciona um novo fornecedor.
- */
+
+  // Adiciona um novo fornecedor.
+ 
 void adicionarFornecedor()
 {
     if (num_fornecedores == capacidade_fornecedores)
@@ -70,9 +70,9 @@ void adicionarFornecedor()
     salvarFornecedores();
 }
 
-/*
-  Lista todos os fornecedores.
- */
+
+  //Lista todos os fornecedores.
+ 
 void listarFornecedores()
 {
     if (num_fornecedores == 0)
@@ -96,9 +96,9 @@ void listarFornecedores()
     printf("----------------------------------\n");
 }
 
-/*
-  Altera os dados de um fornecedor.
- */
+
+   /// Altera os dados de um fornecedor.
+ 
 void alterarFornecedor()
 {
     listarFornecedores();
@@ -185,9 +185,9 @@ void alterarFornecedor()
     salvarFornecedores();
 }
 
-/*
-  Exclui um fornecedor.
- */
+
+  // Exclui um fornecedor.
+
 void excluirFornecedor()
 {
     listarFornecedores();
@@ -234,9 +234,9 @@ void excluirFornecedor()
     }
 }
 
-/*
-  Salva os dados dos fornecedores em um arquivo binário.
- */
+
+  // Salva os dados dos fornecedores em um arquivo binário.
+ 
 void salvarFornecedores()
 {
     TipoArmazenamento modo = obterModoDeArmazenamento();
@@ -254,9 +254,9 @@ void salvarFornecedores()
     fclose(arquivo);
 }
 
-/*
-  Carrega os dados dos fornecedores de um arquivo binário.
- */
+
+ // Carrega os dados dos fornecedores de um arquivo binário.
+ 
 void carregarFornecedores()
 {
     TipoArmazenamento modo = obterModoDeArmazenamento();
@@ -280,9 +280,9 @@ void carregarFornecedores()
     }
 }
 
-/*
-  Libera a memória alocada para a lista de fornecedores.
- */
+
+ // Libera a memória alocada para a lista de fornecedores.
+ 
 void liberarMemoriaFornecedores()
 {
     if (lista_fornecedores != NULL)
