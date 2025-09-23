@@ -1,19 +1,10 @@
 #ifndef MENU_H
 #define MENU_H
 
-/*
- * Exibe o menu para o usuário escolher o modo de armazenamento.
- */
+#include "structs.h" // Incluído para reconhecer o tipo 'Sistema'
+
 void menuEscolherArmazenamento();
-
-/*
- * Exibe o menu principal do sistema.
- */
-void menuPrincipal();
-
-/*
- * Exibe o menu de gestão de dados.
- */
-void menuGestaoDeDados();
+void menuPrincipal(Sistema *sistema);
+void menuGestaoDeDados(Sistema *sistema);
 
 #endif

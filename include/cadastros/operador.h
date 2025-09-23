@@ -3,12 +3,12 @@
 
 #include "structs.h"
 
-void adicionarOperador();
-void alterarOperador();
-void listarOperadores();
-void excluirOperador();
-void salvarOperadores();
-void carregarOperadores();
-void liberarMemoriaOperadores();
+void adicionarOperador(Sistema *sistema);
+void alterarOperador(Sistema *sistema);
+void listarOperadores(Sistema *sistema);
+void excluirOperador(Sistema *sistema);
+void salvarOperadores(Sistema *sistema);
+void carregarOperadores(Sistema *sistema);
+void liberarMemoriaOperadores(Sistema *sistema);
 
 #endif

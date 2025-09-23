@@ -3,12 +3,12 @@
 
 #include "structs.h"
 
-void adicionarFornecedor();
-void alterarFornecedor();
-void listarFornecedores();
-void excluirFornecedor();
-void salvarFornecedores();
-void carregarFornecedores();
-void liberarMemoriaFornecedores();
+void adicionarFornecedor(Sistema *sistema);
+void alterarFornecedor(Sistema *sistema);
+void listarFornecedores(Sistema *sistema);
+void excluirFornecedor(Sistema *sistema);
+void salvarFornecedores(Sistema *sistema);
+void carregarFornecedores(Sistema *sistema);
+void liberarMemoriaFornecedores(Sistema *sistema);
 
 #endif

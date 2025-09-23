@@ -3,12 +3,12 @@
 
 #include "structs.h"
 
-void adicionarCliente();
-void alterarCliente();
-void listarClientes();
-void excluirCliente();
-void salvarClientes();
-void carregarClientes();
-void liberarMemoriaClientes();
+void adicionarCliente(Sistema *sistema);
+void alterarCliente(Sistema *sistema);
+void listarClientes(Sistema *sistema);
+void excluirCliente(Sistema *sistema);
+void salvarClientes(Sistema *sistema);
+void carregarClientes(Sistema *sistema);
+void liberarMemoriaClientes(Sistema *sistema);
 
 #endif

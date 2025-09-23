@@ -3,12 +3,12 @@
 
 #include "structs.h"
 
-void adicionarProdutora();
-void alterarProdutora();
-void verDetalhesProdutora();
-void excluirProdutora();
-void salvarProdutora();
-void carregarProdutora();
-void liberarMemoriaProdutora();
+void adicionarProdutora(Sistema *sistema);
+void alterarProdutora(Sistema *sistema);
+void verDetalhesProdutora(Sistema *sistema);
+void excluirProdutora(Sistema *sistema);
+void salvarProdutora(Sistema *sistema);
+void carregarProdutora(Sistema *sistema);
+void liberarMemoriaProdutora(Sistema *sistema);
 
 #endif

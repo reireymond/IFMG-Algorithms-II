@@ -4,7 +4,9 @@
 #include "config.h"
 #include "utils.h"
 #include "ui/menu.h"
+#include "structs.h"
 
+// Includes dos módulos de cadastro
 #include "cadastros/produtora.h"
 #include "cadastros/cliente.h"
 #include "cadastros/equipe.h"
@@ -12,17 +14,17 @@
 #include "cadastros/fornecedor.h"
 #include "cadastros/operador.h"
 
-void menuGestaoDeDados();
-void menuProdutora();
-void menuClientes();
-void menuEquipeInterna();
-void menuRecursos();
-void menuFornecedores();
-void menuOperadores();
+// Protótipos das funções de menu internas a este arquivo
+void menuGestaoDeDados(Sistema *sistema);
+void menuProdutora(Sistema *sistema);
+void menuClientes(Sistema *sistema);
+void menuEquipeInterna(Sistema *sistema);
+void menuRecursos(Sistema *sistema);
+void menuFornecedores(Sistema *sistema);
+void menuOperadores(Sistema *sistema);
 
-/*
-  Exibe o menu para o usuário escolher o modo de armazenamento.
- */
+
+// Exibe o menu para o usuário escolher o modo de armazenamento.
 void menuEscolherArmazenamento()
 {
     int opcao;
@@ -57,10 +59,9 @@ void menuEscolherArmazenamento()
     pausar();
 }
 
-/*
-  Exibe o menu principal do sistema.
- */
-void menuPrincipal()
+
+// Exibe o menu principal do sistema.
+void menuPrincipal(Sistema *sistema)
 {
     int menu_de_opcoes;
     do
@@ -80,7 +81,7 @@ void menuPrincipal()
         switch (menu_de_opcoes)
         {
         case 1:
-            menuGestaoDeDados();
+            menuGestaoDeDados(sistema);
             break;
         case 2:
             printf("\nModulo em construcao...\n");
@@ -110,10 +111,9 @@ void menuPrincipal()
     } while (menu_de_opcoes != 0);
 }
 
-/*
-  Exibe o menu de gestão de dados.
- */
-void menuGestaoDeDados()
+
+// Exibe o menu de gestão de dados.
+void menuGestaoDeDados(Sistema *sistema)
 {
     int opcao_gestao;
     do
@@ -134,22 +134,22 @@ void menuGestaoDeDados()
         switch (opcao_gestao)
         {
         case 1:
-            menuProdutora();
+            menuProdutora(sistema);
             break;
         case 2:
-            menuClientes();
+            menuClientes(sistema);
             break;
         case 3:
-            menuEquipeInterna();
+            menuEquipeInterna(sistema);
             break;
         case 4:
-            menuRecursos();
+            menuRecursos(sistema);
             break;
         case 5:
-            menuFornecedores();
+            menuFornecedores(sistema);
             break;
         case 6:
-            menuOperadores();
+            menuOperadores(sistema);
             break;
         case 0:
             break;
@@ -162,10 +162,8 @@ void menuGestaoDeDados()
     } while (opcao_gestao != 0);
 }
 
-/*
-  Exibe o menu de gerenciamento da produtora.
- */
-void menuProdutora()
+// Exibe o menu de gerenciamento da produtora.
+void menuProdutora(Sistema *sistema)
 {
     int op_prod;
     do
@@ -183,10 +181,10 @@ void menuProdutora()
 
         switch (op_prod)
         {
-        case 1: adicionarProdutora(); break;
-        case 2: alterarProdutora(); break;
-        case 3: verDetalhesProdutora(); break;
-        case 4: excluirProdutora(); break;
+        case 1: adicionarProdutora(sistema); break;
+        case 2: alterarProdutora(sistema); break;
+        case 3: verDetalhesProdutora(sistema); break;
+        case 4: excluirProdutora(sistema); break;
         case 0: break;
         default: printf("\nOpcao invalida!\n"); break;
         }
@@ -194,10 +192,8 @@ void menuProdutora()
     } while (op_prod != 0);
 }
 
-/*
-  Exibe o menu de gerenciamento de clientes.
- */
-void menuClientes()
+// Exibe o menu de gerenciamento de clientes.
+void menuClientes(Sistema *sistema)
 {
     int op_cli;
     do
@@ -215,10 +211,10 @@ void menuClientes()
 
         switch (op_cli)
         {
-        case 1: adicionarCliente(); break;
-        case 2: alterarCliente(); break;
-        case 3: listarClientes(); break;
-        case 4: excluirCliente(); break;
+        case 1: adicionarCliente(sistema); break;
+        case 2: alterarCliente(sistema); break;
+        case 3: listarClientes(sistema); break;
+        case 4: excluirCliente(sistema); break;
         case 0: break;
         default: printf("\nOpcao invalida!\n"); break;
         }
@@ -226,10 +222,8 @@ void menuClientes()
     } while (op_cli != 0);
 }
 
-/*
-  Exibe o menu de gerenciamento da equipe interna.
- */
-void menuEquipeInterna()
+// Exibe o menu de gerenciamento da equipe interna.
+void menuEquipeInterna(Sistema *sistema)
 {
     int op_eq;
     do
@@ -247,10 +241,10 @@ void menuEquipeInterna()
 
         switch (op_eq)
         {
-        case 1: adicionarEquipeInterna(); break;
-        case 2: alterarEquipeInterna(); break;
-        case 3: listarEquipeInterna(); break;
-        case 4: excluirEquipeInterna(); break;
+        case 1: adicionarEquipeInterna(sistema); break;
+        case 2: alterarEquipeInterna(sistema); break;
+        case 3: listarEquipeInterna(sistema); break;
+        case 4: excluirEquipeInterna(sistema); break;
         case 0: break;
         default: printf("\nOpcao invalida!\n"); break;
         }
@@ -258,10 +252,8 @@ void menuEquipeInterna()
     } while (op_eq != 0);
 }
 
-/*
-  Exibe o menu de gerenciamento de recursos.
- */
-void menuRecursos()
+// Exibe o menu de gerenciamento de recursos.
+void menuRecursos(Sistema *sistema)
 {
     int op_rec;
     do
@@ -279,10 +271,10 @@ void menuRecursos()
 
         switch (op_rec)
         {
-        case 1: adicionarRecurso(); break;
-        case 2: alterarRecurso(); break;
-        case 3: listarRecursos(); break;
-        case 4: excluirRecurso(); break;
+        case 1: adicionarRecurso(sistema); break;
+        case 2: alterarRecurso(sistema); break;
+        case 3: listarRecursos(sistema); break;
+        case 4: excluirRecurso(sistema); break;
         case 0: break;
         default: printf("\nOpcao invalida!\n"); break;
         }
@@ -290,10 +282,9 @@ void menuRecursos()
     } while (op_rec != 0);
 }
 
-/*
- Exibe o menu de gerenciamento de fornecedores.
- */
-void menuFornecedores()
+
+// Exibe o menu de gerenciamento de fornecedores.
+void menuFornecedores(Sistema *sistema)
 {
     int op_forn;
     do
@@ -311,10 +302,10 @@ void menuFornecedores()
 
         switch (op_forn)
         {
-        case 1: adicionarFornecedor(); break;
-        case 2: alterarFornecedor(); break;
-        case 3: listarFornecedores(); break;
-        case 4: excluirFornecedor(); break;
+        case 1: adicionarFornecedor(sistema); break;
+        case 2: alterarFornecedor(sistema); break;
+        case 3: listarFornecedores(sistema); break;
+        case 4: excluirFornecedor(sistema); break;
         case 0: break;
         default: printf("\nOpcao invalida!\n"); break;
         }
@@ -322,10 +313,8 @@ void menuFornecedores()
     } while (op_forn != 0);
 }
 
-/*
-  Exibe o menu de gerenciamento de operadores.
- */
-void menuOperadores()
+// Exibe o menu de gerenciamento de operadores.
+void menuOperadores(Sistema *sistema)
 {
     int op_op;
     do
@@ -343,10 +332,10 @@ void menuOperadores()
 
         switch (op_op)
         {
-        case 1: adicionarOperador(); break;
-        case 2: alterarOperador(); break;
-        case 3: listarOperadores(); break;
-        case 4: excluirOperador(); break;
+        case 1: adicionarOperador(sistema); break;
+        case 2: alterarOperador(sistema); break;
+        case 3: listarOperadores(sistema); break;
+        case 4: excluirOperador(sistema); break;
         case 0: break;
         default: printf("\nOpcao invalida!\n"); break;
         }
