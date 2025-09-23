@@ -5,83 +5,76 @@
 #include "cadastros/produtora.h"
 #include "config.h"
 #include "utils.h"
+#include "structs.h"
 
-// Ponteiro global que armazena os dados da produtora.
-static Produtora *dados_produtora = NULL;
+#define PRODUTORA_DATA_FILE "../data/produtora.dat"
 
-
-  // Adiciona os dados da produtora.
- 
-void adicionarProdutora()
+// Cadastra os dados da produtora.
+void adicionarProdutora(Sistema *sistema)
 {
-    // Verifica se já existe uma produtora cadastrada.
-    if (dados_produtora != NULL)
+    if (sistema->dados_produtora != NULL)
     {
         printf("\nUma produtora ja foi cadastrada. Exclua a existente para cadastrar uma nova.\n");
         return;
     }
 
-    // Aloca memória para a produtora.
-    dados_produtora = (Produtora *)malloc(sizeof(Produtora));
-    if (dados_produtora == NULL)
+    sistema->dados_produtora = (Produtora *)malloc(sizeof(Produtora));
+    if (sistema->dados_produtora == NULL)
     {
         printf("Erro fatal: Nao foi possivel alocar memoria para a produtora.\n");
         return;
     }
 
-    // Solicita e armazena os dados da produtora.
     printf("\n--- Cadastro dos Dados da Produtora ---\n");
 
     printf("Nome Fantasia: ");
-    fgets(dados_produtora->nome_fantasia, sizeof(dados_produtora->nome_fantasia), stdin);
-    dados_produtora->nome_fantasia[strcspn(dados_produtora->nome_fantasia, "\n")] = 0;
+    fgets(sistema->dados_produtora->nome_fantasia, sizeof(sistema->dados_produtora->nome_fantasia), stdin);
+    sistema->dados_produtora->nome_fantasia[strcspn(sistema->dados_produtora->nome_fantasia, "\n")] = 0;
 
     printf("Razao Social: ");
-    fgets(dados_produtora->razao_social, sizeof(dados_produtora->razao_social), stdin);
-    dados_produtora->razao_social[strcspn(dados_produtora->razao_social, "\n")] = 0;
+    fgets(sistema->dados_produtora->razao_social, sizeof(sistema->dados_produtora->razao_social), stdin);
+    sistema->dados_produtora->razao_social[strcspn(sistema->dados_produtora->razao_social, "\n")] = 0;
 
     printf("Nome do Responsavel: ");
-    fgets(dados_produtora->nome_do_responsavel, sizeof(dados_produtora->nome_do_responsavel), stdin);
-    dados_produtora->nome_do_responsavel[strcspn(dados_produtora->nome_do_responsavel, "\n")] = 0;
+    fgets(sistema->dados_produtora->nome_do_responsavel, sizeof(sistema->dados_produtora->nome_do_responsavel), stdin);
+    sistema->dados_produtora->nome_do_responsavel[strcspn(sistema->dados_produtora->nome_do_responsavel, "\n")] = 0;
 
     printf("CNPJ: ");
-    fgets(dados_produtora->cnpj, sizeof(dados_produtora->cnpj), stdin);
-    dados_produtora->cnpj[strcspn(dados_produtora->cnpj, "\n")] = 0;
+    fgets(sistema->dados_produtora->cnpj, sizeof(sistema->dados_produtora->cnpj), stdin);
+    sistema->dados_produtora->cnpj[strcspn(sistema->dados_produtora->cnpj, "\n")] = 0;
 
     printf("Inscricao Estadual: ");
-    fgets(dados_produtora->inscricao_estadual, sizeof(dados_produtora->inscricao_estadual), stdin);
-    dados_produtora->inscricao_estadual[strcspn(dados_produtora->inscricao_estadual, "\n")] = 0;
+    fgets(sistema->dados_produtora->inscricao_estadual, sizeof(sistema->dados_produtora->inscricao_estadual), stdin);
+    sistema->dados_produtora->inscricao_estadual[strcspn(sistema->dados_produtora->inscricao_estadual, "\n")] = 0;
 
     printf("Endereco: ");
-    fgets(dados_produtora->endereco, sizeof(dados_produtora->endereco), stdin);
-    dados_produtora->endereco[strcspn(dados_produtora->endereco, "\n")] = 0;
+    fgets(sistema->dados_produtora->endereco, sizeof(sistema->dados_produtora->endereco), stdin);
+    sistema->dados_produtora->endereco[strcspn(sistema->dados_produtora->endereco, "\n")] = 0;
 
     printf("Telefone: ");
-    fgets(dados_produtora->telefone, sizeof(dados_produtora->telefone), stdin);
-    dados_produtora->telefone[strcspn(dados_produtora->telefone, "\n")] = 0;
+    fgets(sistema->dados_produtora->telefone, sizeof(sistema->dados_produtora->telefone), stdin);
+    sistema->dados_produtora->telefone[strcspn(sistema->dados_produtora->telefone, "\n")] = 0;
 
     printf("Telefone do Responsavel: ");
-    fgets(dados_produtora->telefone_responsavel, sizeof(dados_produtora->telefone_responsavel), stdin);
-    dados_produtora->telefone_responsavel[strcspn(dados_produtora->telefone_responsavel, "\n")] = 0;
+    fgets(sistema->dados_produtora->telefone_responsavel, sizeof(sistema->dados_produtora->telefone_responsavel), stdin);
+    sistema->dados_produtora->telefone_responsavel[strcspn(sistema->dados_produtora->telefone_responsavel, "\n")] = 0;
 
     printf("E-mail: ");
-    fgets(dados_produtora->email, sizeof(dados_produtora->email), stdin);
-    dados_produtora->email[strcspn(dados_produtora->email, "\n")] = 0;
+    fgets(sistema->dados_produtora->email, sizeof(sistema->dados_produtora->email), stdin);
+    sistema->dados_produtora->email[strcspn(sistema->dados_produtora->email, "\n")] = 0;
 
     printf("Margem de Lucro (%%): ");
-    scanf("%f", &dados_produtora->margem_lucro);
+    scanf("%f", &sistema->dados_produtora->margem_lucro);
     limpar_buffer();
 
-    printf("\nDados da produtora '%s' cadastrados com sucesso!\n", dados_produtora->nome_fantasia);
-    salvarProdutora();
+    printf("\nDados da produtora '%s' cadastrados com sucesso!\n", sistema->dados_produtora->nome_fantasia);
+    salvarProdutora(sistema);
 }
 
-
- // Altera os dados da produtora.
- 
-void alterarProdutora()
+// Altera os dados da produtora existente.
+void alterarProdutora(Sistema *sistema)
 {
-    if (dados_produtora == NULL)
+    if (sistema->dados_produtora == NULL)
     {
         printf("\nNenhuma produtora cadastrada para alterar. Por favor, adicione uma primeiro.\n");
         return;
@@ -92,7 +85,7 @@ void alterarProdutora()
     {
         limpar_tela();
         printf("--- Alterar Dados da Produtora ---\n\n");
-        verDetalhesProdutora();
+        verDetalhesProdutora(sistema);
 
         printf("\n\nQual campo deseja alterar?\n");
         printf("1. Nome Fantasia\n");
@@ -114,52 +107,52 @@ void alterarProdutora()
         {
         case 1:
             printf("Digite o novo Nome Fantasia: ");
-            fgets(dados_produtora->nome_fantasia, sizeof(dados_produtora->nome_fantasia), stdin);
-            dados_produtora->nome_fantasia[strcspn(dados_produtora->nome_fantasia, "\n")] = 0;
+            fgets(sistema->dados_produtora->nome_fantasia, sizeof(sistema->dados_produtora->nome_fantasia), stdin);
+            sistema->dados_produtora->nome_fantasia[strcspn(sistema->dados_produtora->nome_fantasia, "\n")] = 0;
             break;
         case 2:
             printf("Digite a nova Razao Social: ");
-            fgets(dados_produtora->razao_social, sizeof(dados_produtora->razao_social), stdin);
-            dados_produtora->razao_social[strcspn(dados_produtora->razao_social, "\n")] = 0;
+            fgets(sistema->dados_produtora->razao_social, sizeof(sistema->dados_produtora->razao_social), stdin);
+            sistema->dados_produtora->razao_social[strcspn(sistema->dados_produtora->razao_social, "\n")] = 0;
             break;
         case 3:
             printf("Digite o novo Nome do Responsavel: ");
-            fgets(dados_produtora->nome_do_responsavel, sizeof(dados_produtora->nome_do_responsavel), stdin);
-            dados_produtora->nome_do_responsavel[strcspn(dados_produtora->nome_do_responsavel, "\n")] = 0;
+            fgets(sistema->dados_produtora->nome_do_responsavel, sizeof(sistema->dados_produtora->nome_do_responsavel), stdin);
+            sistema->dados_produtora->nome_do_responsavel[strcspn(sistema->dados_produtora->nome_do_responsavel, "\n")] = 0;
             break;
         case 4:
             printf("Digite o novo CNPJ: ");
-            fgets(dados_produtora->cnpj, sizeof(dados_produtora->cnpj), stdin);
-            dados_produtora->cnpj[strcspn(dados_produtora->cnpj, "\n")] = 0;
+            fgets(sistema->dados_produtora->cnpj, sizeof(sistema->dados_produtora->cnpj), stdin);
+            sistema->dados_produtora->cnpj[strcspn(sistema->dados_produtora->cnpj, "\n")] = 0;
             break;
         case 5:
             printf("Digite a nova Inscricao Estadual: ");
-            fgets(dados_produtora->inscricao_estadual, sizeof(dados_produtora->inscricao_estadual), stdin);
-            dados_produtora->inscricao_estadual[strcspn(dados_produtora->inscricao_estadual, "\n")] = 0;
+            fgets(sistema->dados_produtora->inscricao_estadual, sizeof(sistema->dados_produtora->inscricao_estadual), stdin);
+            sistema->dados_produtora->inscricao_estadual[strcspn(sistema->dados_produtora->inscricao_estadual, "\n")] = 0;
             break;
         case 6:
             printf("Digite o novo Endereco: ");
-            fgets(dados_produtora->endereco, sizeof(dados_produtora->endereco), stdin);
-            dados_produtora->endereco[strcspn(dados_produtora->endereco, "\n")] = 0;
+            fgets(sistema->dados_produtora->endereco, sizeof(sistema->dados_produtora->endereco), stdin);
+            sistema->dados_produtora->endereco[strcspn(sistema->dados_produtora->endereco, "\n")] = 0;
             break;
         case 7:
             printf("Digite o novo Telefone: ");
-            fgets(dados_produtora->telefone, sizeof(dados_produtora->telefone), stdin);
-            dados_produtora->telefone[strcspn(dados_produtora->telefone, "\n")] = 0;
+            fgets(sistema->dados_produtora->telefone, sizeof(sistema->dados_produtora->telefone), stdin);
+            sistema->dados_produtora->telefone[strcspn(sistema->dados_produtora->telefone, "\n")] = 0;
             break;
         case 8:
             printf("Digite o novo Telefone do Responsavel: ");
-            fgets(dados_produtora->telefone_responsavel, sizeof(dados_produtora->telefone_responsavel), stdin);
-            dados_produtora->telefone_responsavel[strcspn(dados_produtora->telefone_responsavel, "\n")] = 0;
+            fgets(sistema->dados_produtora->telefone_responsavel, sizeof(sistema->dados_produtora->telefone_responsavel), stdin);
+            sistema->dados_produtora->telefone_responsavel[strcspn(sistema->dados_produtora->telefone_responsavel, "\n")] = 0;
             break;
         case 9:
             printf("Digite o novo E-mail: ");
-            fgets(dados_produtora->email, sizeof(dados_produtora->email), stdin);
-            dados_produtora->email[strcspn(dados_produtora->email, "\n")] = 0;
+            fgets(sistema->dados_produtora->email, sizeof(sistema->dados_produtora->email), stdin);
+            sistema->dados_produtora->email[strcspn(sistema->dados_produtora->email, "\n")] = 0;
             break;
         case 10:
             printf("Digite a nova Margem de Lucro (%%): ");
-            scanf("%f", &dados_produtora->margem_lucro);
+            scanf("%f", &sistema->dados_produtora->margem_lucro);
             limpar_buffer();
             break;
         case 0:
@@ -172,54 +165,50 @@ void alterarProdutora()
         }
     } while (opcao_alterar != 0);
 
-    salvarProdutora();
+    salvarProdutora(sistema);
 }
 
-
- // Exibe os detalhes da produtora.
- 
-void verDetalhesProdutora()
+// Mostra os detalhes da produtora.
+void verDetalhesProdutora(Sistema *sistema)
 {
-    if (dados_produtora == NULL)
+    if (sistema->dados_produtora == NULL)
     {
         printf("\nNenhuma produtora cadastrada para exibir.\n");
         return;
     }
     printf("\n--- Detalhes da Produtora Cadastrada ---\n");
-    printf("Nome Fantasia: %s\n", dados_produtora->nome_fantasia);
-    printf("Razao Social: %s\n", dados_produtora->razao_social);
-    printf("Nome do Responsavel: %s\n", dados_produtora->nome_do_responsavel);
-    printf("CNPJ: %s\n", dados_produtora->cnpj);
-    printf("Inscricao Estadual: %s\n", dados_produtora->inscricao_estadual);
-    printf("Endereco: %s\n", dados_produtora->endereco);
-    printf("Telefone: %s\n", dados_produtora->telefone);
-    printf("Telefone do Responsavel: %s\n", dados_produtora->telefone_responsavel);
-    printf("E-mail: %s\n", dados_produtora->email);
-    printf("Margem de Lucro: %.2f%%\n", dados_produtora->margem_lucro);
+    printf("Nome Fantasia: %s\n", sistema->dados_produtora->nome_fantasia);
+    printf("Razao Social: %s\n", sistema->dados_produtora->razao_social);
+    printf("Nome do Responsavel: %s\n", sistema->dados_produtora->nome_do_responsavel);
+    printf("CNPJ: %s\n", sistema->dados_produtora->cnpj);
+    printf("Inscricao Estadual: %s\n", sistema->dados_produtora->inscricao_estadual);
+    printf("Endereco: %s\n", sistema->dados_produtora->endereco);
+    printf("Telefone: %s\n", sistema->dados_produtora->telefone);
+    printf("Telefone do Responsavel: %s\n", sistema->dados_produtora->telefone_responsavel);
+    printf("E-mail: %s\n", sistema->dados_produtora->email);
+    printf("Margem de Lucro: %.2f%%\n", sistema->dados_produtora->margem_lucro);
 }
 
-
-  // Exclui os dados da produtora.
- 
-void excluirProdutora()
+// Exclui os dados da produtora.
+void excluirProdutora(Sistema *sistema)
 {
-    if (dados_produtora == NULL)
+    if (sistema->dados_produtora == NULL)
     {
         printf("\nNenhuma produtora cadastrada para excluir.\n");
         return;
     }
 
     char confirmacao;
-    printf("\nTem certeza que deseja excluir os dados da produtora %s? (s/n): ", dados_produtora->razao_social);
+    printf("\nTem certeza que deseja excluir os dados da produtora %s? (s/n): ", sistema->dados_produtora->razao_social);
     scanf(" %c", &confirmacao);
     limpar_buffer();
 
     if (confirmacao == 's' || confirmacao == 'S')
     {
-        free(dados_produtora);
-        dados_produtora = NULL;
+        free(sistema->dados_produtora);
+        sistema->dados_produtora = NULL;
 
-        salvarProdutora();
+        salvarProdutora(sistema);
 
         printf("\nDados da produtora excluidos com sucesso!\n");
     }
@@ -229,18 +218,16 @@ void excluirProdutora()
     }
 }
 
-
-   // Salva os dados da produtora em um arquivo binário.
- 
-void salvarProdutora()
+// Salva os dados da produtora em arquivo.
+void salvarProdutora(Sistema *sistema)
 {
     TipoArmazenamento modo = obterModoDeArmazenamento();
     if (modo == MEMORIA)
         return;
 
-    int produtora_existe = (dados_produtora != NULL);
+    int produtora_existe = (sistema->dados_produtora != NULL);
 
-    FILE *arquivo = fopen("../data/produtora.dat", "wb");
+    FILE *arquivo = fopen(PRODUTORA_DATA_FILE, "wb");
     if (arquivo == NULL)
     {
         perror("Nao foi possivel abrir o arquivo da produtora");
@@ -250,46 +237,42 @@ void salvarProdutora()
     fwrite(&produtora_existe, sizeof(int), 1, arquivo);
     if (produtora_existe)
     {
-        fwrite(dados_produtora, sizeof(Produtora), 1, arquivo);
+        fwrite(sistema->dados_produtora, sizeof(Produtora), 1, arquivo);
     }
 
     fclose(arquivo);
 }
 
-
-   // Carrega os dados da produtora de um arquivo binário.
- 
-void carregarProdutora()
+// Carrega os dados da produtora do arquivo.
+void carregarProdutora(Sistema *sistema)
 {
     TipoArmazenamento modo = obterModoDeArmazenamento();
     if (modo == MEMORIA)
         return;
 
     int produtora_existe = 0;
-    FILE *arquivo = fopen("../data/produtora.dat", "rb");
+    FILE *arquivo = fopen(PRODUTORA_DATA_FILE, "rb");
     if (arquivo != NULL)
     {
         fread(&produtora_existe, sizeof(int), 1, arquivo);
         if (produtora_existe)
         {
-            dados_produtora = (Produtora *)malloc(sizeof(Produtora));
-            if (dados_produtora != NULL)
+            sistema->dados_produtora = (Produtora *)malloc(sizeof(Produtora));
+            if (sistema->dados_produtora != NULL)
             {
-                fread(dados_produtora, sizeof(Produtora), 1, arquivo);
+                fread(sistema->dados_produtora, sizeof(Produtora), 1, arquivo);
             }
         }
         fclose(arquivo);
     }
 }
 
-
-   // Libera a memória alocada para a produtora.
- 
-void liberarMemoriaProdutora()
+// Libera a memória alocada para a produtora.
+void liberarMemoriaProdutora(Sistema *sistema)
 {
-    if (dados_produtora != NULL)
+    if (sistema->dados_produtora != NULL)
     {
-        free(dados_produtora);
-        dados_produtora = NULL;
+        free(sistema->dados_produtora);
+        sistema->dados_produtora = NULL;
     }
 }

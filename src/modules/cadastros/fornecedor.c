@@ -5,37 +5,31 @@
 #include "cadastros/fornecedor.h"
 #include "config.h"
 #include "utils.h"
+#include "structs.h"
 
-// Ponteiro para a lista de fornecedores.
-static Fornecedor *lista_fornecedores = NULL;
-// Número de fornecedores cadastrados.
-static int num_fornecedores = 0;
-// Capacidade atual do array de fornecedores.
-static int capacidade_fornecedores = 0;
+#define FORNECEDORES_DATA_FILE "../data/fornecedores.dat"
 
-
-  // Adiciona um novo fornecedor.
- 
-void adicionarFornecedor()
+// Adiciona um novo fornecedor.
+void adicionarFornecedor(Sistema *sistema)
 {
-    if (num_fornecedores == capacidade_fornecedores)
+    if (sistema->num_fornecedores == sistema->capacidade_fornecedores)
     {
-        int nova_capacidade = (capacidade_fornecedores == 0) ? 10 : capacidade_fornecedores * 2;
-        Fornecedor *temp = realloc(lista_fornecedores, nova_capacidade * sizeof(Fornecedor));
+        int nova_capacidade = (sistema->capacidade_fornecedores == 0) ? 10 : sistema->capacidade_fornecedores * 2;
+        Fornecedor *temp = realloc(sistema->lista_fornecedores, nova_capacidade * sizeof(Fornecedor));
 
         if (temp == NULL)
         {
             printf("\nErro critico de alocacao de memoria para fornecedores!\n");
             return;
         }
-        lista_fornecedores = temp;
-        capacidade_fornecedores = nova_capacidade;
+        sistema->lista_fornecedores = temp;
+        sistema->capacidade_fornecedores = nova_capacidade;
     }
 
     Fornecedor novo_fornecedor;
     printf("\n--- Cadastro de Novo Fornecedor/Parceiro ---\n");
 
-    novo_fornecedor.codigo = num_fornecedores + 1;
+    novo_fornecedor.codigo = sistema->num_fornecedores + 1;
     printf("Codigo do Fornecedor: %d\n", novo_fornecedor.codigo);
 
     printf("Nome Fantasia: ");
@@ -62,47 +56,42 @@ void adicionarFornecedor()
     fgets(novo_fornecedor.tipo_servico, sizeof(novo_fornecedor.tipo_servico), stdin);
     novo_fornecedor.tipo_servico[strcspn(novo_fornecedor.tipo_servico, "\n")] = 0;
 
-
-    lista_fornecedores[num_fornecedores] = novo_fornecedor;
-    num_fornecedores++;
+    sistema->lista_fornecedores[sistema->num_fornecedores] = novo_fornecedor;
+    sistema->num_fornecedores++;
 
     printf("\nFornecedor '%s' cadastrado com sucesso!\n", novo_fornecedor.nome_fantasia);
-    salvarFornecedores();
+    salvarFornecedores(sistema);
 }
 
-
-  //Lista todos os fornecedores.
- 
-void listarFornecedores()
+// Lista todos os fornecedores.
+void listarFornecedores(Sistema *sistema)
 {
-    if (num_fornecedores == 0)
+    if (sistema->num_fornecedores == 0)
     {
         printf("\nNenhum fornecedor cadastrado.\n");
         return;
     }
 
     printf("\n--- Lista de Fornecedores e Parceiros ---\n");
-    for (int i = 0; i < num_fornecedores; i++)
+    for (int i = 0; i < sistema->num_fornecedores; i++)
     {
         printf("----------------------------------\n");
-        printf("Codigo: %d\n", lista_fornecedores[i].codigo);
-        printf("Nome Fantasia: %s\n", lista_fornecedores[i].nome_fantasia);
-        printf("Razao Social: %s\n", lista_fornecedores[i].razao_social);
-        printf("CNPJ / CPF: %s\n", lista_fornecedores[i].cnpj);
-        printf("Endereco: %s\n", lista_fornecedores[i].endereco);
-        printf("Telefone: %s\n", lista_fornecedores[i].telefone);
-        printf("Tipo de Servico: %s\n", lista_fornecedores[i].tipo_servico);
+        printf("Codigo: %d\n", sistema->lista_fornecedores[i].codigo);
+        printf("Nome Fantasia: %s\n", sistema->lista_fornecedores[i].nome_fantasia);
+        printf("Razao Social: %s\n", sistema->lista_fornecedores[i].razao_social);
+        printf("CNPJ / CPF: %s\n", sistema->lista_fornecedores[i].cnpj);
+        printf("Endereco: %s\n", sistema->lista_fornecedores[i].endereco);
+        printf("Telefone: %s\n", sistema->lista_fornecedores[i].telefone);
+        printf("Tipo de Servico: %s\n", sistema->lista_fornecedores[i].tipo_servico);
     }
     printf("----------------------------------\n");
 }
 
-
-   /// Altera os dados de um fornecedor.
- 
-void alterarFornecedor()
+// Altera os dados de um fornecedor.
+void alterarFornecedor(Sistema *sistema)
 {
-    listarFornecedores();
-    if (num_fornecedores == 0)
+    listarFornecedores(sistema);
+    if (sistema->num_fornecedores == 0)
         return;
 
     int codigo;
@@ -112,9 +101,9 @@ void alterarFornecedor()
     scanf("%d", &codigo);
     limpar_buffer();
 
-    for (int i = 0; i < num_fornecedores; i++)
+    for (int i = 0; i < sistema->num_fornecedores; i++)
     {
-        if (lista_fornecedores[i].codigo == codigo)
+        if (sistema->lista_fornecedores[i].codigo == codigo)
         {
             indice = i;
             break;
@@ -131,7 +120,7 @@ void alterarFornecedor()
     do
     {
         limpar_tela();
-        printf("--- Alterando Fornecedor: %s ---\n", lista_fornecedores[indice].nome_fantasia);
+        printf("--- Alterando Fornecedor: %s ---\n", sistema->lista_fornecedores[indice].nome_fantasia);
         printf("1. Alterar Nome Fantasia\n");
         printf("2. Alterar Razao Social\n");
         printf("3. Alterar CNPJ / CPF\n");
@@ -147,33 +136,33 @@ void alterarFornecedor()
         {
         case 1:
             printf("Novo Nome Fantasia: ");
-            fgets(lista_fornecedores[indice].nome_fantasia, sizeof(lista_fornecedores[indice].nome_fantasia), stdin);
-            lista_fornecedores[indice].nome_fantasia[strcspn(lista_fornecedores[indice].nome_fantasia, "\n")] = 0;
+            fgets(sistema->lista_fornecedores[indice].nome_fantasia, sizeof(sistema->lista_fornecedores[indice].nome_fantasia), stdin);
+            sistema->lista_fornecedores[indice].nome_fantasia[strcspn(sistema->lista_fornecedores[indice].nome_fantasia, "\n")] = 0;
             break;
         case 2:
             printf("Nova Razao Social: ");
-            fgets(lista_fornecedores[indice].razao_social, sizeof(lista_fornecedores[indice].razao_social), stdin);
-            lista_fornecedores[indice].razao_social[strcspn(lista_fornecedores[indice].razao_social, "\n")] = 0;
+            fgets(sistema->lista_fornecedores[indice].razao_social, sizeof(sistema->lista_fornecedores[indice].razao_social), stdin);
+            sistema->lista_fornecedores[indice].razao_social[strcspn(sistema->lista_fornecedores[indice].razao_social, "\n")] = 0;
             break;
         case 3:
             printf("Novo CNPJ / CPF: ");
-            fgets(lista_fornecedores[indice].cnpj, sizeof(lista_fornecedores[indice].cnpj), stdin);
-            lista_fornecedores[indice].cnpj[strcspn(lista_fornecedores[indice].cnpj, "\n")] = 0;
+            fgets(sistema->lista_fornecedores[indice].cnpj, sizeof(sistema->lista_fornecedores[indice].cnpj), stdin);
+            sistema->lista_fornecedores[indice].cnpj[strcspn(sistema->lista_fornecedores[indice].cnpj, "\n")] = 0;
             break;
         case 4:
             printf("Novo Endereco: ");
-            fgets(lista_fornecedores[indice].endereco, sizeof(lista_fornecedores[indice].endereco), stdin);
-            lista_fornecedores[indice].endereco[strcspn(lista_fornecedores[indice].endereco, "\n")] = 0;
+            fgets(sistema->lista_fornecedores[indice].endereco, sizeof(sistema->lista_fornecedores[indice].endereco), stdin);
+            sistema->lista_fornecedores[indice].endereco[strcspn(sistema->lista_fornecedores[indice].endereco, "\n")] = 0;
             break;
         case 5:
             printf("Novo Telefone: ");
-            fgets(lista_fornecedores[indice].telefone, sizeof(lista_fornecedores[indice].telefone), stdin);
-            lista_fornecedores[indice].telefone[strcspn(lista_fornecedores[indice].telefone, "\n")] = 0;
+            fgets(sistema->lista_fornecedores[indice].telefone, sizeof(sistema->lista_fornecedores[indice].telefone), stdin);
+            sistema->lista_fornecedores[indice].telefone[strcspn(sistema->lista_fornecedores[indice].telefone, "\n")] = 0;
             break;
         case 6:
             printf("Novo Tipo de Servico: ");
-            fgets(lista_fornecedores[indice].tipo_servico, sizeof(lista_fornecedores[indice].tipo_servico), stdin);
-            lista_fornecedores[indice].tipo_servico[strcspn(lista_fornecedores[indice].tipo_servico, "\n")] = 0;
+            fgets(sistema->lista_fornecedores[indice].tipo_servico, sizeof(sistema->lista_fornecedores[indice].tipo_servico), stdin);
+            sistema->lista_fornecedores[indice].tipo_servico[strcspn(sistema->lista_fornecedores[indice].tipo_servico, "\n")] = 0;
             break;
         case 0:
             printf("\nAlteracoes salvas!\n");
@@ -182,16 +171,14 @@ void alterarFornecedor()
             printf("\nOpcao invalida!\n");
         }
     } while (opcao != 0);
-    salvarFornecedores();
+    salvarFornecedores(sistema);
 }
 
-
-  // Exclui um fornecedor.
-
-void excluirFornecedor()
+// Exclui um fornecedor.
+void excluirFornecedor(Sistema *sistema)
 {
-    listarFornecedores();
-    if (num_fornecedores == 0)
+    listarFornecedores(sistema);
+    if (sistema->num_fornecedores == 0)
         return;
 
     int codigo;
@@ -200,9 +187,9 @@ void excluirFornecedor()
     limpar_buffer();
 
     int indice = -1;
-    for (int i = 0; i < num_fornecedores; i++)
+    for (int i = 0; i < sistema->num_fornecedores; i++)
     {
-        if (lista_fornecedores[i].codigo == codigo)
+        if (sistema->lista_fornecedores[i].codigo == codigo)
         {
             indice = i;
             break;
@@ -212,16 +199,16 @@ void excluirFornecedor()
     if (indice != -1)
     {
         char confirmacao;
-        printf("Tem certeza que deseja excluir o fornecedor %s? (s/n): ", lista_fornecedores[indice].nome_fantasia);
+        printf("Tem certeza que deseja excluir o fornecedor %s? (s/n): ", sistema->lista_fornecedores[indice].nome_fantasia);
         scanf(" %c", &confirmacao);
         limpar_buffer();
 
         if (confirmacao == 's' || confirmacao == 'S')
         {
-            lista_fornecedores[indice] = lista_fornecedores[num_fornecedores - 1];
-            num_fornecedores--;
+            sistema->lista_fornecedores[indice] = sistema->lista_fornecedores[sistema->num_fornecedores - 1];
+            sistema->num_fornecedores--;
             printf("\nFornecedor excluido com sucesso!\n");
-            salvarFornecedores();
+            salvarFornecedores(sistema);
         }
         else
         {
@@ -234,60 +221,54 @@ void excluirFornecedor()
     }
 }
 
-
-  // Salva os dados dos fornecedores em um arquivo binário.
- 
-void salvarFornecedores()
+// Salva os dados dos fornecedores em arquivo.
+void salvarFornecedores(Sistema *sistema)
 {
     TipoArmazenamento modo = obterModoDeArmazenamento();
     if (modo == MEMORIA)
         return;
 
-    FILE *arquivo = fopen("../data/fornecedores.dat", "wb");
+    FILE *arquivo = fopen(FORNECEDORES_DATA_FILE, "wb");
     if (arquivo == NULL)
     {
         perror("Nao foi possivel abrir o arquivo de fornecedores");
         return;
     }
-    fwrite(&num_fornecedores, sizeof(int), 1, arquivo);
-    fwrite(lista_fornecedores, sizeof(Fornecedor), num_fornecedores, arquivo);
+    fwrite(&sistema->num_fornecedores, sizeof(int), 1, arquivo);
+    fwrite(sistema->lista_fornecedores, sizeof(Fornecedor), sistema->num_fornecedores, arquivo);
     fclose(arquivo);
 }
 
-
- // Carrega os dados dos fornecedores de um arquivo binário.
- 
-void carregarFornecedores()
+// Carrega os dados dos fornecedores do arquivo.
+void carregarFornecedores(Sistema *sistema)
 {
     TipoArmazenamento modo = obterModoDeArmazenamento();
     if (modo == MEMORIA)
         return;
 
-    FILE *arquivo = fopen("../data/fornecedores.dat", "rb");
+    FILE *arquivo = fopen(FORNECEDORES_DATA_FILE, "rb");
     if (arquivo != NULL)
     {
-        fread(&num_fornecedores, sizeof(int), 1, arquivo);
-        if (num_fornecedores > 0)
+        fread(&sistema->num_fornecedores, sizeof(int), 1, arquivo);
+        if (sistema->num_fornecedores > 0)
         {
-            lista_fornecedores = malloc(num_fornecedores * sizeof(Fornecedor));
-            if (lista_fornecedores != NULL)
+            sistema->lista_fornecedores = malloc(sistema->num_fornecedores * sizeof(Fornecedor));
+            if (sistema->lista_fornecedores != NULL)
             {
-                fread(lista_fornecedores, sizeof(Fornecedor), num_fornecedores, arquivo);
-                capacidade_fornecedores = num_fornecedores;
+                fread(sistema->lista_fornecedores, sizeof(Fornecedor), sistema->num_fornecedores, arquivo);
+                sistema->capacidade_fornecedores = sistema->num_fornecedores;
             }
         }
         fclose(arquivo);
     }
 }
 
-
- // Libera a memória alocada para a lista de fornecedores.
- 
-void liberarMemoriaFornecedores()
+// Libera a memória alocada para a lista de fornecedores.
+void liberarMemoriaFornecedores(Sistema *sistema)
 {
-    if (lista_fornecedores != NULL)
+    if (sistema->lista_fornecedores != NULL)
     {
-        free(lista_fornecedores);
-        lista_fornecedores = NULL;
+        free(sistema->lista_fornecedores);
+        sistema->lista_fornecedores = NULL;
     }
 }

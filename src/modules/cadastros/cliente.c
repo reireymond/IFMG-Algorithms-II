@@ -5,6 +5,7 @@
 #include "cadastros/cliente.h"
 #include "config.h"
 #include "utils.h"
+#include "structs.h"
 
 #define CLIENTES_DATA_FILE "../data/clientes.dat"
 #define CLIENTES_TEXT_FILE "../data/clientes.txt"
@@ -63,7 +64,7 @@ void adicionarCliente(Sistema *sistema)
     salvarClientes(sistema);
 }
 
-// Lista todos os clientes cadastrados.
+// Exibe a lista de todos os clientes cadastrados.
 void listarClientes(Sistema *sistema)
 {
     if (sistema->num_clientes == 0)
@@ -87,12 +88,11 @@ void listarClientes(Sistema *sistema)
     printf("----------------------------------\n");
 }
 
-
-// Altera os dados de um cliente existente.
-void alterarCliente()
+// Permite a alteração dos dados de um cliente.
+void alterarCliente(Sistema *sistema)
 {
-    listarClientes();
-    if (num_clientes == 0)
+    listarClientes(sistema);
+    if (sistema->num_clientes == 0)
         return;
 
     int codigo;
@@ -102,10 +102,9 @@ void alterarCliente()
     scanf("%d", &codigo);
     limpar_buffer();
 
-    // Encontra o índice do cliente na lista.
-    for (int i = 0; i < num_clientes; i++)
+    for (int i = 0; i < sistema->num_clientes; i++)
     {
-        if (lista_clientes[i].codigo == codigo)
+        if (sistema->lista_clientes[i].codigo == codigo)
         {
             indice_cliente = i;
             break;
@@ -118,13 +117,12 @@ void alterarCliente()
         return;
     }
 
-    // Exibe um menu para o usuário escolher o que alterar.
     int opcao_alterar;
     do
     {
         limpar_tela();
-        printf("--- Alterando Cliente: %s ---\n", lista_clientes[indice_cliente].razao_social);
-        printf("Codigo: %d\n\n", lista_clientes[indice_cliente].codigo);
+        printf("--- Alterando Cliente: %s ---\n", sistema->lista_clientes[indice_cliente].razao_social);
+        printf("Codigo: %d\n\n", sistema->lista_clientes[indice_cliente].codigo);
 
         printf("Qual campo deseja alterar?\n");
         printf("1. Nome / Razao Social\n");
@@ -142,55 +140,53 @@ void alterarCliente()
         {
         case 1:
             printf("Digite o novo Nome / Razao Social: ");
-            fgets(lista_clientes[indice_cliente].razao_social, sizeof(lista_clientes[indice_cliente].razao_social), stdin);
-            lista_clientes[indice_cliente].razao_social[strcspn(lista_clientes[indice_cliente].razao_social, "\n")] = 0;
+            fgets(sistema->lista_clientes[indice_cliente].razao_social, sizeof(sistema->lista_clientes[indice_cliente].razao_social), stdin);
+            sistema->lista_clientes[indice_cliente].razao_social[strcspn(sistema->lista_clientes[indice_cliente].razao_social, "\n")] = 0;
             break;
         case 2:
             printf("Digite o novo CPF / CNPJ: ");
-            fgets(lista_clientes[indice_cliente].cnpj, sizeof(lista_clientes[indice_cliente].cnpj), stdin);
-            lista_clientes[indice_cliente].cnpj[strcspn(lista_clientes[indice_cliente].cnpj, "\n")] = 0;
+            fgets(sistema->lista_clientes[indice_cliente].cnpj, sizeof(sistema->lista_clientes[indice_cliente].cnpj), stdin);
+            sistema->lista_clientes[indice_cliente].cnpj[strcspn(sistema->lista_clientes[indice_cliente].cnpj, "\n")] = 0;
             break;
         case 3:
             printf("Digite o novo Endereco Completo: ");
-            fgets(lista_clientes[indice_cliente].endereco, sizeof(lista_clientes[indice_cliente].endereco), stdin);
-            lista_clientes[indice_cliente].endereco[strcspn(lista_clientes[indice_cliente].endereco, "\n")] = 0;
+            fgets(sistema->lista_clientes[indice_cliente].endereco, sizeof(sistema->lista_clientes[indice_cliente].endereco), stdin);
+            sistema->lista_clientes[indice_cliente].endereco[strcspn(sistema->lista_clientes[indice_cliente].endereco, "\n")] = 0;
             break;
         case 4:
             printf("Digite o novo Telefone: ");
-            fgets(lista_clientes[indice_cliente].telefone, sizeof(lista_clientes[indice_cliente].telefone), stdin);
-            lista_clientes[indice_cliente].telefone[strcspn(lista_clientes[indice_cliente].telefone, "\n")] = 0;
+            fgets(sistema->lista_clientes[indice_cliente].telefone, sizeof(sistema->lista_clientes[indice_cliente].telefone), stdin);
+            sistema->lista_clientes[indice_cliente].telefone[strcspn(sistema->lista_clientes[indice_cliente].telefone, "\n")] = 0;
             break;
         case 5:
             printf("Digite o novo E-mail: ");
-            fgets(lista_clientes[indice_cliente].email, sizeof(lista_clientes[indice_cliente].email), stdin);
-            lista_clientes[indice_cliente].email[strcspn(lista_clientes[indice_cliente].email, "\n")] = 0;
+            fgets(sistema->lista_clientes[indice_cliente].email, sizeof(sistema->lista_clientes[indice_cliente].email), stdin);
+            sistema->lista_clientes[indice_cliente].email[strcspn(sistema->lista_clientes[indice_cliente].email, "\n")] = 0;
             break;
         case 6:
             printf("Digite o novo Nome do Contato: ");
-            fgets(lista_clientes[indice_cliente].nome_do_contato, sizeof(lista_clientes[indice_cliente].nome_do_contato), stdin);
-            lista_clientes[indice_cliente].nome_do_contato[strcspn(lista_clientes[indice_cliente].nome_do_contato, "\n")] = 0;
+            fgets(sistema->lista_clientes[indice_cliente].nome_do_contato, sizeof(sistema->lista_clientes[indice_cliente].nome_do_contato), stdin);
+            sistema->lista_clientes[indice_cliente].nome_do_contato[strcspn(sistema->lista_clientes[indice_cliente].nome_do_contato, "\n")] = 0;
             break;
         case 0:
             printf("\nAlteracoes salvas com sucesso!\n");
             break;
         default:
             printf("\nOpcao invalida!\n");
-            printf("Pressione Enter para tentar novamente...");
-            getchar();
+            pausar();
             break;
         }
 
     } while (opcao_alterar != 0);
 
-    salvarClientes();
+    salvarClientes(sistema);
 }
 
-
-// Exclui um cliente.
-void excluirCliente()
+// Remove um cliente do sistema.
+void excluirCliente(Sistema *sistema)
 {
-    listarClientes();
-    if (num_clientes == 0)
+    listarClientes(sistema);
+    if (sistema->num_clientes == 0)
         return;
 
     int codigo, i;
@@ -198,22 +194,21 @@ void excluirCliente()
     scanf("%d", &codigo);
     limpar_buffer();
 
-    for (i = 0; i < num_clientes; i++)
+    for (i = 0; i < sistema->num_clientes; i++)
     {
-        if (lista_clientes[i].codigo == codigo)
+        if (sistema->lista_clientes[i].codigo == codigo)
         {
             char confirmacao;
-            printf("Tem certeza que deseja excluir o cliente %s? (s/n): ", lista_clientes[i].razao_social);
+            printf("Tem certeza que deseja excluir o cliente %s? (s/n): ", sistema->lista_clientes[i].razao_social);
             scanf(" %c", &confirmacao);
             limpar_buffer();
 
             if (confirmacao == 's' || confirmacao == 'S')
             {
-                // Substitui o cliente a ser excluído pelo último da lista.
-                lista_clientes[i] = lista_clientes[num_clientes - 1];
-                num_clientes--;
+                sistema->lista_clientes[i] = sistema->lista_clientes[sistema->num_clientes - 1];
+                sistema->num_clientes--;
                 printf("\nCliente excluido com sucesso!\n");
-                salvarClientes();
+                salvarClientes(sistema);
             }
             else
             {
@@ -225,9 +220,8 @@ void excluirCliente()
     printf("\nCliente com codigo %d nao encontrado.\n", codigo);
 }
 
-
-// Salva os dados dos clientes em um arquivo.
-void salvarClientes()
+// Salva os clientes em arquivo.
+void salvarClientes(Sistema *sistema)
 {
     TipoArmazenamento modo = obterModoDeArmazenamento();
     if (modo == MEMORIA)
@@ -239,33 +233,32 @@ void salvarClientes()
         arquivo = fopen(CLIENTES_DATA_FILE, "wb");
         if (arquivo == NULL)
             return;
-        fwrite(&num_clientes, sizeof(int), 1, arquivo);
-        fwrite(lista_clientes, sizeof(Cliente), num_clientes, arquivo);
+        fwrite(&sistema->num_clientes, sizeof(int), 1, arquivo);
+        fwrite(sistema->lista_clientes, sizeof(Cliente), sistema->num_clientes, arquivo);
     }
     else if (modo == ARQUIVO_TEXTO)
     {
         arquivo = fopen(CLIENTES_TEXT_FILE, "w");
         if (arquivo == NULL)
             return;
-        fprintf(arquivo, "%d\n", num_clientes);
-        for (int i = 0; i < num_clientes; i++)
+        fprintf(arquivo, "%d\n", sistema->num_clientes);
+        for (int i = 0; i < sistema->num_clientes; i++)
         {
-            fprintf(arquivo, "%d\n", lista_clientes[i].codigo);
-            fprintf(arquivo, "%s\n", lista_clientes[i].razao_social);
-            fprintf(arquivo, "%s\n", lista_clientes[i].cnpj);
-            fprintf(arquivo, "%s\n", lista_clientes[i].endereco);
-            fprintf(arquivo, "%s\n", lista_clientes[i].telefone);
-            fprintf(arquivo, "%s\n", lista_clientes[i].email);
-            fprintf(arquivo, "%s\n", lista_clientes[i].nome_do_contato);
+            fprintf(arquivo, "%d\n", sistema->lista_clientes[i].codigo);
+            fprintf(arquivo, "%s\n", sistema->lista_clientes[i].razao_social);
+            fprintf(arquivo, "%s\n", sistema->lista_clientes[i].cnpj);
+            fprintf(arquivo, "%s\n", sistema->lista_clientes[i].endereco);
+            fprintf(arquivo, "%s\n", sistema->lista_clientes[i].telefone);
+            fprintf(arquivo, "%s\n", sistema->lista_clientes[i].email);
+            fprintf(arquivo, "%s\n", sistema->lista_clientes[i].nome_do_contato);
         }
     }
     if (arquivo != NULL)
         fclose(arquivo);
 }
 
-
-// Carrega os dados dos clientes de um arquivo.
-void carregarClientes()
+// Carrega os clientes do arquivo.
+void carregarClientes(Sistema *sistema)
 {
     TipoArmazenamento modo = obterModoDeArmazenamento();
     if (modo == MEMORIA)
@@ -277,18 +270,18 @@ void carregarClientes()
         arquivo = fopen(CLIENTES_DATA_FILE, "rb");
         if (arquivo != NULL)
         {
-            fread(&num_clientes, sizeof(int), 1, arquivo);
-            if (num_clientes > 0)
+            fread(&sistema->num_clientes, sizeof(int), 1, arquivo);
+            if (sistema->num_clientes > 0)
             {
-                lista_clientes = malloc(num_clientes * sizeof(Cliente));
-                if (lista_clientes == NULL)
+                sistema->lista_clientes = malloc(sistema->num_clientes * sizeof(Cliente));
+                if (sistema->lista_clientes == NULL)
                 {
                     printf("Erro ao alocar memoria para carregar clientes.\n");
-                    num_clientes = 0;
+                    sistema->num_clientes = 0;
                     return;
                 }
-                fread(lista_clientes, sizeof(Cliente), num_clientes, arquivo);
-                capacidade_clientes = num_clientes;
+                fread(sistema->lista_clientes, sizeof(Cliente), sistema->num_clientes, arquivo);
+                sistema->capacidade_clientes = sistema->num_clientes;
             }
         }
     }
@@ -297,26 +290,26 @@ void carregarClientes()
         arquivo = fopen(CLIENTES_TEXT_FILE, "r");
         if (arquivo != NULL)
         {
-            fscanf(arquivo, "%d\n", &num_clientes);
-            if (num_clientes > 0)
+            fscanf(arquivo, "%d\n", &sistema->num_clientes);
+            if (sistema->num_clientes > 0)
             {
-                lista_clientes = malloc(num_clientes * sizeof(Cliente));
-                capacidade_clientes = num_clientes;
-                for (int i = 0; i < num_clientes; i++)
+                sistema->lista_clientes = malloc(sistema->num_clientes * sizeof(Cliente));
+                sistema->capacidade_clientes = sistema->num_clientes;
+                for (int i = 0; i < sistema->num_clientes; i++)
                 {
-                    fscanf(arquivo, "%d\n", &lista_clientes[i].codigo);
-                    fgets(lista_clientes[i].razao_social, sizeof(lista_clientes[i].razao_social), arquivo);
-                    lista_clientes[i].razao_social[strcspn(lista_clientes[i].razao_social, "\n")] = 0;
-                    fgets(lista_clientes[i].cnpj, sizeof(lista_clientes[i].cnpj), arquivo);
-                    lista_clientes[i].cnpj[strcspn(lista_clientes[i].cnpj, "\n")] = 0;
-                    fgets(lista_clientes[i].endereco, sizeof(lista_clientes[i].endereco), arquivo);
-                    lista_clientes[i].endereco[strcspn(lista_clientes[i].endereco, "\n")] = 0;
-                    fgets(lista_clientes[i].telefone, sizeof(lista_clientes[i].telefone), arquivo);
-                    lista_clientes[i].telefone[strcspn(lista_clientes[i].telefone, "\n")] = 0;
-                    fgets(lista_clientes[i].email, sizeof(lista_clientes[i].email), arquivo);
-                    lista_clientes[i].email[strcspn(lista_clientes[i].email, "\n")] = 0;
-                    fgets(lista_clientes[i].nome_do_contato, sizeof(lista_clientes[i].nome_do_contato), arquivo);
-                    lista_clientes[i].nome_do_contato[strcspn(lista_clientes[i].nome_do_contato, "\n")] = 0;
+                    fscanf(arquivo, "%d\n", &sistema->lista_clientes[i].codigo);
+                    fgets(sistema->lista_clientes[i].razao_social, sizeof(sistema->lista_clientes[i].razao_social), arquivo);
+                    sistema->lista_clientes[i].razao_social[strcspn(sistema->lista_clientes[i].razao_social, "\n")] = 0;
+                    fgets(sistema->lista_clientes[i].cnpj, sizeof(sistema->lista_clientes[i].cnpj), arquivo);
+                    sistema->lista_clientes[i].cnpj[strcspn(sistema->lista_clientes[i].cnpj, "\n")] = 0;
+                    fgets(sistema->lista_clientes[i].endereco, sizeof(sistema->lista_clientes[i].endereco), arquivo);
+                    sistema->lista_clientes[i].endereco[strcspn(sistema->lista_clientes[i].endereco, "\n")] = 0;
+                    fgets(sistema->lista_clientes[i].telefone, sizeof(sistema->lista_clientes[i].telefone), arquivo);
+                    sistema->lista_clientes[i].telefone[strcspn(sistema->lista_clientes[i].telefone, "\n")] = 0;
+                    fgets(sistema->lista_clientes[i].email, sizeof(sistema->lista_clientes[i].email), arquivo);
+                    sistema->lista_clientes[i].email[strcspn(sistema->lista_clientes[i].email, "\n")] = 0;
+                    fgets(sistema->lista_clientes[i].nome_do_contato, sizeof(sistema->lista_clientes[i].nome_do_contato), arquivo);
+                    sistema->lista_clientes[i].nome_do_contato[strcspn(sistema->lista_clientes[i].nome_do_contato, "\n")] = 0;
                 }
             }
         }
@@ -325,7 +318,7 @@ void carregarClientes()
         fclose(arquivo);
 }
 
-// Libera a memória alocada para a lista de clientes.
+// Libera a memória usada pela lista de clientes.
 void liberarMemoriaClientes(Sistema *sistema)
 {
     if (sistema->lista_clientes != NULL)
