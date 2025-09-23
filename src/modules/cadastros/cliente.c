@@ -9,38 +9,27 @@
 #define CLIENTES_DATA_FILE "../data/clientes.dat"
 #define CLIENTES_TEXT_FILE "../data/clientes.txt"
 
-// Ponteiro para a lista de clientes.
-static Cliente *lista_clientes = NULL;
-// Número de clientes cadastrados.
-static int num_clientes = 0;
-// Capacidade atual do array de clientes.
-static int capacidade_clientes = 0;
-
-/*
-  Adiciona um novo cliente.
- */
-void adicionarCliente()
+// Adiciona um novo cliente ao sistema.
+void adicionarCliente(Sistema *sistema)
 {
-    // Realoca a memória se a capacidade máxima for atingida.
-    if (num_clientes == capacidade_clientes)
+    if (sistema->num_clientes == sistema->capacidade_clientes)
     {
-        int nova_capacidade = (capacidade_clientes == 0) ? 10 : capacidade_clientes * 2;
-        Cliente *temp = realloc(lista_clientes, nova_capacidade * sizeof(Cliente));
+        int nova_capacidade = (sistema->capacidade_clientes == 0) ? 10 : sistema->capacidade_clientes * 2;
+        Cliente *temp = realloc(sistema->lista_clientes, nova_capacidade * sizeof(Cliente));
 
         if (temp == NULL)
         {
-            printf("\nErro critico de alocacao de memoria para clientes!\n");
+            printf("\nErro de alocacao de memoria para clientes!\n");
             return;
         }
-        lista_clientes = temp;
-        capacidade_clientes = nova_capacidade;
+        sistema->lista_clientes = temp;
+        sistema->capacidade_clientes = nova_capacidade;
     }
 
-    // Cria um novo cliente e solicita os dados.
     Cliente novo_cliente;
     printf("\n--- Cadastro de Novo Cliente ---\n");
 
-    novo_cliente.codigo = num_clientes + 1;
+    novo_cliente.codigo = sistema->num_clientes + 1;
     printf("Codigo do Cliente: %d\n", novo_cliente.codigo);
 
     printf("Nome / Razao Social: ");
@@ -67,43 +56,39 @@ void adicionarCliente()
     fgets(novo_cliente.nome_do_contato, sizeof(novo_cliente.nome_do_contato), stdin);
     novo_cliente.nome_do_contato[strcspn(novo_cliente.nome_do_contato, "\n")] = 0;
 
-    // Adiciona o novo cliente à lista e incrementa o contador.
-    lista_clientes[num_clientes] = novo_cliente;
-    num_clientes++;
+    sistema->lista_clientes[sistema->num_clientes] = novo_cliente;
+    sistema->num_clientes++;
 
     printf("\nCliente '%s' cadastrado com sucesso!\n", novo_cliente.razao_social);
-    salvarClientes();
+    salvarClientes(sistema);
 }
 
-/*
-  Lista todos os clientes cadastrados.
- */
-void listarClientes()
+// Lista todos os clientes cadastrados.
+void listarClientes(Sistema *sistema)
 {
-    if (num_clientes == 0)
+    if (sistema->num_clientes == 0)
     {
         printf("\nNenhum cliente cadastrado.\n");
         return;
     }
 
     printf("\n--- Lista de Clientes ---\n");
-    for (int i = 0; i < num_clientes; i++)
+    for (int i = 0; i < sistema->num_clientes; i++)
     {
         printf("----------------------------------\n");
-        printf("Codigo: %d\n", lista_clientes[i].codigo);
-        printf("Nome / Razao Social: %s\n", lista_clientes[i].razao_social);
-        printf("CPF / CNPJ: %s\n", lista_clientes[i].cnpj);
-        printf("Endereco: %s\n", lista_clientes[i].endereco);
-        printf("Telefone: %s\n", lista_clientes[i].telefone);
-        printf("E-mail: %s\n", lista_clientes[i].email);
-        printf("Contato: %s\n", lista_clientes[i].nome_do_contato);
+        printf("Codigo: %d\n", sistema->lista_clientes[i].codigo);
+        printf("Nome / Razao Social: %s\n", sistema->lista_clientes[i].razao_social);
+        printf("CPF / CNPJ: %s\n", sistema->lista_clientes[i].cnpj);
+        printf("Endereco: %s\n", sistema->lista_clientes[i].endereco);
+        printf("Telefone: %s\n", sistema->lista_clientes[i].telefone);
+        printf("E-mail: %s\n", sistema->lista_clientes[i].email);
+        printf("Contato: %s\n", sistema->lista_clientes[i].nome_do_contato);
     }
     printf("----------------------------------\n");
 }
 
-/*
-  Altera os dados de um cliente existente.
- */
+
+// Altera os dados de um cliente existente.
 void alterarCliente()
 {
     listarClientes();
@@ -200,9 +185,8 @@ void alterarCliente()
     salvarClientes();
 }
 
-/*
-  Exclui um cliente.
- */
+
+// Exclui um cliente.
 void excluirCliente()
 {
     listarClientes();
@@ -241,9 +225,8 @@ void excluirCliente()
     printf("\nCliente com codigo %d nao encontrado.\n", codigo);
 }
 
-/*
-  Salva os dados dos clientes em um arquivo.
- */
+
+// Salva os dados dos clientes em um arquivo.
 void salvarClientes()
 {
     TipoArmazenamento modo = obterModoDeArmazenamento();
@@ -280,9 +263,8 @@ void salvarClientes()
         fclose(arquivo);
 }
 
-/*
-  Carrega os dados dos clientes de um arquivo.
- */
+
+// Carrega os dados dos clientes de um arquivo.
 void carregarClientes()
 {
     TipoArmazenamento modo = obterModoDeArmazenamento();
@@ -343,14 +325,12 @@ void carregarClientes()
         fclose(arquivo);
 }
 
-/*
-  Libera a memória alocada para a lista de clientes.
- */
-void liberarMemoriaClientes()
+// Libera a memória alocada para a lista de clientes.
+void liberarMemoriaClientes(Sistema *sistema)
 {
-    if (lista_clientes != NULL)
+    if (sistema->lista_clientes != NULL)
     {
-        free(lista_clientes);
-        lista_clientes = NULL;
+        free(sistema->lista_clientes);
+        sistema->lista_clientes = NULL;
     }
 }

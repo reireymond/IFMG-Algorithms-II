@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "config.h"
 #include "ui/menu.h"
@@ -11,35 +12,38 @@
 #include "cadastros/recurso.h"
 #include "cadastros/fornecedor.h"
 #include "cadastros/operador.h"
+#include "structs.h"
 
 /*
- * Ponto de entrada principal do programa.
- *
- * Esta função inicializa o sistema, carrega os dados e exibe o menu principal.
+ * Ponto de entrada do programa.
  */
 int main()
 {
-    // Exibe o menu para o usuário escolher o modo de armazenamento dos dados.
+    // Cria e inicializa a estrutura central do sistema.
+    Sistema sistema;
+    // Zera toda a estrutura para garantir que ponteiros comecem como NULL e contadores como 0.
+    memset(&sistema, 0, sizeof(Sistema));
+
     menuEscolherArmazenamento();
 
-    // Carrega todos os dados dos arquivos de acordo com o modo de armazenamento escolhido.
-    carregarProdutora();
-    carregarClientes();
-    carregarEquipeInterna();
-    carregarRecursos();
-    carregarFornecedores();
-    carregarOperadores();
+    // Carrega os dados para dentro da estrutura 'sistema'.
+    carregarProdutora(&sistema);
+    carregarClientes(&sistema);
+    carregarEquipeInterna(&sistema);
+    carregarRecursos(&sistema);
+    carregarFornecedores(&sistema);
+    carregarOperadores(&sistema);
 
-    // Exibe o menu principal, que controla o fluxo de execução do programa.
-    menuPrincipal();
+    // Passa o ponteiro da 'sistema' para o menu principal.
+    menuPrincipal(&sistema);
 
-    // Libera toda a memória alocada dinamicamente antes de encerrar o programa.
-    liberarMemoriaProdutora();
-    liberarMemoriaClientes();
-    liberarMemoriaEquipe();
-    liberarMemoriaRecursos();
-    liberarMemoriaFornecedores();
-    liberarMemoriaOperadores();
+    // Libera a memória alocada.
+    liberarMemoriaProdutora(&sistema);
+    liberarMemoriaClientes(&sistema);
+    liberarMemoriaEquipe(&sistema);
+    liberarMemoriaRecursos(&sistema);
+    liberarMemoriaFornecedores(&sistema);
+    liberarMemoriaOperadores(&sistema);
 
     return 0;
 }

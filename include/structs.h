@@ -1,9 +1,9 @@
 #ifndef STRUCTS_H
 #define STRUCTS_H
 
-/*
-  Estrutura para armazenar os dados da produtora.
- */
+
+// Estrutura para armazenar os dados da produtora.
+ 
 typedef struct
 {
     char nome_fantasia[100];
@@ -18,9 +18,8 @@ typedef struct
     float margem_lucro;
 } Produtora;
 
-/*
-  Estrutura para armazenar os dados de um cliente.
- */
+// Estrutura para armazenar os dados de um cliente.
+
 typedef struct
 {
     int codigo;
@@ -32,9 +31,8 @@ typedef struct
     char nome_do_contato[100];
 } Cliente;
 
-/*
-  Estrutura para armazenar os dados de um membro da equipe interna.
- */
+// Estrutura para armazenar os dados de um membro da equipe interna.
+
 typedef struct
 {
     int codigo;
@@ -44,9 +42,8 @@ typedef struct
     float valor_diaria;
 } EquipeInterna;
 
-/*
-  Estrutura para armazenar os dados de um recurso ou equipamento.
- */
+// Estrutura para armazenar os dados de um recurso ou equipamento.
+
 typedef struct
 {
     int codigo;
@@ -57,9 +54,8 @@ typedef struct
     float valor_locacao;
 } Recurso;
 
-/*
-  Estrutura para armazenar os dados de um fornecedor ou parceiro.
- */
+// Estrutura para armazenar os dados de um fornecedor ou parceiro.
+
 typedef struct
 {
     int codigo;
@@ -71,9 +67,8 @@ typedef struct
     char tipo_servico[100];
 } Fornecedor;
 
-/*
-  Estrutura para armazenar os dados de um operador do sistema.
- */
+// Estrutura para armazenar os dados de um operador do sistema.
+
 typedef struct
 {
     int codigo;
@@ -81,5 +76,35 @@ typedef struct
     char usuario[50];
     char senha[50];
 } Operador;
+
+// Estrutura central que armazena todos os dados do sistema.
+
+typedef struct
+{
+    // Dados da Produtora
+    Produtora *dados_produtora;
+
+    // Listas de cadastros
+    Cliente *lista_clientes;
+    int num_clientes;
+    int capacidade_clientes;
+
+    EquipeInterna *lista_equipe;
+    int num_equipe;
+    int capacidade_equipe;
+
+    Recurso *lista_recursos;
+    int num_recursos;
+    int capacidade_recursos;
+
+    Fornecedor *lista_fornecedores;
+    int num_fornecedores;
+    int capacidade_fornecedores;
+
+    Operador *lista_operadores;
+    int num_operadores;
+    int capacidade_operadores;
+
+} Sistema;
 
 #endif
