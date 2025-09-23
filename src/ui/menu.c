@@ -23,7 +23,6 @@ void menuRecursos(Sistema *sistema);
 void menuFornecedores(Sistema *sistema);
 void menuOperadores(Sistema *sistema);
 
-
 // Exibe o menu para o usuário escolher o modo de armazenamento.
 void menuEscolherArmazenamento()
 {
