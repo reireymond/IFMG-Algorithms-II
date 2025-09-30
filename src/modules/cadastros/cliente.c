@@ -225,7 +225,8 @@ void excluirCliente(Sistema *sistema)
     printf("\nCliente com codigo %d nao encontrado.\n", codigo);
 }
 
-// Salva os clientes em arquivo.
+
+// Salva todos os clientes cadastrados em arquivo, podendo ser binário ou texto, conforme configuração do sistema.
 void salvarClientes(Sistema *sistema)
 {
     TipoArmazenamento modo = obterModoDeArmazenamento();
@@ -277,6 +278,7 @@ void carregarClientes(Sistema *sistema)
         if (arquivo != NULL)
         {
             fread(&sistema->num_clientes, sizeof(int), 1, arquivo);
+              // Lê do arquivo binário a quantidade de clientes cadastrados e armazena em sistema->num_clientes
             if (sistema->num_clientes > 0)
             {
                 sistema->lista_clientes = malloc(sistema->num_clientes * sizeof(Cliente));
@@ -324,7 +326,7 @@ void carregarClientes(Sistema *sistema)
         fclose(arquivo);
 }
 
-// Libera a memória usada pela lista de clientes.
+// Libera a memória alocada para a lista de clientes, evitando vazamentos de memória.
 void liberarMemoriaClientes(Sistema *sistema)
 {
     if (sistema->lista_clientes != NULL)
