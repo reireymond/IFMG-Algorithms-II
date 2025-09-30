@@ -12,6 +12,8 @@
 // Adiciona um novo membro da equipe.
 void adicionarEquipeInterna(Sistema *sistema)
 {
+    // Verifica se o array de equipe está cheio
+   // Se estiver, será necessário aumentar a capacidade antes de adicionar  uma nova equipe
     if (sistema->num_equipe == sistema->capacidade_equipe)
     {
         int nova_capacidade = (sistema->capacidade_equipe == 0) ? 10 : sistema->capacidade_equipe * 2;

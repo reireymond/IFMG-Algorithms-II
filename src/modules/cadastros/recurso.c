@@ -12,6 +12,11 @@
 // Adiciona um novo recurso.
 void adicionarRecurso(Sistema *sistema)
 {
+    // Verifica se o array de recursos está cheio
+    // Se estiver cheio, será necessário aumentar a capacidade antes de adicionar um novo recurso
+if (sistema->num_recursos == sistema->capacidade_recursos)
+{
+
     if (sistema->num_recursos == sistema->capacidade_recursos)
     {
         int nova_capacidade = (sistema->capacidade_recursos == 0) ? 10 : sistema->capacidade_recursos * 2;
@@ -25,7 +30,7 @@ void adicionarRecurso(Sistema *sistema)
         sistema->lista_recursos = temp;
         sistema->capacidade_recursos = nova_capacidade;
     }
-
+}
     Recurso novo_recurso;
     printf("\n--- Cadastro de Novo Recurso/Equipamento ---\n");
 

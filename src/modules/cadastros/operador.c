@@ -12,6 +12,8 @@
 // Adiciona um novo operador.
 void adicionarOperador(Sistema *sistema)
 {
+    // Verifica se o array de operador está cheio
+    // Se estiver, será necessário aumentar a capacidade antes de adicionar um novo operador
     if (sistema->num_operadores == sistema->capacidade_operadores)
     {
         int nova_capacidade = (sistema->capacidade_operadores == 0) ? 10 : sistema->capacidade_operadores * 2;

@@ -13,8 +13,12 @@
 
 // Adiciona um novo cliente ao sistema.
 void adicionarCliente(Sistema *sistema)
+
+// Verifica se o array de clientes está cheio
+// Se estiver, será necessário aumentar a capacidade antes de adicionar um novo cliente
 { 
-    if (sistema->num_clientes == sistema->capacidade_clientes)
+    if (sistema->num_clientes == sistema->capacidade_clientes) 
+    
     {
         int nova_capacidade = (sistema->capacidade_clientes == 0) ? 10 : sistema->capacidade_clientes * 2;
         Cliente *temp = realloc(sistema->lista_clientes, nova_capacidade * sizeof(Cliente));

@@ -12,6 +12,8 @@
 // Adiciona um novo fornecedor.
 void adicionarFornecedor(Sistema *sistema)
 {
+    // Verifica se o array de Fornecedo está cheio
+    // Se estiver, será necessário aumentar a capacidade antes de adicionar um novo fornecedor
     if (sistema->num_fornecedores == sistema->capacidade_fornecedores)
     {
         int nova_capacidade = (sistema->capacidade_fornecedores == 0) ? 10 : sistema->capacidade_fornecedores * 2;

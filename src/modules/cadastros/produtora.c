@@ -12,6 +12,8 @@
 // Cadastra os dados da produtora.
 void adicionarProdutora(Sistema *sistema)
 {
+    // Verifica se o ponteiro para dados_produtora existe
+    // Só tenta acessar os dados se o ponteiro não for NULL
     if (sistema->dados_produtora != NULL)
     {
         printf("\nUma produtora ja foi cadastrada. Exclua a existente para cadastrar uma nova.\n");
