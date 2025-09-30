@@ -10,9 +10,10 @@
 #define CLIENTES_DATA_FILE "../data/clientes.dat"
 #define CLIENTES_TEXT_FILE "../data/clientes.txt"
 
+
 // Adiciona um novo cliente ao sistema.
 void adicionarCliente(Sistema *sistema)
-{
+{ 
     if (sistema->num_clientes == sistema->capacidade_clientes)
     {
         int nova_capacidade = (sistema->capacidade_clientes == 0) ? 10 : sistema->capacidade_clientes * 2;
