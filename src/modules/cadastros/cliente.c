@@ -235,7 +235,8 @@ void salvarClientes(Sistema *sistema)
     FILE *arquivo = NULL;
     if (modo == ARQUIVO_BINARIO)
     {
-        arquivo = fopen(CLIENTES_DATA_FILE, "wb");
+        arquivo = fopen(CLIENTES_DATA_FILE, "wb");//abre o arquivo para escrita em modo binário
+
         if (arquivo == NULL)
             return;
         fwrite(&sistema->num_clientes, sizeof(int), 1, arquivo);
@@ -243,7 +244,7 @@ void salvarClientes(Sistema *sistema)
     }
     else if (modo == ARQUIVO_TEXTO)
     {
-        arquivo = fopen(CLIENTES_TEXT_FILE, "w");
+        arquivo = fopen(CLIENTES_TEXT_FILE, "w");//abre o arquivo para escrita em modo texto
         if (arquivo == NULL)
             return;
         fprintf(arquivo, "%d\n", sistema->num_clientes);
@@ -272,7 +273,7 @@ void carregarClientes(Sistema *sistema)
     FILE *arquivo = NULL;
     if (modo == ARQUIVO_BINARIO)
     {
-        arquivo = fopen(CLIENTES_DATA_FILE, "rb");
+        arquivo = fopen(CLIENTES_DATA_FILE, "rb");// abre o arquivo para leitura em binário
         if (arquivo != NULL)
         {
             fread(&sistema->num_clientes, sizeof(int), 1, arquivo);
@@ -292,7 +293,7 @@ void carregarClientes(Sistema *sistema)
     }
     else if (modo == ARQUIVO_TEXTO)
     {
-        arquivo = fopen(CLIENTES_TEXT_FILE, "r");
+        arquivo = fopen(CLIENTES_TEXT_FILE, "r"); // abre o aquivo para leitura em texto
         if (arquivo != NULL)
         {
             fscanf(arquivo, "%d\n", &sistema->num_clientes);

@@ -222,7 +222,7 @@ void salvarRecursos(Sistema *sistema)
     if (modo == MEMORIA)
         return;
 
-    FILE *arquivo = fopen(RECURSOS_DATA_FILE, "wb");
+    FILE *arquivo = fopen(RECURSOS_DATA_FILE, "wb"); // abre o arquivo para escrita em modo binário
     if (arquivo == NULL)
     {
         perror("Nao foi possivel abrir o arquivo de recursos");
@@ -240,7 +240,7 @@ void carregarRecursos(Sistema *sistema)
     if (modo == MEMORIA)
         return;
 
-    FILE *arquivo = fopen(RECURSOS_DATA_FILE, "rb");
+    FILE *arquivo = fopen(RECURSOS_DATA_FILE, "rb"); // abre o arquivo para leitura em binário
     if (arquivo != NULL)
     {
         fread(&sistema->num_recursos, sizeof(int), 1, arquivo);

@@ -229,7 +229,7 @@ void salvarProdutora(Sistema *sistema)
 
     int produtora_existe = (sistema->dados_produtora != NULL);
 
-    FILE *arquivo = fopen(PRODUTORA_DATA_FILE, "wb");
+    FILE *arquivo = fopen(PRODUTORA_DATA_FILE, "wb"); //abre o arquivo para escrita em modo binário
     if (arquivo == NULL)
     {
         perror("Nao foi possivel abrir o arquivo da produtora");
@@ -253,7 +253,7 @@ void carregarProdutora(Sistema *sistema)
         return;
 
     int produtora_existe = 0;
-    FILE *arquivo = fopen(PRODUTORA_DATA_FILE, "rb");
+    FILE *arquivo = fopen(PRODUTORA_DATA_FILE, "rb"); // abre o arquivo para leitura em binário
     if (arquivo != NULL)
     {
         fread(&produtora_existe, sizeof(int), 1, arquivo);

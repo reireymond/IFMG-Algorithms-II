@@ -230,7 +230,7 @@ void salvarFornecedores(Sistema *sistema)
     if (modo == MEMORIA)
         return;
 
-    FILE *arquivo = fopen(FORNECEDORES_DATA_FILE, "wb");
+    FILE *arquivo = fopen(FORNECEDORES_DATA_FILE, "wb");//abre o arquivo para escrita em modo binário
     if (arquivo == NULL)
     {
         perror("Nao foi possivel abrir o arquivo de fornecedores");
@@ -248,7 +248,7 @@ void carregarFornecedores(Sistema *sistema)
     if (modo == MEMORIA)
         return;
 
-    FILE *arquivo = fopen(FORNECEDORES_DATA_FILE, "rb");
+    FILE *arquivo = fopen(FORNECEDORES_DATA_FILE, "rb");// abre o arquivo para leitura em binário
     if (arquivo != NULL)
     {
         fread(&sistema->num_fornecedores, sizeof(int), 1, arquivo);
