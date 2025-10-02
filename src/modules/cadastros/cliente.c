@@ -1,3 +1,4 @@
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -44,10 +45,15 @@ void adicionarCliente(Sistema *sistema)
     fgets(novo_cliente.razao_social, sizeof(novo_cliente.razao_social), stdin);
     novo_cliente.razao_social[strcspn(novo_cliente.razao_social, "\n")] = 0;
 
-    printf("CPF / CNPJ: ");
-    // Lê o CPF ou CNPJ do cliente.
-    fgets(novo_cliente.cnpj, sizeof(novo_cliente.cnpj), stdin);
-    novo_cliente.cnpj[strcspn(novo_cliente.cnpj, "\n")] = 0;
+    // Lê e valida o CPF do cliente
+    do {
+        printf("CPF / CNPJ: ");
+        fgets(novo_cliente.cnpj, sizeof(novo_cliente.cnpj), stdin);
+        novo_cliente.cnpj[strcspn(novo_cliente.cnpj, "\n")] = 0;
+        if (!validarCPF(novo_cliente.cnpj)) {
+            printf("CPF invalido! Digite novamente.(deve conter 11 digitos)\n");
+        }
+    } while (!validarCPF(novo_cliente.cnpj));
 
     printf("Endereco Completo: ");
     // Lê o endereço completo do cliente.
