@@ -29,18 +29,22 @@ void adicionarOperador(Sistema *sistema)
 
     Operador novo;
     printf("\n--- Cadastro de Novo Operador ---\n");
+    // Gera o código do novo operador automaticamente.
     novo.codigo = sistema->num_operadores + 1;
     printf("Codigo: %d\n", novo.codigo);
 
     printf("Nome: ");
+    // Lê o nome do operador.
     fgets(novo.nome, sizeof(novo.nome), stdin);
     novo.nome[strcspn(novo.nome, "\n")] = 0;
 
     printf("Usuario: ");
+    // Lê o nome de usuário do operador.
     fgets(novo.usuario, sizeof(novo.usuario), stdin);
     novo.usuario[strcspn(novo.usuario, "\n")] = 0;
 
     printf("Senha: ");
+    // Lê a senha do operador.
     fgets(novo.senha, sizeof(novo.senha), stdin);
     novo.senha[strcspn(novo.senha, "\n")] = 0;
 
@@ -60,6 +64,7 @@ void listarOperadores(Sistema *sistema)
         return;
     }
     printf("\n--- Lista de Operadores ---\n");
+    // Percorre e exibe os dados de todos os operadores cadastrados.
     for (int i = 0; i < sistema->num_operadores; i++)
     {
         printf("----------------------------------\n");
@@ -84,6 +89,7 @@ void alterarOperador(Sistema *sistema)
     scanf("%d", &codigo);
     limpar_buffer();
 
+    // Busca o operador pelo código informado.
     for (int i = 0; i < sistema->num_operadores; i++)
     {
         if (sistema->lista_operadores[i].codigo == codigo)
@@ -112,6 +118,7 @@ void alterarOperador(Sistema *sistema)
         scanf("%d", &opcao);
         limpar_buffer();
 
+        // Executa a alteração do campo escolhido pelo usuário.
         switch (opcao)
         {
         case 1:
@@ -152,6 +159,7 @@ void excluirOperador(Sistema *sistema)
     scanf("%d", &codigo);
     limpar_buffer();
 
+    // Busca o operador pelo código informado para exclusão.
     for (i = 0; i < sistema->num_operadores; i++)
     {
         if (sistema->lista_operadores[i].codigo == codigo)
@@ -191,7 +199,9 @@ void salvarOperadores(Sistema *sistema)
         perror("Nao foi possivel abrir o arquivo de operadores");
         return;
     }
+    // Salva a quantidade de operadores no arquivo binário.
     fwrite(&sistema->num_operadores, sizeof(int), 1, arquivo);
+    // Salva os dados dos operadores no arquivo binário.
     fwrite(sistema->lista_operadores, sizeof(Operador), sistema->num_operadores, arquivo);
     fclose(arquivo);
 }
@@ -206,12 +216,14 @@ void carregarOperadores(Sistema *sistema)
     FILE *arquivo = fopen(OPERADORES_DATA_FILE, "rb"); // abre o arquivo para leitura em binário
     if (arquivo != NULL)
     {
-        fread(&sistema->num_operadores, sizeof(int), 1, arquivo);
+    // Lê do arquivo binário a quantidade de operadores cadastrados.
+    fread(&sistema->num_operadores, sizeof(int), 1, arquivo);
         if (sistema->num_operadores > 0)
         {
             sistema->lista_operadores = malloc(sistema->num_operadores * sizeof(Operador));
             if (sistema->lista_operadores != NULL)
             {
+                // Lê os dados dos operadores do arquivo binário para a memória.
                 fread(sistema->lista_operadores, sizeof(Operador), sistema->num_operadores, arquivo);
                 sistema->capacidade_operadores = sistema->num_operadores;
             }

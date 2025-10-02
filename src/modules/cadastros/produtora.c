@@ -20,6 +20,7 @@ void adicionarProdutora(Sistema *sistema)
         return;
     }
 
+    // Aloca memória para os dados da produtora.
     sistema->dados_produtora = (Produtora *)malloc(sizeof(Produtora));
     if (sistema->dados_produtora == NULL)
     {
@@ -30,42 +31,52 @@ void adicionarProdutora(Sistema *sistema)
     printf("\n--- Cadastro dos Dados da Produtora ---\n");
 
     printf("Nome Fantasia: ");
+    // Lê o nome fantasia da produtora.
     fgets(sistema->dados_produtora->nome_fantasia, sizeof(sistema->dados_produtora->nome_fantasia), stdin);
     sistema->dados_produtora->nome_fantasia[strcspn(sistema->dados_produtora->nome_fantasia, "\n")] = 0;
 
     printf("Razao Social: ");
+    // Lê a razão social da produtora.
     fgets(sistema->dados_produtora->razao_social, sizeof(sistema->dados_produtora->razao_social), stdin);
     sistema->dados_produtora->razao_social[strcspn(sistema->dados_produtora->razao_social, "\n")] = 0;
 
     printf("Nome do Responsavel: ");
+    // Lê o nome do responsável pela produtora.
     fgets(sistema->dados_produtora->nome_do_responsavel, sizeof(sistema->dados_produtora->nome_do_responsavel), stdin);
     sistema->dados_produtora->nome_do_responsavel[strcspn(sistema->dados_produtora->nome_do_responsavel, "\n")] = 0;
 
     printf("CNPJ: ");
+    // Lê o CNPJ da produtora.
     fgets(sistema->dados_produtora->cnpj, sizeof(sistema->dados_produtora->cnpj), stdin);
     sistema->dados_produtora->cnpj[strcspn(sistema->dados_produtora->cnpj, "\n")] = 0;
 
     printf("Inscricao Estadual: ");
+    // Lê a inscrição estadual da produtora.
     fgets(sistema->dados_produtora->inscricao_estadual, sizeof(sistema->dados_produtora->inscricao_estadual), stdin);
     sistema->dados_produtora->inscricao_estadual[strcspn(sistema->dados_produtora->inscricao_estadual, "\n")] = 0;
 
     printf("Endereco: ");
+    // Lê o endereço da produtora.
     fgets(sistema->dados_produtora->endereco, sizeof(sistema->dados_produtora->endereco), stdin);
     sistema->dados_produtora->endereco[strcspn(sistema->dados_produtora->endereco, "\n")] = 0;
 
     printf("Telefone: ");
+    // Lê o telefone da produtora.
     fgets(sistema->dados_produtora->telefone, sizeof(sistema->dados_produtora->telefone), stdin);
     sistema->dados_produtora->telefone[strcspn(sistema->dados_produtora->telefone, "\n")] = 0;
 
     printf("Telefone do Responsavel: ");
+    // Lê o telefone do responsável pela produtora.
     fgets(sistema->dados_produtora->telefone_responsavel, sizeof(sistema->dados_produtora->telefone_responsavel), stdin);
     sistema->dados_produtora->telefone_responsavel[strcspn(sistema->dados_produtora->telefone_responsavel, "\n")] = 0;
 
     printf("E-mail: ");
+    // Lê o e-mail da produtora.
     fgets(sistema->dados_produtora->email, sizeof(sistema->dados_produtora->email), stdin);
     sistema->dados_produtora->email[strcspn(sistema->dados_produtora->email, "\n")] = 0;
 
     printf("Margem de Lucro (%%): ");
+    // Lê a margem de lucro da produtora.
     scanf("%f", &sistema->dados_produtora->margem_lucro);
     limpar_buffer();
 
@@ -105,7 +116,8 @@ void alterarProdutora(Sistema *sistema)
         scanf("%d", &opcao_alterar);
         limpar_buffer();
 
-        switch (opcao_alterar)
+    // Executa a alteração do campo escolhido pelo usuário.
+    switch (opcao_alterar)
         {
         case 1:
             printf("Digite o novo Nome Fantasia: ");
@@ -236,10 +248,12 @@ void salvarProdutora(Sistema *sistema)
         return;
     }
 
+    // Salva a informação se existe produtora cadastrada.
     fwrite(&produtora_existe, sizeof(int), 1, arquivo);
     if (produtora_existe)
     {
-        fwrite(sistema->dados_produtora, sizeof(Produtora), 1, arquivo);
+    // Salva os dados da produtora no arquivo binário.
+    fwrite(sistema->dados_produtora, sizeof(Produtora), 1, arquivo);
     }
 
     fclose(arquivo);
@@ -256,12 +270,14 @@ void carregarProdutora(Sistema *sistema)
     FILE *arquivo = fopen(PRODUTORA_DATA_FILE, "rb"); // abre o arquivo para leitura em binário
     if (arquivo != NULL)
     {
-        fread(&produtora_existe, sizeof(int), 1, arquivo);
+    // Lê do arquivo binário se existe produtora cadastrada.
+    fread(&produtora_existe, sizeof(int), 1, arquivo);
         if (produtora_existe)
         {
             sistema->dados_produtora = (Produtora *)malloc(sizeof(Produtora));
             if (sistema->dados_produtora != NULL)
             {
+                // Lê os dados da produtora do arquivo binário para a memória.
                 fread(sistema->dados_produtora, sizeof(Produtora), 1, arquivo);
             }
         }

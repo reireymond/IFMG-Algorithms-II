@@ -29,22 +29,27 @@ void adicionarEquipeInterna(Sistema *sistema)
 
     EquipeInterna novo_membro;
     printf("\n--- Cadastro de Novo Membro da Equipe ---\n");
+    // Gera o código do novo membro automaticamente.
     novo_membro.codigo = sistema->num_equipe + 1;
     printf("Codigo do Membro: %d\n", novo_membro.codigo);
 
     printf("Nome: ");
+    // Lê o nome do membro da equipe.
     fgets(novo_membro.nome, sizeof(novo_membro.nome), stdin);
     novo_membro.nome[strcspn(novo_membro.nome, "\n")] = 0;
 
     printf("CPF: ");
+    // Lê o CPF do membro da equipe.
     fgets(novo_membro.cpf, sizeof(novo_membro.cpf), stdin);
     novo_membro.cpf[strcspn(novo_membro.cpf, "\n")] = 0;
 
     printf("Funcao: ");
+    // Lê a função do membro da equipe.
     fgets(novo_membro.funcao, sizeof(novo_membro.funcao), stdin);
     novo_membro.funcao[strcspn(novo_membro.funcao, "\n")] = 0;
 
     printf("Valor da diaria: R$ ");
+    // Lê o valor da diária do membro da equipe.
     scanf("%f", &novo_membro.valor_diaria);
     limpar_buffer();
 
@@ -65,6 +70,7 @@ void listarEquipeInterna(Sistema *sistema)
     }
 
     printf("\n--- Lista de membros da equipe interna ---\n");
+    // Percorre e exibe os dados de todos os membros cadastrados.
     for (int i = 0; i < sistema->num_equipe; i++)
     {
         printf("----------------------------------\n");
@@ -91,6 +97,7 @@ void alterarEquipeInterna(Sistema *sistema)
     scanf("%d", &codigo);
     limpar_buffer();
 
+    // Busca o membro da equipe pelo código informado.
     for (int i = 0; i < sistema->num_equipe; i++)
     {
         if (sistema->lista_equipe[i].codigo == codigo)
@@ -120,6 +127,7 @@ void alterarEquipeInterna(Sistema *sistema)
         scanf("%d", &opcao);
         limpar_buffer();
 
+        // Executa a alteração do campo escolhido pelo usuário.
         switch (opcao)
         {
         case 1:
@@ -165,6 +173,7 @@ void excluirEquipeInterna(Sistema *sistema)
     limpar_buffer();
 
     int indice = -1;
+    // Busca o membro da equipe pelo código informado para exclusão.
     for (int i = 0; i < sistema->num_equipe; i++)
     {
         if (sistema->lista_equipe[i].codigo == codigo)
@@ -212,7 +221,9 @@ void salvarEquipeInterna(Sistema *sistema)
         perror("Nao foi possivel abrir o arquivo da equipe");
         return;
     }
+    // Salva a quantidade de membros da equipe no arquivo binário.
     fwrite(&sistema->num_equipe, sizeof(int), 1, arquivo);
+    // Salva os dados dos membros da equipe no arquivo binário.
     fwrite(sistema->lista_equipe, sizeof(EquipeInterna), sistema->num_equipe, arquivo);
     fclose(arquivo);
 }
@@ -227,12 +238,14 @@ void carregarEquipeInterna(Sistema *sistema)
     FILE *arquivo = fopen(EQUIPE_DATA_FILE, "rb"); // abre o arquivo para leitura em binário
     if (arquivo != NULL)
     {
-        fread(&sistema->num_equipe, sizeof(int), 1, arquivo);
+    // Lê do arquivo binário a quantidade de membros cadastrados.
+    fread(&sistema->num_equipe, sizeof(int), 1, arquivo);
         if (sistema->num_equipe > 0)
         {
             sistema->lista_equipe = malloc(sistema->num_equipe * sizeof(EquipeInterna));
             if (sistema->lista_equipe != NULL)
             {
+                // Lê os dados dos membros da equipe do arquivo binário para a memória.
                 fread(sistema->lista_equipe, sizeof(EquipeInterna), sistema->num_equipe, arquivo);
                 sistema->capacidade_equipe = sistema->num_equipe;
             }

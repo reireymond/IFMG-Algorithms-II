@@ -15,8 +15,8 @@
 void adicionarCliente(Sistema *sistema)
 
 // Verifica se o array de clientes está cheio
-// Se estiver, será necessário aumentar a capacidade antes de adicionar um novo cliente
 { 
+    // Verifica se o vetor de clientes está cheio. Se sim, aumenta a capacidade para permitir novos cadastros.
     if (sistema->num_clientes == sistema->capacidade_clientes) 
     
     {
@@ -35,30 +35,37 @@ void adicionarCliente(Sistema *sistema)
     Cliente novo_cliente;
     printf("\n--- Cadastro de Novo Cliente ---\n");
 
+    // Gera o código do novo cliente automaticamente.
     novo_cliente.codigo = sistema->num_clientes + 1;
     printf("Codigo do Cliente: %d\n", novo_cliente.codigo);
 
     printf("Nome / Razao Social: ");
+    // Lê o nome ou razão social do cliente.
     fgets(novo_cliente.razao_social, sizeof(novo_cliente.razao_social), stdin);
     novo_cliente.razao_social[strcspn(novo_cliente.razao_social, "\n")] = 0;
 
     printf("CPF / CNPJ: ");
+    // Lê o CPF ou CNPJ do cliente.
     fgets(novo_cliente.cnpj, sizeof(novo_cliente.cnpj), stdin);
     novo_cliente.cnpj[strcspn(novo_cliente.cnpj, "\n")] = 0;
 
     printf("Endereco Completo: ");
+    // Lê o endereço completo do cliente.
     fgets(novo_cliente.endereco, sizeof(novo_cliente.endereco), stdin);
     novo_cliente.endereco[strcspn(novo_cliente.endereco, "\n")] = 0;
 
     printf("Telefone: ");
+    // Lê o telefone do cliente.
     fgets(novo_cliente.telefone, sizeof(novo_cliente.telefone), stdin);
     novo_cliente.telefone[strcspn(novo_cliente.telefone, "\n")] = 0;
 
     printf("E-mail: ");
+    // Lê o e-mail do cliente.
     fgets(novo_cliente.email, sizeof(novo_cliente.email), stdin);
     novo_cliente.email[strcspn(novo_cliente.email, "\n")] = 0;
 
     printf("Nome do Contato: ");
+    // Lê o nome do contato do cliente.
     fgets(novo_cliente.nome_do_contato, sizeof(novo_cliente.nome_do_contato), stdin);
     novo_cliente.nome_do_contato[strcspn(novo_cliente.nome_do_contato, "\n")] = 0;
 
@@ -79,6 +86,7 @@ void listarClientes(Sistema *sistema)
     }
 
     printf("\n--- Lista de Clientes ---\n");
+    // Percorre e exibe os dados de todos os clientes cadastrados.
     for (int i = 0; i < sistema->num_clientes; i++)
     {
         printf("----------------------------------\n");
@@ -107,6 +115,7 @@ void alterarCliente(Sistema *sistema)
     scanf("%d", &codigo);
     limpar_buffer();
 
+    // Busca o cliente pelo código informado.
     for (int i = 0; i < sistema->num_clientes; i++)
     {
         if (sistema->lista_clientes[i].codigo == codigo)
@@ -141,6 +150,7 @@ void alterarCliente(Sistema *sistema)
         scanf("%d", &opcao_alterar);
         limpar_buffer();
 
+        // Executa a alteração do campo escolhido pelo usuário.
         switch (opcao_alterar)
         {
         case 1:
@@ -199,6 +209,7 @@ void excluirCliente(Sistema *sistema)
     scanf("%d", &codigo);
     limpar_buffer();
 
+    // Busca o cliente pelo código informado para exclusão.
     for (i = 0; i < sistema->num_clientes; i++)
     {
         if (sistema->lista_clientes[i].codigo == codigo)
@@ -277,6 +288,7 @@ void carregarClientes(Sistema *sistema)
         arquivo = fopen(CLIENTES_DATA_FILE, "rb");// abre o arquivo para leitura em binário
         if (arquivo != NULL)
         {
+            // Lê do arquivo binário a quantidade de clientes cadastrados.
             fread(&sistema->num_clientes, sizeof(int), 1, arquivo);
               // Lê do arquivo binário a quantidade de clientes cadastrados e armazena em sistema->num_clientes
             if (sistema->num_clientes > 0)
@@ -288,6 +300,7 @@ void carregarClientes(Sistema *sistema)
                     sistema->num_clientes = 0;
                     return;
                 }
+                // Lê os dados dos clientes do arquivo binário para a memória.
                 fread(sistema->lista_clientes, sizeof(Cliente), sistema->num_clientes, arquivo);
                 sistema->capacidade_clientes = sistema->num_clientes;
             }

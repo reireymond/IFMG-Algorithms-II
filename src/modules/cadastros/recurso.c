@@ -17,6 +17,7 @@ void adicionarRecurso(Sistema *sistema)
 if (sistema->num_recursos == sistema->capacidade_recursos)
 {
 
+    // Verifica se o vetor de recursos está cheio. Se sim, aumenta a capacidade para permitir novos cadastros.
     if (sistema->num_recursos == sistema->capacidade_recursos)
     {
         int nova_capacidade = (sistema->capacidade_recursos == 0) ? 10 : sistema->capacidade_recursos * 2;
@@ -34,26 +35,32 @@ if (sistema->num_recursos == sistema->capacidade_recursos)
     Recurso novo_recurso;
     printf("\n--- Cadastro de Novo Recurso/Equipamento ---\n");
 
+    // Gera o código do novo recurso automaticamente.
     novo_recurso.codigo = sistema->num_recursos + 1;
     printf("Codigo do Recurso: %d\n", novo_recurso.codigo);
 
     printf("Descricao (Ex: Caixa de Som Ativa): ");
+    // Lê a descrição do recurso.
     fgets(novo_recurso.descricao, sizeof(novo_recurso.descricao), stdin);
     novo_recurso.descricao[strcspn(novo_recurso.descricao, "\n")] = 0;
 
     printf("Categoria (Ex: Sonorizacao): ");
+    // Lê a categoria do recurso.
     fgets(novo_recurso.categoria, sizeof(novo_recurso.categoria), stdin);
     novo_recurso.categoria[strcspn(novo_recurso.categoria, "\n")] = 0;
 
     printf("Quantidade em Estoque: ");
+    // Lê a quantidade em estoque do recurso.
     scanf("%d", &novo_recurso.quantidade_estoque);
     limpar_buffer();
 
     printf("Preco de Custo (unitario): R$ ");
+    // Lê o preço de custo unitário do recurso.
     scanf("%f", &novo_recurso.preco_custo);
     limpar_buffer();
 
     printf("Valor da Locacao (diaria): R$ ");
+    // Lê o valor da locação diária do recurso.
     scanf("%f", &novo_recurso.valor_locacao);
     limpar_buffer();
 
@@ -74,6 +81,7 @@ void listarRecursos(Sistema *sistema)
     }
 
     printf("\n--- Lista de Recursos e Equipamentos ---\n");
+    // Percorre e exibe os dados de todos os recursos cadastrados.
     for (int i = 0; i < sistema->num_recursos; i++)
     {
         printf("----------------------------------\n");
@@ -101,6 +109,7 @@ void alterarRecurso(Sistema *sistema)
     scanf("%d", &codigo);
     limpar_buffer();
 
+    // Busca o recurso pelo código informado.
     for (int i = 0; i < sistema->num_recursos; i++)
     {
         if (sistema->lista_recursos[i].codigo == codigo)
@@ -131,6 +140,7 @@ void alterarRecurso(Sistema *sistema)
         scanf("%d", &opcao);
         limpar_buffer();
 
+        // Executa a alteração do campo escolhido pelo usuário.
         switch (opcao)
         {
         case 1:
@@ -181,6 +191,7 @@ void excluirRecurso(Sistema *sistema)
     limpar_buffer();
 
     int indice = -1;
+    // Busca o recurso pelo código informado para exclusão.
     for (int i = 0; i < sistema->num_recursos; i++)
     {
         if (sistema->lista_recursos[i].codigo == codigo)
@@ -228,7 +239,9 @@ void salvarRecursos(Sistema *sistema)
         perror("Nao foi possivel abrir o arquivo de recursos");
         return;
     }
+    // Salva a quantidade de recursos no arquivo binário.
     fwrite(&sistema->num_recursos, sizeof(int), 1, arquivo);
+    // Salva os dados dos recursos no arquivo binário.
     fwrite(sistema->lista_recursos, sizeof(Recurso), sistema->num_recursos, arquivo);
     fclose(arquivo);
 }
@@ -243,12 +256,14 @@ void carregarRecursos(Sistema *sistema)
     FILE *arquivo = fopen(RECURSOS_DATA_FILE, "rb"); // abre o arquivo para leitura em binário
     if (arquivo != NULL)
     {
-        fread(&sistema->num_recursos, sizeof(int), 1, arquivo);
+    // Lê do arquivo binário a quantidade de recursos cadastrados.
+    fread(&sistema->num_recursos, sizeof(int), 1, arquivo);
         if (sistema->num_recursos > 0)
         {
             sistema->lista_recursos = malloc(sistema->num_recursos * sizeof(Recurso));
             if (sistema->lista_recursos != NULL)
             {
+                // Lê os dados dos recursos do arquivo binário para a memória.
                 fread(sistema->lista_recursos, sizeof(Recurso), sistema->num_recursos, arquivo);
                 sistema->capacidade_recursos = sistema->num_recursos;
             }

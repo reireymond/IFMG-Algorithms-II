@@ -31,30 +31,37 @@ void adicionarFornecedor(Sistema *sistema)
     Fornecedor novo_fornecedor;
     printf("\n--- Cadastro de Novo Fornecedor/Parceiro ---\n");
 
+    // Gera o código do novo fornecedor automaticamente.
     novo_fornecedor.codigo = sistema->num_fornecedores + 1;
     printf("Codigo do Fornecedor: %d\n", novo_fornecedor.codigo);
 
     printf("Nome Fantasia: ");
+    // Lê o nome fantasia do fornecedor.
     fgets(novo_fornecedor.nome_fantasia, sizeof(novo_fornecedor.nome_fantasia), stdin);
     novo_fornecedor.nome_fantasia[strcspn(novo_fornecedor.nome_fantasia, "\n")] = 0;
 
     printf("Razao Social: ");
+    // Lê a razão social do fornecedor.
     fgets(novo_fornecedor.razao_social, sizeof(novo_fornecedor.razao_social), stdin);
     novo_fornecedor.razao_social[strcspn(novo_fornecedor.razao_social, "\n")] = 0;
 
     printf("CNPJ / CPF: ");
+    // Lê o CNPJ ou CPF do fornecedor.
     fgets(novo_fornecedor.cnpj, sizeof(novo_fornecedor.cnpj), stdin);
     novo_fornecedor.cnpj[strcspn(novo_fornecedor.cnpj, "\n")] = 0;
 
     printf("Endereco Completo: ");
+    // Lê o endereço completo do fornecedor.
     fgets(novo_fornecedor.endereco, sizeof(novo_fornecedor.endereco), stdin);
     novo_fornecedor.endereco[strcspn(novo_fornecedor.endereco, "\n")] = 0;
 
     printf("Telefone: ");
+    // Lê o telefone do fornecedor.
     fgets(novo_fornecedor.telefone, sizeof(novo_fornecedor.telefone), stdin);
     novo_fornecedor.telefone[strcspn(novo_fornecedor.telefone, "\n")] = 0;
 
     printf("Tipo de Servico (Ex: Buffet, Seguranca): ");
+    // Lê o tipo de serviço oferecido pelo fornecedor.
     fgets(novo_fornecedor.tipo_servico, sizeof(novo_fornecedor.tipo_servico), stdin);
     novo_fornecedor.tipo_servico[strcspn(novo_fornecedor.tipo_servico, "\n")] = 0;
 
@@ -75,6 +82,7 @@ void listarFornecedores(Sistema *sistema)
     }
 
     printf("\n--- Lista de Fornecedores e Parceiros ---\n");
+    // Percorre e exibe os dados de todos os fornecedores cadastrados.
     for (int i = 0; i < sistema->num_fornecedores; i++)
     {
         printf("----------------------------------\n");
@@ -103,6 +111,7 @@ void alterarFornecedor(Sistema *sistema)
     scanf("%d", &codigo);
     limpar_buffer();
 
+    // Busca o fornecedor pelo código informado.
     for (int i = 0; i < sistema->num_fornecedores; i++)
     {
         if (sistema->lista_fornecedores[i].codigo == codigo)
@@ -134,6 +143,7 @@ void alterarFornecedor(Sistema *sistema)
         scanf("%d", &opcao);
         limpar_buffer();
 
+        // Executa a alteração do campo escolhido pelo usuário.
         switch (opcao)
         {
         case 1:
@@ -189,6 +199,7 @@ void excluirFornecedor(Sistema *sistema)
     limpar_buffer();
 
     int indice = -1;
+    // Busca o fornecedor pelo código informado para exclusão.
     for (int i = 0; i < sistema->num_fornecedores; i++)
     {
         if (sistema->lista_fornecedores[i].codigo == codigo)
@@ -236,7 +247,9 @@ void salvarFornecedores(Sistema *sistema)
         perror("Nao foi possivel abrir o arquivo de fornecedores");
         return;
     }
+    // Salva a quantidade de fornecedores no arquivo binário.
     fwrite(&sistema->num_fornecedores, sizeof(int), 1, arquivo);
+    // Salva os dados dos fornecedores no arquivo binário.
     fwrite(sistema->lista_fornecedores, sizeof(Fornecedor), sistema->num_fornecedores, arquivo);
     fclose(arquivo);
 }
@@ -251,12 +264,14 @@ void carregarFornecedores(Sistema *sistema)
     FILE *arquivo = fopen(FORNECEDORES_DATA_FILE, "rb");// abre o arquivo para leitura em binário
     if (arquivo != NULL)
     {
-        fread(&sistema->num_fornecedores, sizeof(int), 1, arquivo);
+    // Lê do arquivo binário a quantidade de fornecedores cadastrados.
+    fread(&sistema->num_fornecedores, sizeof(int), 1, arquivo);
         if (sistema->num_fornecedores > 0)
         {
             sistema->lista_fornecedores = malloc(sistema->num_fornecedores * sizeof(Fornecedor));
             if (sistema->lista_fornecedores != NULL)
             {
+                // Lê os dados dos fornecedores do arquivo binário para a memória.
                 fread(sistema->lista_fornecedores, sizeof(Fornecedor), sistema->num_fornecedores, arquivo);
                 sistema->capacidade_fornecedores = sistema->num_fornecedores;
             }
