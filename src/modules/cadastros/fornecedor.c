@@ -45,10 +45,15 @@ void adicionarFornecedor(Sistema *sistema)
     fgets(novo_fornecedor.razao_social, sizeof(novo_fornecedor.razao_social), stdin);
     novo_fornecedor.razao_social[strcspn(novo_fornecedor.razao_social, "\n")] = 0;
 
-    printf("CNPJ / CPF: ");
-    // Lê o CNPJ ou CPF do fornecedor.
-    fgets(novo_fornecedor.cnpj, sizeof(novo_fornecedor.cnpj), stdin);
-    novo_fornecedor.cnpj[strcspn(novo_fornecedor.cnpj, "\n")] = 0;
+   // Lê e valida o CPF do cliente
+    do {
+        printf("CPF / CNPJ: ");
+        fgets(novo_fornecedor.cnpj, sizeof(novo_fornecedor.cnpj), stdin);
+        novo_fornecedor.cnpj[strcspn(novo_fornecedor.cnpj, "\n")] = 0;
+        if (!validarCPF(novo_fornecedor.cnpj)) {
+            printf("CPF invalido! Digite novamente.(deve conter 11 digitos)\n");
+        }
+    } while (!validarCPF(novo_fornecedor.cnpj));
 
     printf("Endereco Completo: ");
     // Lê o endereço completo do fornecedor.
@@ -157,9 +162,14 @@ void alterarFornecedor(Sistema *sistema)
             sistema->lista_fornecedores[indice].razao_social[strcspn(sistema->lista_fornecedores[indice].razao_social, "\n")] = 0;
             break;
         case 3:
-            printf("Novo CNPJ / CPF: ");
-            fgets(sistema->lista_fornecedores[indice].cnpj, sizeof(sistema->lista_fornecedores[indice].cnpj), stdin);
-            sistema->lista_fornecedores[indice].cnpj[strcspn(sistema->lista_fornecedores[indice].cnpj, "\n")] = 0;
+           do {
+                printf("Digite o novo CPF/CNPJ: ");
+                fgets(sistema->lista_fornecedores[indice].cnpj, sizeof(sistema->lista_fornecedores[indice].cnpj), stdin);
+                sistema->lista_fornecedores[indice].cnpj[strcspn(sistema->lista_fornecedores[indice].cnpj, "\n")] = 0;
+                if (!validarCPF(sistema->lista_fornecedores[indice].cnpj)) {
+                    printf("CPF invalido! Digite novamente. (deve conter 11 digitos validos)\n");
+                }
+            } while (!validarCPF(sistema->lista_fornecedores[indice].cnpj));
             break;
         case 4:
             printf("Novo Endereco: ");

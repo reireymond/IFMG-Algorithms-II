@@ -165,9 +165,15 @@ void alterarCliente(Sistema *sistema)
             sistema->lista_clientes[indice_cliente].razao_social[strcspn(sistema->lista_clientes[indice_cliente].razao_social, "\n")] = 0;
             break;
         case 2:
-            printf("Digite o novo CPF / CNPJ: ");
-            fgets(sistema->lista_clientes[indice_cliente].cnpj, sizeof(sistema->lista_clientes[indice_cliente].cnpj), stdin);
-            sistema->lista_clientes[indice_cliente].cnpj[strcspn(sistema->lista_clientes[indice_cliente].cnpj, "\n")] = 0;
+            // Lê e valida o CPF do cliente ao alterar
+            do {
+                printf("Digite o novo CPF / CNPJ: ");
+                fgets(sistema->lista_clientes[indice_cliente].cnpj, sizeof(sistema->lista_clientes[indice_cliente].cnpj), stdin);
+                sistema->lista_clientes[indice_cliente].cnpj[strcspn(sistema->lista_clientes[indice_cliente].cnpj, "\n")] = 0;
+                if (!validarCPF(sistema->lista_clientes[indice_cliente].cnpj)) {
+                    printf("CPF invalido! Digite novamente. (deve conter 11 digitos validos)\n");
+                }
+            } while (!validarCPF(sistema->lista_clientes[indice_cliente].cnpj));
             break;
         case 3:
             printf("Digite o novo Endereco Completo: ");

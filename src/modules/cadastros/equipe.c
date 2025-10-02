@@ -38,11 +38,15 @@ void adicionarEquipeInterna(Sistema *sistema)
     fgets(novo_membro.nome, sizeof(novo_membro.nome), stdin);
     novo_membro.nome[strcspn(novo_membro.nome, "\n")] = 0;
 
-    printf("CPF: ");
-    // Lê o CPF do membro da equipe.
-    fgets(novo_membro.cpf, sizeof(novo_membro.cpf), stdin);
-    novo_membro.cpf[strcspn(novo_membro.cpf, "\n")] = 0;
-
+   // Lê e valida o CPF da equipe
+    do {
+        printf("CPF / CNPJ: ");
+        fgets(novo_membro.cpf, sizeof(novo_membro.cpf), stdin);
+        novo_membro.cpf[strcspn(novo_membro.cpf, "\n")] = 0;
+        if (!validarCPF(novo_membro.cpf)) {
+            printf("CPF invalido! Digite novamente.(deve conter 11 digitos)\n");
+        }
+    } while (!validarCPF(novo_membro.cpf));
     printf("Funcao: ");
     // Lê a função do membro da equipe.
     fgets(novo_membro.funcao, sizeof(novo_membro.funcao), stdin);
@@ -136,9 +140,15 @@ void alterarEquipeInterna(Sistema *sistema)
             sistema->lista_equipe[indice].nome[strcspn(sistema->lista_equipe[indice].nome, "\n")] = 0;
             break;
         case 2:
-            printf("Novo CPF: ");
-            fgets(sistema->lista_equipe[indice].cpf, sizeof(sistema->lista_equipe[indice].cpf), stdin);
-            sistema->lista_equipe[indice].cpf[strcspn(sistema->lista_equipe[indice].cpf, "\n")] = 0;
+            // Lê e valida o CPF do cliente ao alterar
+            do {
+                printf("Digite o novo CPF: ");
+                fgets(sistema->lista_equipe[indice].cpf, sizeof(sistema->lista_equipe[indice].cpf), stdin);
+                sistema->lista_equipe[indice].cpf[strcspn(sistema->lista_equipe[indice].cpf, "\n")] = 0;
+                if (!validarCPF(sistema->lista_equipe[indice].cpf)) {
+                    printf("CPF invalido! Digite novamente. (deve conter 11 digitos validos)\n");
+                }
+            } while (!validarCPF(sistema->lista_equipe[indice].cpf));
             break;
         case 3:
             printf("Nova Funcao: ");
