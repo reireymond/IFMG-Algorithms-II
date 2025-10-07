@@ -23,6 +23,7 @@ void menuRecursos(Sistema *sistema);
 void menuFornecedores(Sistema *sistema);
 void menuOperadores(Sistema *sistema);
 
+
 // Exibe o menu para o usuário escolher o modo de armazenamento.
 void menuEscolherArmazenamento()
 {
@@ -341,12 +342,4 @@ void menuOperadores(Sistema *sistema)
         if (op_op != 0) pausar();
     } while (op_op != 0);
 }
-// Função para validar CPF (apenas formato e dígitos, não valida dígito verificador)
-int validarCPF(const char *cpf) {
-    int digitos = 0;
-    for (int i = 0; cpf[i] != '\0'; i++) {
-        if (isdigit((unsigned char)cpf[i])) digitos++;
-    }
-    // CPF deve ter 11 dígitos
-    return digitos == 11;
-}
+

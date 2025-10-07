@@ -11,4 +11,7 @@ void limpar_buffer();
  
 void pausar();
 
-#endif
+// Valida CPF (aceita com ou sem pontuação). Retorna 1 se válido, 0 caso contrário.
+int validarCPF(const char *cpf_raw);
+
+#endif  

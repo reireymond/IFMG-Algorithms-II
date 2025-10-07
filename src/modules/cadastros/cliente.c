@@ -12,6 +12,8 @@
 #define CLIENTES_TEXT_FILE "../data/clientes.txt"
 
 
+
+
 // Adiciona um novo cliente ao sistema.
 void adicionarCliente(Sistema *sistema)
 
