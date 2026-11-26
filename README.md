@@ -23,14 +23,14 @@ O sistema permite escolher, ao iniciar, onde os dados ficam armazenados:
 - **Importação e exportação** de dados em XML
 - Código modular separado em `core`, `modules/cadastros` e `ui`
 
-> A versão evoluída deste projeto está em [IFMG-EventManager](https://github.com/reireymond/IFMG-EventManager).
+> A versão evoluída deste projeto está em [IFMG-EventManager](https://github.com/Hey-Reymond/IFMG-EventManager).
 
 ## 💻 Como executar
 
 Pré-requisito: **GCC** e **make** (o `makefile` usa comandos do Windows/MinGW).
 
 ```bash
-git clone https://github.com/reireymond/IFMG-Algorithms-II.git
+git clone https://github.com/Hey-Reymond/IFMG-Algorithms-II.git
 cd IFMG-Algorithms-II
 make run
 ```
@@ -48,7 +48,7 @@ doc/                    enunciado do trabalho
 
 ## 👥 Equipe
 
-- [Kaua Teixeira Nascimento](https://github.com/reireymond)
+- [Kaua Teixeira Nascimento](https://github.com/Hey-Reymond)
 - [Gabriel Mendonça de Oliveira](https://github.com/bielbieloliveirag8-eng)
 
 ## 📄 Licença
